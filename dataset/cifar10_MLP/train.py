@@ -1,3 +1,4 @@
+import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -14,13 +15,12 @@ config = {
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 64,
-    "num_workers": 8,
-    "learning_rate": 2e-3,
-    "epochs": 300,
-    "test_freq": 20,
+    "batch_size": 1000,
+    "num_workers": 32,
+    "learning_rate": 0.01,
+    "epochs": 120,
+    "test_freq": 10,
     "weight_decay": 1e-3,
-    "momentum": 0.8,
 }
 
 
@@ -67,8 +67,8 @@ print('==> Building model..')
 model = simple_mlp_for_cifar10_classify().to(config["device"])
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.AdamW(model.parameters(),
-                        lr=config["learning_rate"],
-                        weight_decay=config["weight_decay"])
+                       lr=config["learning_rate"],
+                       weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                  T_max=config["epochs"])
 
@@ -76,7 +76,7 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
 # Training
 print('==> Defining training..')
 
-def train(epoch):
+def train(epoch, save_name):
     print(f"\nEpoch: {epoch}", end=": ")
     model.train()
     train_loss = 0
@@ -96,6 +96,14 @@ def train(epoch):
         correct += predicted.eq(targets).sum().item()
     print('\r', 'Loss: %.3f | Acc: %.3f%% (%d/%d)' %
           (train_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
+    # save
+    if epoch == config["epochs"]-10 or epoch == config["epochs"]-5:
+        save_epoch = 1 if epoch == config["epochs"]-10 else 2
+        state = {}
+        for key, value in model.state_dict().items():
+            state[key] = value.cpu().to(torch.float16)
+        torch.save(state, f'./checkpoint/{save_name[:-4]}{save_epoch}.pth')
+
 
 def test(save_name):
     print("\n==> Testing..")
@@ -120,18 +128,26 @@ def test(save_name):
     acc = 100.*correct/total
     if acc > best_acc and save_name is not None:
         print('Saving..')
-        state = model.state_dict()
+        state = {}
+        for key, value in model.state_dict().items():
+            state[key] = value.cpu().to(torch.float16)
         if not os.path.isdir('checkpoint'):
             os.mkdir('checkpoint')
-        torch.save(state, f'./checkpoint/{save_name}.pth')
+        torch.save(state, f'./checkpoint/{save_name}')
         best_acc = acc
 
 
 best_acc = 0  # best test accuracy
 if __name__ == '__main__':
+    # config save name
+    items = os.listdir("./checkpoint")
+    save_name = "000.pth"
+    while save_name in items:
+        save_name = str(random.randint(0, 999)).zfill(3) + '.pth'
+    # main train
     for epoch in range(0, config["epochs"]):
         epoch += 1
-        train(epoch)
+        train(epoch, save_name)
         if epoch % config["test_freq"] == 0:
-            test(epoch)
+            test(save_name)
         scheduler.step()

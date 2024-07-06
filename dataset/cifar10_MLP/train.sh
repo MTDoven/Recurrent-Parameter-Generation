@@ -1,0 +1,9 @@
+#!/bin/bash
+
+num_iterations=500
+
+for i in $(seq 1 $num_iterations)
+do
+  echo "Running iteration $i"
+  CUDA_VISIBLE_DEVICES=5 python train.py
+done

@@ -18,8 +18,8 @@ class SimpleMLP(nn.Module):
 
 
 def simple_mlp_for_cifar10_classify():
-    """ this model size is 0.021B parameters (0,020,992,000) """
-    return SimpleMLP([3072, 4096, 2048, 10])
+    """ this model size is 0.010B parameters (0,010,228,736) """
+    return SimpleMLP([3072, 2048, 1536, 512, 10])
 
 
 if __name__ == "__main__":
