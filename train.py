@@ -54,8 +54,9 @@ train_loader = DataLoader(dataset=train_set,
                           drop_last=True,
                           shuffle=True,)
 def preprocess_data(datas):
+    batch_size = datas.size(0)
     # start padding
-    start_padding = torch.full((datas.size(0), 1, config["dim_per_token"]), 1./config["dim_per_token"])
+    start_padding = model.start_padding.repeat(batch_size, 1, 1)
     datas = torch.cat([start_padding, datas], dim=1)
     # random cutting
     random_cutting = random.randint(1, datas.size(1) - config["predict_length"] - 1)
