@@ -12,7 +12,7 @@ class GaussianDiffusion(nn.Module):
         self.device = device
         self.n_timesteps = n_timesteps
         # Define beta schedule
-        def betas_for_alpha_bar(n_timesteps, max_beta=0.999):
+        def betas_for_alpha_bar(n_timesteps, max_beta):
             gen = lambda t: math.cos((t + 0.008) / 1.008 * math.pi / 2) ** 2
             betas = [min(1 - gen((i + 1) / n_timesteps) / gen(i / n_timesteps), max_beta)
                      for i in range(n_timesteps)]
@@ -54,7 +54,8 @@ class GaussianDiffusion(nn.Module):
         pred_noise = model(x, t, z)
         mu = self.one_divide_sqrt_alphas[t] * \
               (x - self.betas_divide_sqrt_one_minus_alphas_cumprod[t] * pred_noise)
-        return mu if t == 0 else mu + self.sqrt_betas[t] * torch.randn_like(x)
+        cor_noise = self.sqrt_betas[t] * self.sqrt_one_minus_alphas_cumprod[t-1] / self.sqrt_one_minus_alphas_cumprod[t]
+        return mu if t == 0 else mu + cor_noise * torch.randn_like(x)
 
     def p_sample_ddim(self, x, t, z, model, sample_timesteps=100, eta=0.05, t_next=None):
         # Diffusion reverse process: p_theta(x_{t-tao} | x_t).

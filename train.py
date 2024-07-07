@@ -19,27 +19,27 @@ config = {
     "sequence_length": 10005,
     "max_length": 1024,
     # model config
-    "stage1_layers": 6,
-    "stage2_layers": 6,
+    "stage1_layers": 8,
+    "stage2_layers": 8,
     "predict_length": 64,
     "num_heads": 8,
-    "feedforward_dim": 1024,
-    "dropout": 0.1,
+    "feedforward_dim": 2048,
+    "dropout": 0.0,
     "transformer_activation": nn.GELU(),
     # diffusion loss config
-    "mlp_layer_dims": [1024, 1024, 1024, 1024],
+    "mlp_layer_dims": [1024, 2048, 2048, 1024],
     "condition_dim": 1024,
-    "diffusion_beta_max": 0.999,
+    "diffusion_beta_max": 0.02,
     "diffusion_n_timesteps": 1000,
-    "mlp_activation": nn.SiLU(),
+    "mlp_activation": nn.ELU(),
     # train setting
     "batch_size": 64,
-    "num_workers": 16,
+    "num_workers": 24,
     "epochs": 1000,
     "learning_rate": 1e-4,
-    "weight_decay": 1e-4,
-    "save_every": 10,
-    "print_every": 10,
+    "weight_decay": 0.0,
+    "save_every": 500,
+    "print_every": 20,
     "checkpoint_save_path": "./generated",
     # test setting
     "test_batch_size": 1,  # fixed don't change this
@@ -54,7 +54,8 @@ wandb.init(project="cifar10_MLP", config=config)
 # Data
 print('==> Preparing data..')
 train_set = config["dataset"](checkpoint_path=config["data_path"],
-                              dim_per_token=config["dim_per_token"])
+                              dim_per_token=config["dim_per_token"],
+                              fix_one_sample=True,)
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
                           num_workers=config["num_workers"],
@@ -137,7 +138,8 @@ def train_one_epoch():
         optimizer.step()
         # to logging losses and print and save
         train_loss += loss.item()
-        wandb.log({"train_loss": loss.item()})
+        wandb.log({"train_loss": loss.item(),
+                   "z_norm": z.abs().mean(), })
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
@@ -160,14 +162,15 @@ def generate(save_path=config["generated_path"], need_test=True):
         x = model.start_padding.repeat(config["test_batch_size"], 1, 1)
         while True:
             predict_length = min(model.predict_length, config["sequence_length"] + 1 - x.size(1))
-            output = model(x[:, -config["max_length"]:, :], predict_length=predict_length)
-            output = diffusion.sample_ddim(x=torch.randn_like(output), z=output,
-                                           sample_timesteps=100, eta=0.05)
+            z = model(x[:, -config["max_length"]:, :], predict_length=predict_length)
+            output = diffusion.sample(x=torch.randn_like(z), z=z,
+                                      sample_timesteps=100, eta=0.05)
             x = torch.cat([x, output], dim=1)
             assert x.size(1) <= config["sequence_length"] + 1
             if x.size(1) == config["sequence_length"] + 1:
                 break
         prediction = x[:, 1:, :]
+    print("Generated_norm:", z.abs().mean())
     train_set.save_params(prediction.cpu().to(torch.float16), save_path=save_path)
     if need_test:
         os.system(config["test_command"])

@@ -4,33 +4,6 @@ from .attention import MHA
 import math
 
 
-class PositionalEncoding(torch.nn.Module):
-    def __init__(self, d_model, max_len=5000):
-        """
-        :param d_model: 模型的维度 (word embedding的维度)
-        :param max_len: 最大序列长度
-        """
-        super(PositionalEncoding, self).__init__()
-
-        # 创建位置编码张量
-        pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        pe = pe.unsqueeze(0).transpose(0, 1)
-
-        # 将位置编码注册为缓冲区
-        self.register_buffer('pe', pe)
-
-    def forward(self, x):
-        """
-        :param x: 输入张量 (seq_len, batch_size, d_model)
-        """
-        x = x + self.pe[:x.size(0), :]
-        return x
-
-
 class MaskFreeTransformerEncoderLayer(nn.Module):
     def __init__(self, hidden_dim, num_heads, feedforward_dim,
                  dropout=0.1, activation=nn.GELU(), use_flash_attn=True):

@@ -28,6 +28,8 @@ class BaseDataset(Dataset, ABC):
         return self.length
 
     def __getitem__(self, index):
+        if self.kwargs.get("fix_one_sample"):
+            index = 0
         diction = torch.load(self.checkpoint_list[index], map_location="cpu")
         return self.preprocess(diction, **self.kwargs)
 
