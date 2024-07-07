@@ -25,7 +25,7 @@ config = {
     "num_heads": 8,
     "feedforward_dim": 2048,
     "dropout": 0.0,
-    "transformer_activation": nn.GELU(),
+    "transformer_activation": nn.SiLU(),
     # diffusion loss config
     "mlp_layer_dims": [1024, 2048, 2048, 1024],
     "condition_dim": 1024,
