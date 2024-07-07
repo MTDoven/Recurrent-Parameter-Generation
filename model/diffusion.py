@@ -85,10 +85,7 @@ class DiffusionLoss(nn.Module):
                                            n_timesteps=diffusion_n_timesteps)
 
     def forward(self, x, z, **kwargs):
-        if self.training:
-            return self.loss(x, z)
-        else:  # evaluate
-            return self.sample_ddim(x, z, **kwargs)
+        return self.loss(x, z)
 
     def loss(self, x, z):
         # Given condition z and ground truth token x, compute loss
@@ -101,20 +98,16 @@ class DiffusionLoss(nn.Module):
 
     def sample(self, x, z, **kwargs):
         # Given condition and noise, sample x using reverse diffusion process
-        if kwargs.get("quiet"):
-            tqdm = lambda x:x
-        for t in tqdm(list(range(self.diffusion.n_timesteps))[::-1]):
+        for t in list(range(self.diffusion.n_timesteps))[::-1]:
             x = self.diffusion.p_sample(x, torch.tensor([t], device=self.device), z, self.net)
         return x
 
     def sample_ddim(self, x, z, sample_timesteps=100, eta=0.05, **kwargs):
-        if kwargs.get("quiet"):
-            tqdm = lambda x:x
         # Given condition and noise, sample x using reverse diffusion process
         times = torch.linspace(-1, self.diffusion.n_timesteps-1, steps=sample_timesteps+1)
         times = list(reversed(times.int().tolist()))
         time_pairs = list(zip(times[:-1], times[1:]))
-        for t, t_next in tqdm(time_pairs):
+        for t, t_next in time_pairs:
             x = self.diffusion.p_sample_ddim(
                     x, torch.tensor([t], device=self.device), z,
                     self.net, sample_timesteps, eta, t_next)

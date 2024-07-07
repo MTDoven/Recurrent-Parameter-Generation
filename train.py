@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import wandb
 from torch.utils.data import DataLoader
 from model import BiARTransformer, DiffusionLoss
 from dataset import Cifar10_MLP
@@ -16,7 +17,7 @@ config = {
     "data_path": "./dataset/cifar10_MLP/checkpoint",
     "dim_per_token": 1024,
     "sequence_length": 10005,
-    "max_length": 2048,
+    "max_length": 1024,
     # model config
     "stage1_layers": 6,
     "stage2_layers": 6,
@@ -37,15 +38,18 @@ config = {
     "epochs": 1000,
     "learning_rate": 1e-4,
     "weight_decay": 1e-4,
-    "save_every": 2000,
-    "print_every": 20,
+    "save_every": 10,
+    "print_every": 10,
     "checkpoint_save_path": "./generated",
     # test setting
-    "test_batch_size": 1,  # fixed
+    "test_batch_size": 1,  # fixed don't change this
     "generated_path": "./dataset/cifar10_MLP/generated/generated_classifier.pth",
-    "test_command": "python ./dataset/cifar10_MLP/test.py ./dataset/cifar10_MLP/generated/generated_classifier.pth"
+    "test_command": "CUDA_VISIBLE_DEVICE=0 python ./dataset/cifar10_MLP/test.py ./dataset/cifar10_MLP/generated/generated_classifier.pth"
 }
 
+# wandb
+wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
+wandb.init(project="cifar10_MLP", config=config)
 
 # Data
 print('==> Preparing data..')
@@ -118,9 +122,9 @@ print('==> Defining training..')
 total_steps = 0
 train_loss = 0
 this_steps = 0
-def train(epoch):
+def train_one_epoch():
     global total_steps, train_loss, this_steps
-    print(f"Epoch: {epoch}")
+    # print(f"Epoch: {epoch}")
     model.train()
     diffusion.train()
     for batch_idx, datas in enumerate(train_loader):
@@ -133,6 +137,7 @@ def train(epoch):
         optimizer.step()
         # to logging losses and print and save
         train_loss += loss.item()
+        wandb.log({"train_loss": loss.item()})
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
@@ -157,7 +162,7 @@ def generate(save_path=config["generated_path"], need_test=True):
             predict_length = min(model.predict_length, config["sequence_length"] + 1 - x.size(1))
             output = model(x[:, -config["max_length"]:, :], predict_length=predict_length)
             output = diffusion.sample_ddim(x=torch.randn_like(output), z=output,
-                                           sample_timesteps=100, eta=0.05, quiet=True)
+                                           sample_timesteps=100, eta=0.05)
             x = torch.cat([x, output], dim=1)
             assert x.size(1) <= config["sequence_length"] + 1
             if x.size(1) == config["sequence_length"] + 1:
@@ -173,7 +178,7 @@ def generate(save_path=config["generated_path"], need_test=True):
 if __name__ == '__main__':
     for epoch in range(0, config["epochs"]):
         epoch += 1
-        train(epoch)
+        train_one_epoch()
         scheduler.step()
 
     # deal problems by dataloder
