@@ -1,2 +1,3 @@
 /.idea
 /dataset/cifar10_MLP/checkpoint/
+/dataset/cifar10_MLP/generated/

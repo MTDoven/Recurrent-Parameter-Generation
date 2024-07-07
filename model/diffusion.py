@@ -99,7 +99,7 @@ class DiffusionLoss(nn.Module):
         loss = F.mse_loss(noise_pred, noise_origin)
         return loss
 
-    def sample(self, x, z):
+    def sample(self, x, z, **kwargs):
         # Given condition and noise, sample x using reverse diffusion process
         for t in tqdm(list(range(self.diffusion.n_timesteps))[::-1]):
             x = self.diffusion.p_sample(x, torch.tensor([t], device=self.device), z, self.net)
