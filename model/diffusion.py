@@ -101,11 +101,15 @@ class DiffusionLoss(nn.Module):
 
     def sample(self, x, z, **kwargs):
         # Given condition and noise, sample x using reverse diffusion process
+        if kwargs.get("quiet"):
+            tqdm = lambda x:x
         for t in tqdm(list(range(self.diffusion.n_timesteps))[::-1]):
             x = self.diffusion.p_sample(x, torch.tensor([t], device=self.device), z, self.net)
         return x
 
-    def sample_ddim(self, x, z, sample_timesteps=100, eta=0.05):
+    def sample_ddim(self, x, z, sample_timesteps=100, eta=0.05, **kwargs):
+        if kwargs.get("quiet"):
+            tqdm = lambda x:x
         # Given condition and noise, sample x using reverse diffusion process
         times = torch.linspace(-1, self.diffusion.n_timesteps-1, steps=sample_timesteps+1)
         times = list(reversed(times.int().tolist()))

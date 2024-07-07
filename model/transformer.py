@@ -104,7 +104,7 @@ class BiARTransformer(nn.Module):
         middle = self.stage1(src)
         middle = torch.cat([middle, next_padding.repeat(batch_size, 1, 1)], dim=1)
         out = self.stage2(middle)
-        return out[:, -self.predict_length:, :]
+        return out[:, -predict_length:, :]
 
 
 if __name__ == '__main__':

@@ -5,18 +5,22 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10
-from model import simple_mlp_for_cifar10_classify
+try:  # relative import
+    from .model import simple_mlp_for_cifar10_classify
+except:  # absolute import
+    from model import simple_mlp_for_cifar10_classify
+import sys
 import os
 
 
 config = {
     # dataset setting
-    "dataset_root": "../../../Datasets",
+    "dataset_root": "/home/wangkai/AR-Param-Generation/Datasets",
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 1000,
-    "num_workers": 50,
+    "num_workers": 8,
     "learning_rate": 0.01,
     "epochs": 120,
     "test_freq": 10,
@@ -144,6 +148,6 @@ if __name__ == '__main__':
             test(save_name)
         scheduler.step()
 
-# fix some bug caused by num_workers
-del train_loader
-exit(0)
+    # fix some bug caused by num_workers
+    del train_loader
+    exit(0)

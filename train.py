@@ -10,36 +10,36 @@ import os
 
 config = {
     # device setting
-    "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+    "device": "cuda:0",
     # dataset setting
     "dataset": Cifar10_MLP,
     "data_path": "./dataset/cifar10_MLP/checkpoint",
-    "dim_per_token": 2048,
-    "sequence_length": 5005,
-    "max_length": 1024,
+    "dim_per_token": 1024,
+    "sequence_length": 10005,
+    "max_length": 2048,
     # model config
     "stage1_layers": 6,
     "stage2_layers": 6,
     "predict_length": 64,
     "num_heads": 8,
-    "feedforward_dim": 2048,
+    "feedforward_dim": 1024,
     "dropout": 0.1,
     "transformer_activation": nn.GELU(),
     # diffusion loss config
-    "mlp_layer_dims": [2048, 2048, 2048, 2048],
-    "condition_dim": 2048,
+    "mlp_layer_dims": [1024, 1024, 1024, 1024],
+    "condition_dim": 1024,
     "diffusion_beta_max": 0.999,
     "diffusion_n_timesteps": 1000,
     "mlp_activation": nn.SiLU(),
     # train setting
-    "batch_size": 1,
-    "num_workers": 0,
-    "epochs": 5000,
+    "batch_size": 64,
+    "num_workers": 16,
+    "epochs": 1000,
     "learning_rate": 1e-4,
     "weight_decay": 1e-4,
-    "save_every": 1000,
-    "print_every": 100,
-    "checkpoint_save_path": "./checkpoint",
+    "save_every": 2000,
+    "print_every": 20,
+    "checkpoint_save_path": "./generated",
     # test setting
     "test_batch_size": 1,  # fixed
     "generated_path": "./dataset/cifar10_MLP/generated/generated_classifier.pth",
@@ -54,10 +54,11 @@ train_set = config["dataset"](checkpoint_path=config["data_path"],
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
                           num_workers=config["num_workers"],
-                          persistent_workers=False,
+                          persistent_workers=True,
                           drop_last=True,
                           shuffle=True,)
 def preprocess_data(datas):
+    # print("Sequence length:", datas.size(1))
     max_length = config["max_length"]
     predict_length = config["predict_length"]
     sequence_length = config["sequence_length"]
@@ -92,7 +93,7 @@ model = BiARTransformer(hidden_dim=config["dim_per_token"],
 model = model.to(config["device"])
 
 # Loss
-print('==> Building diffusion_loss..')
+print('==> Building diffusion..')
 diffusion = DiffusionLoss(mlp_layer_dims=config["mlp_layer_dims"],
                           condition_dim=config["condition_dim"],
                           diffusion_beta_max=config["diffusion_beta_max"],
@@ -115,13 +116,13 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer=optimizer,
 print('==> Defining training..')
 
 total_steps = 0
+train_loss = 0
+this_steps = 0
 def train(epoch):
-    global total_steps
-    print(f"Epoch: {epoch}", end=": ")
+    global total_steps, train_loss, this_steps
+    print(f"Epoch: {epoch}")
     model.train()
     diffusion.train()
-    train_loss = 0
-    total = len(train_set)
     for batch_idx, datas in enumerate(train_loader):
         optimizer.zero_grad()
         inputs, targets = preprocess_data(datas)
@@ -132,17 +133,22 @@ def train(epoch):
         optimizer.step()
         # to logging losses and print and save
         train_loss += loss.item()
-        if total_steps % config["print_every"] == 0:
-            print('Loss: %.6f' % (train_loss/total))
+        this_steps += 1
+        total_steps += 1
+        if this_steps % config["print_every"] == 0:
+            print('Loss: %.6f' % (train_loss/this_steps))
+            this_steps = 0
+            train_loss = 0
         if total_steps % config["save_every"] == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(), "diffusion": diffusion.state_dict(),
                      "optimizer": optimizer.state_dict()}
             torch.save(state, os.path.join(config["checkpoint_save_path"], "state.pth"))
+            generate(save_path=config["generated_path"], need_test=True)
 
 
 def generate(save_path=config["generated_path"], need_test=True):
-    print("\n==> Testing..")
+    print("\n==> Generating..")
     model.eval()
     diffusion.eval()
     with torch.no_grad():
@@ -150,7 +156,8 @@ def generate(save_path=config["generated_path"], need_test=True):
         while True:
             predict_length = min(model.predict_length, config["sequence_length"] + 1 - x.size(1))
             output = model(x[:, -config["max_length"]:, :], predict_length=predict_length)
-            output = diffusion.sample(x=torch.randn_like(output), z=output, sample_timesteps=100, eta=0.05)
+            output = diffusion.sample_ddim(x=torch.randn_like(output), z=output,
+                                           sample_timesteps=100, eta=0.05, quiet=True)
             x = torch.cat([x, output], dim=1)
             assert x.size(1) <= config["sequence_length"] + 1
             if x.size(1) == config["sequence_length"] + 1:
@@ -159,6 +166,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     train_set.save_params(prediction.cpu().to(torch.float16), save_path=save_path)
     if need_test:
         os.system(config["test_command"])
+        print("\n")
     return prediction
 
 
@@ -166,6 +174,9 @@ if __name__ == '__main__':
     for epoch in range(0, config["epochs"]):
         epoch += 1
         train(epoch)
-        generate(save_path=config["generated_path"], need_test=True)
         scheduler.step()
+
+    # deal problems by dataloder
+    del train_loader
+    exit(0)
 

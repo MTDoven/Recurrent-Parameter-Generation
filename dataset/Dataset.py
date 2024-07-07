@@ -48,13 +48,15 @@ class Cifar10_MLP(BaseDataset):
     def __init__(self, checkpoint_path, dim_per_token, **kwargs):
         super().__init__(checkpoint_path, **kwargs)
         self.kwargs["dim_per_token"] = dim_per_token
-        self._first_step = True
+        self.preprocess(diction=torch.load(self.checkpoint_list[0]),
+                        first_step=True, dim_per_token=dim_per_token)
 
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         dim_per_token = kwargs['dim_per_token']
         param_list = []
         for key, value in diction.items():
-            self.structure[key] = value.shape
+            if kwargs.get("first_step"):
+                self.structure[key] = value.shape
             value = pad_to_length(value, dim_per_token)
             value = value.flatten()
             value = torch.chunk(value, chunks=len(value) // dim_per_token, dim=0)
@@ -63,9 +65,6 @@ class Cifar10_MLP(BaseDataset):
             param_list.extend(list(value))
         param = torch.cat(param_list, dim=0)
         param = param.view(-1, dim_per_token)
-        if self._first_step:
-            print(f"\nSequence length: {param.size(0)}")
-            self._first_step = False
         return param
 
     def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
