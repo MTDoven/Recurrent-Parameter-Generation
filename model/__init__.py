@@ -1,3 +1,3 @@
 from .denoiser import ConditionalMLP
-from .transformer import BiARTransformer
+from .ARModule import BiARModule
 from .diffusion import DiffusionLoss

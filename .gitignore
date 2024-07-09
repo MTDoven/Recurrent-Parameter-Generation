@@ -1,4 +1,6 @@
 /.idea
-/dataset/cifar10_MLP/checkpoint/
-/dataset/cifar10_MLP/generated/
+/dataset/cifar10_MLP_middle/checkpoint/
+/dataset/cifar10_MLP_middle/generated/
 /checkpoint/
+/dataset/cifar10_MLP_small/checkpoint/
+/dataset/cifar10_MLP_small/generated/

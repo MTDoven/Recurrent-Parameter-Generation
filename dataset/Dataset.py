@@ -47,50 +47,47 @@ class BaseDataset(Dataset, ABC):
 
 
 class Cifar10_MLP(BaseDataset):
-    def __init__(self, checkpoint_path, dim_per_token, **kwargs):
+    def __init__(self, checkpoint_path, dim_per_token, predict_length, **kwargs):
         super().__init__(checkpoint_path, **kwargs)
-        self.kwargs["dim_per_token"] = dim_per_token
+        self.dim_per_token = dim_per_token
+        self.predict_length = predict_length
+        self.norm = [0.0, 1.0]
         self.preprocess(diction=torch.load(self.checkpoint_list[0]),
                         first_step=True, dim_per_token=dim_per_token)
+        if kwargs.get("fix_one_sample"):
+            self.length = 1024
 
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
-        dim_per_token = kwargs['dim_per_token']
         param_list = []
         for key, value in diction.items():
             if kwargs.get("first_step"):
                 self.structure[key] = value.shape
-            value = pad_to_length(value, dim_per_token)
             value = value.flatten()
-            value = torch.chunk(value, chunks=len(value) // dim_per_token, dim=0)
-            assert len(value[0]) == dim_per_token, \
-                f"This param need padding: {key} with shape of {diction[key].shape}."
-            param_list.extend(list(value))
+            param_list.append(value)
         param = torch.cat(param_list, dim=0)
-        param = param.view(-1, dim_per_token)
+        param = pad_to_length(param, self.dim_per_token * self.predict_length)
+        param = param.view(-1, self.dim_per_token)
+        # print("Sequence length:", param.size(0))
+        if kwargs.get("first_step") and self.kwargs.get("fix_one_sample"):
+            self.norm[0], self.norm[1] = param.mean(), param.std()
+        param = (param - self.norm[0]) / self.norm[1]
         return param
 
     def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
-        dim_per_token = kwargs['dim_per_token']
         diction = {}
         params = params.flatten()
+        params = params * self.norm[1] + self.norm[0]
         for key, shape in self.structure.items():
             num_elements = math.prod(shape)
             this_param = params[:num_elements].view(*shape)
             diction[key] = this_param
-            if num_elements % dim_per_token == 0:
-                params = params[num_elements:]
-            else:  # drop padding
-                num_elements = (num_elements // dim_per_token + 1) * dim_per_token
-                params = params[num_elements:]
+            params = params[num_elements:]
         return diction
 
 
 if __name__ == "__main__":
-    dataset = Cifar10_MLP(checkpoint_path="./cifar10_MLP/checkpoint", dim_per_token=4096)
+    dataset = Cifar10_MLP(checkpoint_path="cifar10_MLP_middle/checkpoint", dim_per_token=4096, predict_length=32)
     x = dataset[0]
     print(x.shape)
-    dataset.save_params(x, "./test.path")
-
-
-
+    dataset.save_params(x, "./test.pth")
 
