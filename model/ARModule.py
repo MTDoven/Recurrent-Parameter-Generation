@@ -10,13 +10,13 @@ class Mixer(nn.Module):
         self.middle_norm = nn.BatchNorm1d(input_dim)
         self.activate = activation
         self.conv1 = nn.Conv1d(input_dim, input_dim, kernel_size,
-                               1, kernel_size//2, groups=input_dim//2)
+                               1, kernel_size//2)
         self.conv2 = nn.Conv1d(input_dim, input_dim, kernel_size,
-                               1, kernel_size//2, groups=input_dim//2)
+                               1, kernel_size//2)
         self.conv3 = nn.Conv1d(input_dim, input_dim, kernel_size,
-                               1, kernel_size//2, groups=input_dim//2)
+                               1, kernel_size//2)
         self.conv4 = nn.Conv1d(input_dim, output_dim, kernel_size,
-                               1, kernel_size//2, groups=output_dim//2)
+                               1, kernel_size//2)
 
     def forward(self, x0):
         x1 = self.pre_norm(x0)
@@ -66,7 +66,7 @@ class BiARModule(nn.Module):
         start_padding = torch.empty(size=(1, self.input_length, self.hidden_dim))
         self.start_padding = nn.Parameter(nn.init.normal_(start_padding))
         # weight init
-        self.weight_init()
+        # self.weight_init()
 
     def weight_init(self):
         for module in self.modules():

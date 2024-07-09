@@ -22,11 +22,11 @@ config = {
     "dim_per_token": 2048,
     "sequence_length": 5120,
     # model config
-    "num_layers": 6,
-    "input_length": 384,
-    "predict_length": 128,
-    "token_mixer_ks": 65,
-    "feed_forward_ks": 65,
+    "num_layers": 18,
+    "input_length": 256,
+    "predict_length": 64,
+    "token_mixer_ks": 13,
+    "feed_forward_ks": 5,
     "activation": nn.ELU(),
     # diffusion loss config
     "mlp_layer_dims": [2048, 2048, 2048, 2048],
@@ -34,14 +34,14 @@ config = {
     "diffusion_beta_max": 0.02,
     "diffusion_n_timesteps": 1000,
     # train setting
-    "batch_size": 32,
-    "num_workers": 24,
-    "epochs": 500,
-    "learning_rate": 5e-3,
+    "batch_size": 16,
+    "num_workers": 8,
+    "total_steps": 10000,
+    "learning_rate": 5e-5,
     "weight_decay": 0.0,
     "save_every": 500,
     "print_every": 20,
-    "num_warmup_epochs": 10,
+    "warmup_steps": 300,
     "checkpoint_save_path": "./generated",
     # test setting
     "test_batch_size": 1,  # fixed don't change this
@@ -59,6 +59,7 @@ train_set = config["dataset"](checkpoint_path=config["data_path"],
                               dim_per_token=config["dim_per_token"],
                               predict_length=config["predict_length"],
                               fix_one_sample=True,)
+print("Dataset length:", train_set.length)
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
                           num_workers=config["num_workers"],
@@ -101,18 +102,18 @@ diffusion = diffusion.to(config["device"])
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.RMSprop(params=[{"params": model.parameters()},
-                                  {"params": diffusion.parameters()}],
-                          lr=config["learning_rate"],
-                          weight_decay=config["weight_decay"],)
+optimizer = optim.AdamW(params=[{"params": model.parameters()},
+                                {"params": diffusion.parameters()}],
+                        lr=config["learning_rate"],
+                        weight_decay=config["weight_decay"],)
 scheduler = SequentialLR(optimizer=optimizer,
                          schedulers=[LinearLR(optimizer=optimizer,
                                               start_factor=1e-4,
                                               end_factor=1.0,
-                                              total_iters=config["num_warmup_epochs"]),
+                                              total_iters=config["warmup_steps"]),
                                      CosineAnnealingLR(optimizer=optimizer,
-                                                       T_max=config["epochs"]-config["num_warmup_epochs"])],
-                         milestones=[config["num_warmup_epochs"]],)
+                                                       T_max=config["total_steps"]-config["warmup_steps"])],
+                         milestones=[config["warmup_steps"]],)
 
 
 # Training
@@ -120,7 +121,7 @@ print('==> Defining training..')
 total_steps = 0
 train_loss = 0
 this_steps = 0
-def train_one_epoch():
+def train():
     global total_steps, train_loss, this_steps
     # print(f"Epoch: {epoch}")
     model.train()
@@ -135,10 +136,11 @@ def train_one_epoch():
         # loss = diffusion(targets, z)
         loss.backward()
         optimizer.step()
+        scheduler.step()
         # to logging losses and print and save
         train_loss += loss.item()
         wandb.log({"train_loss": loss.item(),
-                   "z_norm": z.abs().mean(), })
+                   "z_norm": z.abs().mean(),})
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
@@ -151,6 +153,8 @@ def train_one_epoch():
                      "optimizer": optimizer.state_dict()}
             torch.save(state, os.path.join(config["checkpoint_save_path"], "state.pth"))
             generate(save_path=config["generated_path"], need_test=True)
+        if total_steps >= config["total_steps"]:
+            break
 
 
 def generate(save_path=config["generated_path"], need_test=True):
@@ -174,17 +178,17 @@ def generate(save_path=config["generated_path"], need_test=True):
     if need_test:
         os.system(config["test_command"])
         print("\n")
+    model.train()
+    diffusion.train()
     return prediction
 
 
 if __name__ == '__main__':
-    # model = torch.compile(model, mode="default")
-    for epoch in range(0, config["epochs"]):
-        epoch += 1
-        train_one_epoch()
-        scheduler.step()
+    model = torch.compile(model, mode="default")
+    train()
 
     # deal problems by dataloder
     del train_loader
+    print("Finished Training!")
     exit(0)
 

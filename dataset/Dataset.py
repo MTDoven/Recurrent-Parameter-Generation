@@ -3,6 +3,7 @@ import torch
 from torch.utils.data import Dataset
 from abc import ABC, abstractmethod
 import math
+import sys
 
 
 def pad_to_length(x, common_factor):
@@ -55,7 +56,7 @@ class Cifar10_MLP(BaseDataset):
         self.preprocess(diction=torch.load(self.checkpoint_list[0]),
                         first_step=True, dim_per_token=dim_per_token)
         if kwargs.get("fix_one_sample"):
-            self.length = 1024
+            self.length = 640000000
 
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
