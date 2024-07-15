@@ -1,3 +1,4 @@
+import math
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -5,7 +6,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.nn import functional as F
 import wandb
 from torch.utils.data import DataLoader
-from model import BiARModule, DiffusionLoss
+from model import BiARModule, RNNModule, DiffusionLoss
 from dataset import Cifar10_MLP
 import random
 import os
@@ -20,12 +21,12 @@ config = {
     "dataset": Cifar10_MLP,
     "data_path": "./dataset/cifar10_MLP_middle/checkpoint",
     "dim_per_token": 2048,
-    "sequence_length": 5120,
+    "sequence_length": 5056,
     # model config
-    "num_layers": 18,
-    "input_length": 256,
+    "num_layers": 12,
+    "input_length": 64,
     "predict_length": 64,
-    "token_mixer_ks": 13,
+    "token_mixer_ks": 65,
     "feed_forward_ks": 5,
     "activation": nn.ELU(),
     # diffusion loss config
@@ -34,14 +35,14 @@ config = {
     "diffusion_beta_max": 0.02,
     "diffusion_n_timesteps": 1000,
     # train setting
-    "batch_size": 16,
+    "batch_size": 1,
     "num_workers": 8,
-    "total_steps": 10000,
-    "learning_rate": 5e-5,
+    "total_steps": 200000,
+    "learning_rate": 0.001,
     "weight_decay": 0.0,
     "save_every": 500,
     "print_every": 20,
-    "warmup_steps": 300,
+    "warmup_steps": 250,
     "checkpoint_save_path": "./generated",
     # test setting
     "test_batch_size": 1,  # fixed don't change this
@@ -81,13 +82,16 @@ def preprocess_data(datas):
 
 # Model
 print('==> Building model..')
-model = BiARModule(num_layers=config["num_layers"],
-                   hidden_dim=config["dim_per_token"],
-                   input_length=config["input_length"],
-                   predict_length=config["predict_length"],
-                   token_mixer_ks=config["token_mixer_ks"],
-                   feed_forward_ks=config["feed_forward_ks"],
-                   activation=config["activation"],)
+# model = BiARModule(num_layers=config["num_layers"],
+#                    hidden_dim=config["dim_per_token"],
+#                    input_length=config["input_length"],
+#                    predict_length=config["predict_length"],
+#                    token_mixer_ks=config["token_mixer_ks"],
+#                    feed_forward_ks=config["feed_forward_ks"],
+#                    activation=config["activation"],)
+model = RNNModule(hidden_dim=config["dim_per_token"],
+                  book_size=config["sequence_length"]//config["predict_length"],
+                  out_conv_ks=config["feed_forward_ks"])
 model = model.to(config["device"])
 
 # Loss
@@ -102,10 +106,10 @@ diffusion = diffusion.to(config["device"])
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(params=[{"params": model.parameters()},
-                                {"params": diffusion.parameters()}],
-                        lr=config["learning_rate"],
-                        weight_decay=config["weight_decay"],)
+optimizer = optim.RMSprop(params=[{"params": model.parameters()},
+                                  {"params": diffusion.parameters()}],
+                          lr=config["learning_rate"],
+                          weight_decay=config["weight_decay"],)
 scheduler = SequentialLR(optimizer=optimizer,
                          schedulers=[LinearLR(optimizer=optimizer,
                                               start_factor=1e-4,
@@ -128,11 +132,21 @@ def train():
     diffusion.train()
     for batch_idx, datas in enumerate(train_loader):
         optimizer.zero_grad()
-        inputs, targets = preprocess_data(datas)
+        # inputs, targets = preprocess_data(datas)
         # train
-        z = model(inputs)
-        loss = F.mse_loss(z, targets)  # FIXME: use diffusion loss
-        # loss = torch.exp(-torch.mean(z * targets)) + F.huber_loss(z, targets)
+        # z = model(inputs)
+        assert datas.size(1) % config["predict_length"] == 0
+        num_slices = datas.size(1) // config["predict_length"]
+        predicts = []
+        predict, state = model(last_state=None, batch_size=datas.size(0))
+        predicts.append(predict)
+        for _ in range(num_slices-1):
+            predict, state = model(state, batch_size=datas.size(0))
+            predicts.append(predict)
+        prediction = torch.cat(predicts, dim=1).flatten(start_dim=1)
+        targets = datas.flatten(start_dim=1).to(config["device"], torch.float32)
+        # loss = F.mse_loss(z, targets)  # FIXME: use diffusion loss
+        loss = F.mse_loss(prediction, targets)
         # loss = diffusion(targets, z)
         loss.backward()
         optimizer.step()
@@ -140,7 +154,7 @@ def train():
         # to logging losses and print and save
         train_loss += loss.item()
         wandb.log({"train_loss": loss.item(),
-                   "z_norm": z.abs().mean(),})
+                   "z_norm": prediction.abs().mean(),})
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
@@ -162,18 +176,28 @@ def generate(save_path=config["generated_path"], need_test=True):
     model.eval()
     diffusion.eval()
     with torch.no_grad():
-        x = torch.zeros(config["test_batch_size"], 0, config["dim_per_token"], device=config["device"])
-        while True:
-            z = model(x[:, -config["input_length"]:, :])
-            output = z  # FIXME: use diffusion loss
-            # output = diffusion.sample(x=torch.randn_like(z), z=z,
-            #                           sample_timesteps=100, eta=0.05)
-            x = torch.cat([x, output], dim=1)
-            assert x.size(1) < config["sequence_length"] + config["predict_length"]
-            if x.size(1) >= config["sequence_length"]:
-                break
-        prediction = x[:, :config["sequence_length"], :]
-    print("Generated_norm:", z.abs().mean())
+        # x = torch.zeros(config["test_batch_size"], 0, config["dim_per_token"], device=config["device"])
+        # while True:
+        #     z = model(x[:, -config["input_length"]:, :])
+        #     output = z  # FIXME: use diffusion loss
+        #     # output = diffusion.sample(x=torch.randn_like(z), z=z,
+        #     #                           sample_timesteps=100, eta=0.05)
+        #     x = torch.cat([x, output], dim=1)
+        #     assert x.size(1) < config["sequence_length"] + config["predict_length"]
+        #     if x.size(1) >= config["sequence_length"]:
+        #         break
+        num_slices = config["sequence_length"] // config["predict_length"]
+        predicts = []
+        predict, state = model(last_state=None, batch_size=1)
+        predicts.append(predict)
+        for _ in range(num_slices-1):
+            predict, state = model(state, batch_size=1)
+            predicts.append(predict)
+        prediction = torch.cat(predicts, dim=1).flatten(start_dim=1)
+        prediction = prediction.view(prediction.size(0), -1, config["dim_per_token"])
+        # prediction = x[:, :config["sequence_length"], :]
+    print("Generated_norm:", prediction.abs().mean())
+    #print("Generated_norm:", z.abs().mean())
     train_set.save_params(prediction.cpu().to(torch.float16), save_path=save_path)
     if need_test:
         os.system(config["test_command"])
@@ -184,7 +208,7 @@ def generate(save_path=config["generated_path"], need_test=True):
 
 
 if __name__ == '__main__':
-    model = torch.compile(model, mode="default")
+    # model = torch.compile(model, mode="default")
     train()
 
     # deal problems by dataloder

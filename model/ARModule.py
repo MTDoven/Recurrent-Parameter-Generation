@@ -65,15 +65,6 @@ class BiARModule(nn.Module):
         self.next_padding = nn.Parameter(nn.init.normal_(next_padding))
         start_padding = torch.empty(size=(1, self.input_length, self.hidden_dim))
         self.start_padding = nn.Parameter(nn.init.normal_(start_padding))
-        # weight init
-        # self.weight_init()
-
-    def weight_init(self):
-        for module in self.modules():
-            if isinstance(module, nn.Conv1d):
-                nn.init.normal_(module.weight, 0.0, 1e-8)
-                if module.bias is not None:
-                    nn.init.normal_(module.bias, 0.0, 1e-8)
 
     def forward(self, x):
         if x.size(1) < self.input_length:
@@ -82,6 +73,40 @@ class BiARModule(nn.Module):
         x = torch.cat((x, self.next_padding.repeat(x.size(0), 1, 1)), dim=1)
         x = self.encoder(x)
         return x[:, -self.predict_length:, :]
+
+
+class RNNModule(nn.Module):
+    CONV_EXPAND = 4
+
+    def __init__(self, hidden_dim, book_size, out_conv_ks):
+        super().__init__()
+        from dataset.Dataset import Cifar10_MLP
+        dataset = Cifar10_MLP(checkpoint_path="/home/wangkai/AR-Param-Generation/AR-Param-Generation/dataset/cifar10_MLP_middle/checkpoint",
+                              dim_per_token=2048, predict_length=64)
+        model_param = dataset[0].to(torch.float32)
+        model_param = model_param.view((1, book_size, hidden_dim * 64))
+        self.code_book = nn.Parameter(model_param)
+        # self.code_book.requires_grad = False
+        # self.code_book = nn.Parameter(
+        #         nn.init.zeros_(torch.empty(size=(1, book_size, hidden_dim * 64))))
+        self.next_state = nn.Sequential(
+                nn.Linear(book_size, book_size),)
+                #nn.Softmax(dim=-1),)
+        self.start_state = nn.Parameter(
+                nn.init.zeros_(torch.empty(size=(1, 1, book_size))))
+        self.out_conv = nn.Identity()
+        # self.out_conv = nn.Sequential(
+        #         nn.Conv1d(1, self.CONV_EXPAND, out_conv_ks, 1, out_conv_ks//2),
+        #         nn.ELU(),
+        #         nn.Conv1d(self.CONV_EXPAND, 1, out_conv_ks, 1, out_conv_ks//2),)
+
+    def forward(self, last_state, batch_size):
+        if last_state is None:
+            last_state = self.start_state.repeat(batch_size, 1, 1)
+        this_state = self.next_state(last_state)
+        output = this_state @ self.code_book
+        output = self.out_conv(output)
+        return output, this_state
 
 
 if __name__ == '__main__':
