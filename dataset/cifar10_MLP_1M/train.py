@@ -20,11 +20,11 @@ config = {
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 1000,
-    "num_workers": 8,
+    "num_workers": 16,
     "learning_rate": 0.01,
-    "epochs": 120,
+    "epochs": 150,
     "test_freq": 10,
-    "weight_decay": 1e-3,
+    "weight_decay": 0.005,
 }
 
 
@@ -100,6 +100,11 @@ def train(epoch, save_name):
         correct += predicted.eq(targets).sum().item()
     print('\r', 'Loss: %.3f | Acc: %.3f%% (%d/%d)' %
           (train_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
+    if epoch >= config["epochs"] * 2 / 3:
+        state = {}
+        for key, value in model.state_dict().items():
+            state[key] = value.cpu().to(torch.float32)
+        torch.save(state, f'./checkpoint/{save_name}.pth')
 
 def test(save_name):
     print("\n==> Testing..")
@@ -126,27 +131,25 @@ def test(save_name):
         print('\tSaving..')
         state = {}
         for key, value in model.state_dict().items():
-            state[key] = value.cpu().to(torch.float16)
+            state[key] = value.cpu().to(torch.float32)
         if not os.path.isdir('checkpoint'):
             os.mkdir('checkpoint')
-        torch.save(state, f'./checkpoint/{save_name}')
+        torch.save(state, f'./checkpoint/{save_name}.pth')
         best_acc = acc
 
 
 best_acc = 0  # best test accuracy
 if __name__ == '__main__':
     # config save name
-    items = os.listdir("./checkpoint")
-    save_name = "0000.pth"
-    while save_name in items:
-        save_name = str(random.randint(0, 9999)).zfill(4) + '.pth'
+    save_name = 0
     # main train
     for epoch in range(0, config["epochs"]):
         epoch += 1
-        train(epoch, save_name)
+        train(epoch, str(save_name).zfill(4))
         if epoch % config["test_freq"] == 0:
-            test(save_name)
+            test(str(save_name).zfill(4))
         scheduler.step()
+        save_name += 1
 
     # fix some bug caused by num_workers
     del train_loader

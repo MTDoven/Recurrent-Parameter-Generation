@@ -4,10 +4,12 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.nn import functional as F
-import wandb
+
 from torch.utils.data import DataLoader
 from model import BiARModule, RNNModule, DiffusionLoss
 from dataset import Cifar10_MLP
+
+import wandb
 import random
 import os
 import warnings
