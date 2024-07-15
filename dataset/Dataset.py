@@ -11,7 +11,7 @@ class BaseDataset(Dataset, ABC):
         assert os.path.exists(checkpoint_path)
         checkpoint_list = os.listdir(checkpoint_path)
         self.checkpoint_list = list([os.path.join(checkpoint_path, item) for item in checkpoint_list])
-        self.length = len(self.checkpoint_list)
+        self.length = self.real_length = len(self.checkpoint_list)
         self.structure = {}
         diction = torch.load(self.checkpoint_list[0], map_location="cpu")
         for key, value in diction.items():
@@ -22,6 +22,7 @@ class BaseDataset(Dataset, ABC):
         return self.length
 
     def __getitem__(self, index):
+        index = index % self.real_length
         diction = torch.load(self.checkpoint_list[index], map_location="cpu")
         return self.preprocess(diction)
 
@@ -77,6 +78,12 @@ class Cifar10_MLP(BaseDataset):
             params = params[num_elements:]
         return diction
 
+    def set_infinite_dataset(self, max_num=None):
+        if max_num is None:
+            max_num = self.length * 1000000
+        self.length = max_num
+        return self
+
 
 
 
@@ -85,4 +92,7 @@ if __name__ == "__main__":
     x = dataset[0]
     print(x.shape)
     dataset.save_params(x, "./test.pth")
+    dataset.set_infinite_dataset()
+    print(dataset[100000])
+    print(len(dataset))
 
