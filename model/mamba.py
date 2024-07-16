@@ -6,35 +6,7 @@ from torch import nn, Tensor
 from zeta.nn import SSM
 
 
-def output_head(dim: int, num_classes: int):
-    return nn.Sequential(
-        Reduce("b s d -> b d", "mean"),
-        nn.LayerNorm(dim),
-        nn.Linear(dim, num_classes),
-    )
-
-
 class EncoderMambaBlock(nn.Module):
-    """
-    EncoderMambaBlock is a module that implements the Mamba block from the paper
-    Vision Mamba: Efficient Visual Representation Learning with Bidirectional
-    State Space Model
-
-    Args:
-        dim (int): The input dimension of the input tensor.
-        dt_rank (int): The rank of the state space model.
-        dim_inner (int): The dimension of the inner layer of the
-            multi-head attention.
-        d_state (int): The dimension of the state space model.
-
-    Example:
-    >>> block = VisionMambaBlock(dim=256, heads=8, dt_rank=32, dim_inner=512, d_state=256)
-    >>> x = torch.randn(1, 32, 256)
-    >>> out = block(x)
-    >>> out.shape
-    torch.Size([1, 32, 256])
-    """
-
     def __init__(
         self,
         dim: int,
@@ -79,7 +51,6 @@ class EncoderMambaBlock(nn.Module):
 
 
 class MambaModel(nn.Module):
-
     def __init__(
         self,
         dim: int,
@@ -97,6 +68,8 @@ class MambaModel(nn.Module):
         self.dropout = dropout
         self.depth = depth
 
+        # Padding
+        self.next_token = nn.Parameter(torch.nn.init.normal_(torch.empty(size=(1, 1, dim)), std=1e-12))
         # Dropout
         self.dropout = nn.Dropout(dropout)
         # encoder layers
@@ -110,9 +83,12 @@ class MambaModel(nn.Module):
                     d_state=d_state,
                 )
             )
+        # init weight
+        #self.weight_init()
 
     def forward(self, x: Tensor):
         # Patch embedding
+        x = torch.cat((x, self.next_token.repeat(x.size(0), 1, 1)), dim=1)
         # b, s, d = x.shape
         x = self.dropout(x)  # Dropout
         # Forward pass with the layers
@@ -120,6 +96,15 @@ class MambaModel(nn.Module):
             x = layer(x)
         # Output head with the cls tokens
         return x[:, -1:, :]
+
+    def weight_init(self):
+        for module in self.modules():
+            if isinstance(module, nn.Linear) or \
+               isinstance(module, nn.Conv1d) or \
+               isinstance(module, nn.LayerNorm):
+                nn.init.normal_(module.weight, std=1e-8)
+                if hasattr(module, "bias"):
+                    nn.init.normal_(module.weight, std=1e-8)
 
 
 

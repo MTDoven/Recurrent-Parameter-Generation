@@ -1,1 +1,1 @@
-from .Dataset import Cifar10_MLP
+from .Dataset import Cifar10_MLP, ImageDebugDataset
