@@ -1,15 +1,34 @@
-import os
 import torch
+import einops
 from torch.utils.data import Dataset
-from abc import ABC, abstractmethod
+
+import os
 import math
-import sys
+from abc import ABC
+
+
+def pad_to_length(x, common_factor):
+    if len(x.flatten()) % common_factor == 0:
+        return x.flatten()
+    # print(f"padding {x.shape} according to {common_factor}")
+    full_length = (len(x.flatten()) // common_factor + 1) * common_factor
+    padding_length = full_length - len(x.flatten())
+    padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
+    x = torch.cat((x.flatten(), padding), dim=0)
+    return x
 
 
 class BaseDataset(Dataset, ABC):
-    def __init__(self, checkpoint_path, dim_per_token, **kwargs):
+    data_path = None
+    generated_path = None
+    test_command = None
+
+    def __init__(self, checkpoint_path=None, dim_per_token=1024, max_input_length=1, **kwargs):
+        checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
         assert os.path.exists(checkpoint_path)
         self.dim_per_token = dim_per_token
+        self.max_input_length = max_input_length
+        self.sequence_length = None
         checkpoint_list = os.listdir(checkpoint_path)
         self.checkpoint_list = list([os.path.join(checkpoint_path, item) for item in checkpoint_list])
         self.length = self.real_length = len(self.checkpoint_list)
@@ -25,7 +44,30 @@ class BaseDataset(Dataset, ABC):
     def __getitem__(self, index):
         index = index % self.real_length
         diction = torch.load(self.checkpoint_list[index], map_location="cpu")
-        return self.preprocess(diction)
+        param = self.preprocess(diction)
+        max_input_length = self.max_input_length
+        self.sequence_length = param.size(0)
+        random_cutting = index % self.sequence_length
+        inputs = param[max(random_cutting - max_input_length, 0):random_cutting, :]
+        if inputs.size(0) < max_input_length:
+            padding = torch.zeros((max_input_length-inputs.size(0), self.dim_per_token))
+            inputs = torch.cat((padding, inputs), dim=0)
+        assert inputs.size(0) == max_input_length
+        targets = param[random_cutting:random_cutting + 1, :]
+        inputs, targets = inputs.to(torch.float32), targets.to(torch.float32)
+        return inputs, targets
+
+    def preprocess_data(self, datas):
+        max_input_length = config["max_input_length"]
+        sequence_length = config["sequence_length"]
+        predict_length = 1
+        assert max_input_length % predict_length == 0
+        assert sequence_length % predict_length == 0
+        random_cutting = random.randint(0, sequence_length - 1)
+        inputs = datas[:, max(random_cutting - max_input_length, 0):random_cutting, :]
+        targets = datas[:, random_cutting:random_cutting + predict_length, :]
+        inputs, targets = inputs.to(config["device"], torch.float32), targets.to(config["device"], torch.float32)
+        return inputs, targets
 
     def save_params(self, params, save_path):
         diction = self.postprocess(params.cpu())
@@ -33,31 +75,10 @@ class BaseDataset(Dataset, ABC):
 
     def set_infinite_dataset(self, max_num=None):
         if max_num is None:
-            max_num = self.length * 1000000
+            max_num = self.length * 10000000
         self.length = max_num
         return self
 
-    @abstractmethod
-    def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
-        pass
-
-    @abstractmethod
-    def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
-        pass
-
-
-def pad_to_length(x, common_factor):
-    if len(x.flatten()) % common_factor == 0:
-        return x.flatten()
-    # print(f"padding {x.shape} according to {common_factor}")
-    full_length = (len(x.flatten()) // common_factor + 1) * common_factor
-    padding_length = full_length - len(x.flatten())
-    padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
-    x = torch.cat((x.flatten(), padding), dim=0)
-    return x
-
-
-class Cifar10_MLP(BaseDataset):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
@@ -81,51 +102,55 @@ class Cifar10_MLP(BaseDataset):
         return diction
 
 
-class ImageDebugDataset(Dataset):
-    def __init__(self, checkpoint_path, dim_per_token, **kwargs):
-        self.length = self.real_length = 1
+class RandomDebugDataset(Dataset):
+    data_path = "do not need a data_path."
+    generated_path = "do not need a generated_path."
+    test_command = "echo ''"
+
+    def __init__(self, dim_per_token, max_input_length, test_tensor, **kwargs):
+        self.real_length = 1
+        self.length = 10000000
         self.dim_per_token = dim_per_token
+        self.max_input_length = max_input_length
+        self.sequence_length = None
         self.kwargs = kwargs
-        from PIL import Image
-        from torchvision.transforms import ToTensor, ToPILImage
-        img = ToTensor()(Image.open(os.path.join(checkpoint_path, "image.jpg")))
-        self.img = img - img.mean()
-        self.shape = self.img.shape
-        self.mean = img.mean()
-        self.to_pil_image = ToPILImage()
+        assert isinstance(test_tensor, torch.Tensor), "input a test tensor"
+        param = test_tensor
+        # make sure image have the same mse loss scale with params
+        self.param = (param - param.mean()) / param.std()
+        self.param = pad_to_length(self.param, self.dim_per_token).view(-1, self.dim_per_token)
+
 
     def __len__(self):
         return self.length
 
     def __getitem__(self, index):
-        param = pad_to_length(self.img, self.dim_per_token)
-        param = param.view(-1, self.dim_per_token)
-        return param
+        index = index % self.real_length
+        param = self.param
+        max_input_length = self.max_input_length
+        self.sequence_length = param.size(0)
+        random_cutting = index % self.sequence_length
+        inputs = param[max(random_cutting - max_input_length, 0):random_cutting, :]
+        if inputs.size(0) < max_input_length:
+            padding = torch.zeros((max_input_length-inputs.size(0), self.dim_per_token))
+            inputs = torch.cat((padding, inputs), dim=0)
+        assert inputs.size(0) == max_input_length
+        targets = param[random_cutting:random_cutting + 1, :]
+        inputs, targets = inputs.to(torch.float32), targets.to(torch.float32)
+        return inputs, targets
 
     def save_params(self, params, save_path):
-        params = params.flatten()
-        num_elements = math.prod(self.shape)
-        img = params[:num_elements].view(*self.shape)
-        img = img + self.mean
-        img = self.to_pil_image(img)
-        img.save(save_path)
-
-    def set_infinite_dataset(self, max_num=None):
-        if max_num is None:
-            max_num = self.length * 10000000
-        self.length = max_num
-        return self
+        print("Contrast:")
+        print("ground_truth:", self.param.flatten()[-5:])
+        print("prediction:", params.flatten()[-5:])
 
 
 
 
-if __name__ == "__main__":
-    dataset = ImageDebugDataset(checkpoint_path="image_debug_2m/checkpoint", dim_per_token=256, predict_length=1)
-    x = dataset[0]
-    print(x.shape)
-    dataset.save_params(x, "./test.pth")
-    dataset.set_infinite_dataset()
-    print(dataset[100000])
-    print(len(dataset))
-    os.remove("./test.pth")
+class Cifar10_MLP(BaseDataset):
+    data_path = "./dataset/cifar10_mlp_1m/checkpoint"
+    generated_path = "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_mlp_1m/test.py " + \
+                   "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth",
 

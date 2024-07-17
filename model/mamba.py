@@ -83,8 +83,6 @@ class MambaModel(nn.Module):
                     d_state=d_state,
                 )
             )
-        # init weight
-        #self.weight_init()
 
     def forward(self, x: Tensor):
         # Patch embedding
@@ -96,15 +94,6 @@ class MambaModel(nn.Module):
             x = layer(x)
         # Output head with the cls tokens
         return x[:, -1:, :]
-
-    def weight_init(self):
-        for module in self.modules():
-            if isinstance(module, nn.Linear) or \
-               isinstance(module, nn.Conv1d) or \
-               isinstance(module, nn.LayerNorm):
-                nn.init.normal_(module.weight, std=1e-8)
-                if hasattr(module, "bias"):
-                    nn.init.normal_(module.weight, std=1e-8)
 
 
 

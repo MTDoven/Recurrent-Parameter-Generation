@@ -1,17 +1,19 @@
+USE_WANDB = False
+
 import math
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.nn import functional as F
+from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 
 from torch.utils.data import DataLoader
-from model import MambaModel, ConditionalMLP, DiffusionLoss
-from dataset import Cifar10_MLP, ImageDebugDataset
-
-import wandb
-import random
+from model.transformer import TransformerModel
+from dataset.Dataset import Cifar10_MLP
 import os
+if USE_WANDB:
+    import wandb
+import random
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -20,45 +22,35 @@ config = {
     # device setting
     "device": "cuda:7",
     # dataset setting
-    "dataset": ImageDebugDataset,
-    "data_path": "./dataset/image_debug_2m/checkpoint",
-    "dim_per_token": 768,
-    "sequence_length": 4096,
-    "max_input_length": 1,
-    # model config
-    "dt_rank": 32,
-    "dim_inner": 768,
-    "d_state": 128,
-    "dropout": 0.0,
-    "depth": 6,
+    "dataset": Cifar10_MLP,
+    "dim_per_token": 1024,
+    "sequence_length": 971,
+    "max_input_length": 3,
     # train setting
-    "batch_size": 32,
-    "num_workers": 8,
-    "total_steps": 10000,
-    "learning_rate": 0.0001,
+    "batch_size": 256,
+    "num_workers": 16,
+    "total_steps": 20000,
+    "learning_rate": 0.00005,
     "weight_decay": 0.0,
-    "save_every": 500,
-    "print_every": 20,
-    "warmup_steps": 250,
+    "save_every": 2000,
+    "print_every": 100,
+    "warmup_steps": 1000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
-    "generated_path": ImageDebugDataset.generated_path,
-    "test_command": ImageDebugDataset.test_command,
+    "generated_path": Cifar10_MLP.generated_path,
+    "test_command": Cifar10_MLP.test_command,
 }
 
 
-# wandb
-wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-wandb.init(project="cifar10_MLP", config=config)
-
 # Data
 print('==> Preparing data..')
-train_set = config["dataset"](checkpoint_path=config["data_path"],
-                              dim_per_token=config["dim_per_token"],)
+train_set = config["dataset"](dim_per_token=config["dim_per_token"],
+                              max_input_length=config["max_input_length"],)
 train_set.set_infinite_dataset()
 print("Dataset length:", train_set.real_length)
-print("Sequence length:", train_set[0].shape)
+print("input shape:", train_set[0][0].shape)
+assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
                           num_workers=config["num_workers"],
@@ -77,15 +69,12 @@ def preprocess_data(datas):
     inputs, targets = inputs.to(config["device"], torch.float32), targets.to(config["device"], torch.float32)
     return inputs, targets
 
+
 # Model
 print('==> Building model..')
-model = MambaModel(dim=config["dim_per_token"],  # Dimension of the model
-                   dt_rank=config["dt_rank"],  # Rank of the dynamic routing matrix
-                   dim_inner=config["dim_inner"],  # Inner dimension of the model
-                   d_state=config["d_state"],  # Dimension of the state vector
-                   dropout=config["dropout"],  # Dropout rate
-                   depth=config["depth"],)  # Depth of the model
+model = TransformerModel()  # model setting is in model
 model = model.to(config["device"])
+
 
 # Optimizer
 print('==> Building optimizer..')
@@ -101,6 +90,13 @@ scheduler = SequentialLR(optimizer=optimizer,
                                                        T_max=config["total_steps"]-config["warmup_steps"])],
                          milestones=[config["warmup_steps"]],)
 
+# wandb
+if USE_WANDB:
+    wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
+    wandb.init(project="cifar10_MLP", config=config)
+
+
+
 
 # Training
 print('==> Defining training..')
@@ -110,9 +106,9 @@ this_steps = 0
 def train():
     global total_steps, train_loss, this_steps
     model.train()
-    for batch_idx, datas in enumerate(train_loader):
+    for batch_idx, (inputs, targets) in enumerate(train_loader):
         optimizer.zero_grad()
-        inputs, targets = preprocess_data(datas)
+        inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
         # train
         prediction = model(inputs)
         loss = F.mse_loss(prediction, targets)
@@ -121,8 +117,9 @@ def train():
         scheduler.step()
         # to logging losses and print and save
         train_loss += loss.item()
-        wandb.log({"train_loss": loss.item(),
-                   "z_norm": prediction.abs().mean(),})
+        if USE_WANDB:
+            wandb.log({"train_loss": loss.item(),
+                       "z_norm": prediction.abs().mean(),})
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
@@ -143,7 +140,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
     with torch.no_grad():
-        x = torch.zeros(size=(1, 0, config["dim_per_token"]), device=config["device"])
+        x = torch.zeros(size=(1, config["max_input_length"], config["dim_per_token"]), device=config["device"])
         prediction_list = []
         while True:
             this_prediction = model(x)
