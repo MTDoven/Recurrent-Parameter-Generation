@@ -50,14 +50,13 @@ class EncoderMambaBlock(nn.Module):
         return x
 
 
-class MambaModel(nn.Module):
+class Mamba(nn.Module):
     def __init__(
         self,
         dim: int,
         dt_rank: int = 32,
         dim_inner: int = None,
         d_state: int = None,
-        dropout: float = 0.1,
         depth: int = 12,
     ):
         super().__init__()
@@ -65,13 +64,7 @@ class MambaModel(nn.Module):
         self.dt_rank = dt_rank
         self.dim_inner = dim_inner
         self.d_state = d_state
-        self.dropout = dropout
         self.depth = depth
-
-        # Padding
-        self.next_token = nn.Parameter(torch.nn.init.normal_(torch.empty(size=(1, 1, dim)), std=1e-12))
-        # Dropout
-        self.dropout = nn.Dropout(dropout)
         # encoder layers
         self.layers = nn.ModuleList()
         for _ in range(depth):
@@ -85,28 +78,37 @@ class MambaModel(nn.Module):
             )
 
     def forward(self, x: Tensor):
-        # Patch embedding
-        x = torch.cat((x, self.next_token.repeat(x.size(0), 1, 1)), dim=1)
         # b, s, d = x.shape
-        x = self.dropout(x)  # Dropout
-        # Forward pass with the layers
         for layer in self.layers:
             x = layer(x)
-        # Output head with the cls tokens
+        return x
+
+
+
+
+class MambaModel(nn.Module):
+    config = {
+        "dim": 1024,
+        "dt_rank": 16,
+        "dim_inner": 1024,
+        "d_state": 64,
+        "depth": 3,
+    }
+
+    def __init__(self):
+        super().__init__()
+        self.model = Mamba(
+            dim=self.config["dim"],
+            dt_rank=self.config["dt_rank"],
+            dim_inner=self.config["dim_inner"],
+            d_state=self.config["d_state"],
+            depth=self.config["depth"],
+        )
+        self.next_token = nn.Parameter(nn.init.normal_(torch.empty((1, 1, self.config["dim"]))))
+
+    def forward(self, x):
+        assert len(x.shape) == 3
+        assert x.shape[-1] == self.config["dim"]
+        x = torch.cat((x, self.next_token.repeat(x.size(0), 1, 1)), dim=1)
+        x = self.model(x)
         return x[:, -1:, :]
-
-
-
-
-if __name__ == "__main__":
-    model = MambaModel(
-        dim=256,  # Dimension of the model
-        dt_rank=32,  # Rank of the dynamic routing matrix
-        dim_inner=256,  # Inner dimension of the model
-        d_state=256,  # Dimension of the state vector
-        dropout=0.1,  # Dropout rate
-        depth=12,  # Depth of the model
-    )
-    x = torch.randn(4, 100, 256)
-    out = model(x)
-    print(out.shape)

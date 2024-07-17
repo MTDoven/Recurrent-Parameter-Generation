@@ -152,5 +152,5 @@ class Cifar10_MLP(BaseDataset):
     generated_path = "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth"
     test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
                    "./dataset/cifar10_mlp_1m/test.py " + \
-                   "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth",
+                   "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth"
 
