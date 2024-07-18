@@ -4,7 +4,7 @@ from torch import nn
 
 class LstmModel(nn.Module):
     config = {
-        "input_size": 4096,
+        "input_size": 32,
         "hidden_size": 4096,
         "output_size": 1024,
         "num_layers": 2,
