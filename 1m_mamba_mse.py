@@ -1,4 +1,4 @@
-USE_WANDB = False
+USE_WANDB = True
 
 import math
 import torch
@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:7",
+    "device": "cuda:6",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
@@ -28,8 +28,8 @@ config = {
     "max_input_length": 3,
     # train setting
     "batch_size": 256,
-    "num_workers": 16,
-    "total_steps": 20000,
+    "num_workers": 8,
+    "total_steps": 100000,
     "learning_rate": 0.00005,
     "weight_decay": 0.0,
     "save_every": 2000,
@@ -40,6 +40,8 @@ config = {
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Cifar10_MLP.generated_path,
     "test_command": Cifar10_MLP.test_command,
+    # to log
+    "model_config": MambaModel.config,
 }
 
 
@@ -57,18 +59,6 @@ train_loader = DataLoader(dataset=train_set,
                           persistent_workers=True,
                           drop_last=True,
                           shuffle=True,)
-def preprocess_data(datas):
-    max_input_length = config["max_input_length"]
-    sequence_length = config["sequence_length"]
-    predict_length = 1
-    assert max_input_length % predict_length == 0
-    assert sequence_length % predict_length == 0
-    random_cutting = random.randint(0, sequence_length // predict_length - 1) * predict_length
-    inputs = datas[:, max(random_cutting-max_input_length, 0):random_cutting, :]
-    targets = datas[:, random_cutting:random_cutting+predict_length, :]
-    inputs, targets = inputs.to(config["device"], torch.float32), targets.to(config["device"], torch.float32)
-    return inputs, targets
-
 
 # Model
 print('==> Building model..')
@@ -89,6 +79,14 @@ scheduler = SequentialLR(optimizer=optimizer,
                                      CosineAnnealingLR(optimizer=optimizer,
                                                        T_max=config["total_steps"]-config["warmup_steps"])],
                          milestones=[config["warmup_steps"]],)
+def weighted_mse_loss(result, target):
+    loss = (result - target) ** 2
+    loss = loss.mean(dim=[1, 2])
+    no_grad_const = loss.detach()
+    loss = loss / no_grad_const * no_grad_const.mean()
+    loss = loss.mean()
+    return loss
+
 
 # wandb
 if USE_WANDB:
@@ -111,7 +109,7 @@ def train():
         inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
         # train
         prediction = model(inputs)
-        loss = F.mse_loss(prediction, targets)
+        loss = weighted_mse_loss(prediction, targets)
         loss.backward()
         optimizer.step()
         scheduler.step()

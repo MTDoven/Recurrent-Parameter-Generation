@@ -60,18 +60,6 @@ train_loader = DataLoader(dataset=train_set,
                           persistent_workers=True,
                           drop_last=True,
                           shuffle=True,)
-def preprocess_data(datas):
-    max_input_length = config["max_input_length"]
-    sequence_length = config["sequence_length"]
-    predict_length = 1
-    assert max_input_length % predict_length == 0
-    assert sequence_length % predict_length == 0
-    random_cutting = random.randint(0, sequence_length // predict_length - 1) * predict_length
-    inputs = datas[:, max(random_cutting-max_input_length, 0):random_cutting, :]
-    targets = datas[:, random_cutting:random_cutting+predict_length, :]
-    inputs, targets = inputs.to(config["device"], torch.float32), targets.to(config["device"], torch.float32)
-    return inputs, targets
-
 
 # Model
 print('==> Building model..')

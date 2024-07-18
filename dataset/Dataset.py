@@ -29,13 +29,14 @@ class BaseDataset(Dataset, ABC):
         self.dim_per_token = dim_per_token
         self.max_input_length = max_input_length
         self.sequence_length = None
+        self.return_full_param = False
         checkpoint_list = os.listdir(checkpoint_path)
         self.checkpoint_list = list([os.path.join(checkpoint_path, item) for item in checkpoint_list])
         self.length = self.real_length = len(self.checkpoint_list)
         self.structure = {}
         diction = torch.load(self.checkpoint_list[0], map_location="cpu")
         for key, value in diction.items():
-            self.structure[key] = value.shape
+            self.structure[key] = (value.shape, value.mean(), value.std())
         self.kwargs = kwargs
 
     def __len__(self):
@@ -47,6 +48,8 @@ class BaseDataset(Dataset, ABC):
         param = self.preprocess(diction)
         max_input_length = self.max_input_length
         self.sequence_length = param.size(0)
+        if self.return_full_param:
+            return param
         random_cutting = index % self.sequence_length
         inputs = param[max(random_cutting - max_input_length, 0):random_cutting, :]
         if inputs.size(0) < max_input_length:
@@ -79,11 +82,16 @@ class BaseDataset(Dataset, ABC):
         self.length = max_num
         return self
 
+    def set_return_full_param(self, mode=True):
+        self.return_full_param = mode
+
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
             # print(key, value.shape)
             value = value.flatten()
+            _, mean, std = self.structure[key]
+            value = (value - mean) / std
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
         param = pad_to_length(param, self.dim_per_token)
@@ -94,9 +102,10 @@ class BaseDataset(Dataset, ABC):
     def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
         diction = {}
         params = params.flatten()
-        for key, shape in self.structure.items():
+        for key, (shape, mean, std) in self.structure.items():
             num_elements = math.prod(shape)
             this_param = params[:num_elements].view(*shape)
+            this_param = this_param * std + mean
             diction[key] = this_param
             params = params[num_elements:]
         return diction
@@ -113,6 +122,7 @@ class RandomDebugDataset(Dataset):
         self.dim_per_token = dim_per_token
         self.max_input_length = max_input_length
         self.sequence_length = None
+        self.return_full_param = False
         self.kwargs = kwargs
         assert isinstance(test_tensor, torch.Tensor), "input a test tensor"
         param = test_tensor
@@ -125,6 +135,8 @@ class RandomDebugDataset(Dataset):
         return self.length
 
     def __getitem__(self, index):
+        if self.return_full_param:
+            return self.param
         index = index % self.real_length
         param = self.param
         max_input_length = self.max_input_length

@@ -12,7 +12,7 @@ class FeedForward(nn.Module):
         self.net = nn.Sequential(
             nn.LayerNorm(dim),
             nn.Linear(dim, hidden_dim),
-            nn.SiLU(),
+            nn.ELU(),
             nn.Linear(hidden_dim, dim),
         )
 
@@ -45,12 +45,12 @@ class Attention(nn.Module):
 
 
 class Transformer(nn.Module):
-    def __init__(self, d_model, nhead, dim_feedforward, num_layers):
+    def __init__(self, d_model, nhead, dim_feedforward, dim_head, num_layers):
         super().__init__()
         self.layers = nn.ModuleList([])
         for _ in range(num_layers):
             self.layers.append(nn.ModuleList([
-                Attention(d_model, heads=nhead, dim_head=d_model//nhead),
+                Attention(d_model, heads=nhead, dim_head=dim_head),
                 FeedForward(d_model, dim_feedforward)
             ]))
 
@@ -64,9 +64,10 @@ class Transformer(nn.Module):
 class TransformerModel(nn.Module):
     config = {
         "d_model": 1024,
-        "nhead": 8,
-        "dim_feedforward": 2048,
-        "num_layers": 18,
+        "nhead": 16,
+        "dim_feedforward": 4096,
+        "dim_head": 64,
+        "num_layers": 8,
     }
 
     def __init__(self):
@@ -75,7 +76,8 @@ class TransformerModel(nn.Module):
             d_model=self.config["d_model"],
             nhead=self.config["nhead"],
             dim_feedforward=self.config["dim_feedforward"],
-            num_layers=self.config["num_layers"]
+            dim_head=self.config["dim_head"],
+            num_layers=self.config["num_layers"],
         )
         self.next_token = nn.Parameter(nn.init.normal_(torch.empty((1, 1, self.config["d_model"]))))
 
