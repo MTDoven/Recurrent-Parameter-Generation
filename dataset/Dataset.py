@@ -135,12 +135,12 @@ class RandomDebugDataset(Dataset):
         return self.length
 
     def __getitem__(self, index):
-        if self.return_full_param:
-            return self.param
         index = index % self.real_length
         param = self.param
         max_input_length = self.max_input_length
         self.sequence_length = param.size(0)
+        if self.return_full_param:
+            return self.param
         random_cutting = index % self.sequence_length
         inputs = param[max(random_cutting - max_input_length, 0):random_cutting, :]
         if inputs.size(0) < max_input_length:

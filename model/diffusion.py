@@ -72,20 +72,27 @@ class GaussianDiffusion(nn.Module):
 
 
 class DiffusionLoss(nn.Module):
-    def __init__(self, mlp_layer_dims: list, condition_dim: int,
-                 diffusion_beta_max=0.999, diffusion_n_timesteps=1000,
-                 device=torch.device("cpu"), mlp_activation=nn.SiLU(),):
+    config = {
+        "mlp_layer_dims": [1024, 2048, 2048, 1024],
+        "condition_dim": 1024,
+        "diffusion_beta_max": 0.999,
+        "diffusion_n_timesteps": 1000,
+        "mlp_activation": nn.ELU(),
+    }
+
+    def __init__(self, device=torch.device("cpu")):
         super().__init__()
         self.device = device
-        self.net = ConditionalMLP(layer_dims=mlp_layer_dims,
-                                  condition_dim=condition_dim,
+        self.net = ConditionalMLP(layer_dims=self.config["mlp_layer_dims"],
+                                  condition_dim=self.config["condition_dim"],
                                   device=device,
-                                  activation=mlp_activation)
+                                  activation=self.config["mlp_activation"])
         self.diffusion = GaussianDiffusion(device=device,
-                                           beta_max=diffusion_beta_max,
-                                           n_timesteps=diffusion_n_timesteps)
+                                           beta_max=self.config["diffusion_beta_max"],
+                                           n_timesteps=self.config["diffusion_n_timesteps"])
 
     def forward(self, x, z, **kwargs):
+        # Given condition z and ground truth token x, compute loss
         return self.loss(x, z)
 
     def loss(self, x, z):
@@ -114,15 +121,3 @@ class DiffusionLoss(nn.Module):
                     self.net, sample_timesteps, eta, t_next)
         return x
 
-
-if __name__ == '__main__':
-    model = DiffusionLoss(mlp_layer_dims=[2048 for i in range(3)], condition_dim=4096,
-                          device=torch.device('cuda'), mlp_activation=nn.SiLU()).to("cuda")
-    x = torch.randn(4, 32, 2048).to("cuda")
-    z = torch.randn(4, 32, 4096).to("cuda")
-    loss = model.loss(x, z)
-    print(loss)
-    y = model.sample(x, z)
-    print(y.shape)
-    y = model.sample_ddim(x, z, sample_timesteps=50, eta=0.05)
-    print(y.shape)

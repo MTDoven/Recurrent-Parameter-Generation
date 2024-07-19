@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from .diffusion import DiffusionLoss
 
 
 class LstmModel(nn.Module):
@@ -28,3 +29,25 @@ class LstmModel(nn.Module):
         output, _ = self.lstm(self.input.repeat(output_shape[0], 1, 1))
         output = self.to_out(output)
         return output
+
+
+class LstmDiffusion(nn.Module):
+    def __init__(self, sequence_length, device):
+        super().__init__()
+        self.model = LstmModel(sequence_length=sequence_length)
+        self.criteria = DiffusionLoss(device=device)
+        assert self.model.config["output_size"] == self.criteria.config["condition_dim"]
+        self.dim_per_token = self.criteria.config["condition_dim"]
+        self.sequence_length = sequence_length
+
+    def forward(self, x, z, **kwargs):
+        x = self.model(x)
+        loss = self.criteria(x, z, **kwargs)
+        return loss
+
+    def sample(self, random_param=None):
+        z = self.model(output_shape=[1, self.sequence_length, self.dim_per_token])
+        x = torch.randn((1, self.sequence_length, self.dim_per_token)) if random_param is None else random_param
+        x = self.criteria.sample(x, z)
+        return x
+
