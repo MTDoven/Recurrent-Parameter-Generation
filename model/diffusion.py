@@ -144,16 +144,18 @@ class DDIMSampler(nn.Module):
 
 class DiffusionLoss(nn.Module):
     config = {
-        "mlp_layer_dims": [1024, 2048, 2048, 1024],
+        "mlp_layer_dims": [1024, 2048, 1024],
         "condition_dim": 1024,
         "mlp_activation": nn.ELU(),
         "beta": (0.0001, 0.02),
         "T": 1000,
+        "sample_mode": "ddpm"
     }
 
-    def __init__(self, device=torch.device("cpu"), sample_mode="ddim"):
+    def __init__(self, device=torch.device("cpu")):
         super().__init__()
         self.device = device
+        self.sample_mode = self.config["sample_mode"]
         self.net = ConditionalMLP(
             layer_dims=self.config["mlp_layer_dims"],
             condition_dim=self.config["condition_dim"],
@@ -165,18 +167,20 @@ class DiffusionLoss(nn.Module):
             beta=self.config["beta"],
             T=self.config["T"]
         )
-        if sample_mode == 'ddim':
+        if self.sample_mode == 'ddim':
             self.diffusion_sampler = DDIMSampler(
                 model=self.net,
                 beta=self.config["beta"],
                 T=self.config["T"]
             )
-        elif sample_mode == 'ddpm':
+        elif self.sample_mode == 'ddpm':
             self.diffusion_sampler = DDPMSampler(
                 model=self.net,
                 beta=self.config["beta"],
                 T=self.config["T"]
             )
+        else:  # NotImplementedError
+            raise NotImplementedError
 
     def forward(self, x, z):
         # Given condition z and ground truth token x, compute loss

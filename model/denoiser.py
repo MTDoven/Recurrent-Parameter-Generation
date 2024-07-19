@@ -29,7 +29,7 @@ class AdaptiveLayer(nn.Module):
         condition_dim = input_dim if condition_dim is None else condition_dim
         self.norm = nn.LayerNorm(input_dim, elementwise_affine=False, eps=1e-6)
         self.adaptive_layer_norm_modulation = nn.Sequential(
-                nn.SiLU(), nn.Linear(condition_dim, 2 * input_dim, bias=True))
+                nn.ELU(), nn.Linear(condition_dim, 2 * input_dim, bias=True))
         self.linear = nn.Sequential(
                 nn.Linear(input_dim, output_dim, bias=True),
                 activation if activation is not None else nn.Identity(),)
@@ -43,7 +43,7 @@ class AdaptiveLayer(nn.Module):
 
 class ConditionalMLP(nn.Module):
     def __init__(self, layer_dims: list, condition_dim: int,
-                 device, activation=nn.SiLU()):
+                 device, activation=nn.ELU()):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
         self.module_list = nn.ModuleList()
@@ -57,9 +57,8 @@ class ConditionalMLP(nn.Module):
 
     def forward(self, x, t, z):
         t = self.time_embedder(t).unsqueeze(-2)
-        x = x + t
         for module in self.module_list:
-            x = module(x, z)
+            x = module(x, z + t)
         return x
 
 

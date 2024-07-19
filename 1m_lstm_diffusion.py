@@ -84,7 +84,7 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP_final", config=config)
+    wandb.init(project="cifar10_MLP", config=config)
 
 
 
@@ -130,7 +130,10 @@ def generate(save_path=config["generated_path"], need_test=True):
     model.eval()
     with torch.no_grad():
         prediction = model.sample()
-    print("Generated_norm:", prediction.abs().mean())
+        generated_norm = prediction.abs().mean()
+    print("Generated_norm:", generated_norm.item())
+    if USE_WANDB:
+        wandb.log({"generated_norm": generated_norm.item()})
     train_set.save_params(prediction, save_path=save_path)
     if need_test:
         os.system(config["test_command"])
