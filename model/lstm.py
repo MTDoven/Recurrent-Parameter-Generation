@@ -31,6 +31,8 @@ class LstmModel(nn.Module):
         return output
 
 
+
+
 class LstmDiffusion(nn.Module):
     def __init__(self, sequence_length, device):
         super().__init__()
@@ -45,9 +47,11 @@ class LstmDiffusion(nn.Module):
         loss = self.criteria(x, z, **kwargs)
         return loss
 
-    def sample(self, random_param=None):
+    @torch.no_grad()
+    def sample(self, x=None):
         z = self.model(output_shape=[1, self.sequence_length, self.dim_per_token])
-        x = torch.randn((1, self.sequence_length, self.dim_per_token)) if random_param is None else random_param
+        if x is None:
+            x = torch.randn((1, self.sequence_length, self.dim_per_token), device=self.criteria.device)
         x = self.criteria.sample(x, z)
         return x
 

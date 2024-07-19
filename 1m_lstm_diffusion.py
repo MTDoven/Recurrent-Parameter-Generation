@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:5",
+    "device": "cuda:6",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
@@ -28,7 +28,7 @@ config = {
     # train setting
     "batch_size": 8,
     "num_workers": 4,
-    "total_steps": 10000,
+    "total_steps": 30000,
     "learning_rate": 0.0001,
     "weight_decay": 0.0,
     "save_every": 2000,
@@ -84,7 +84,7 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP", config=config)
+    wandb.init(project="cifar10_MLP_final", config=config)
 
 
 
