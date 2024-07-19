@@ -1,12 +1,10 @@
 USE_WANDB = True
-
 import math
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
-
 from torch.utils.data import DataLoader
 from model.lstm import LstmDiffusion, LstmModel
 from model.diffusion import DiffusionLoss
@@ -28,10 +26,10 @@ config = {
     "sequence_length": 971,
     "max_input_length": 971,
     # train setting
-    "batch_size": 16,
-    "num_workers": 8,
+    "batch_size": 8,
+    "num_workers": 4,
     "total_steps": 10000,
-    "learning_rate": 0.00005,
+    "learning_rate": 0.0001,
     "weight_decay": 0.0,
     "save_every": 2000,
     "print_every": 50,
@@ -71,9 +69,9 @@ model = model.to(config["device"])
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.RMSprop(params=model.parameters(),
-                          lr=config["learning_rate"],
-                          weight_decay=config["weight_decay"],)
+optimizer = optim.AdamW(params=model.parameters(),
+                        lr=config["learning_rate"],
+                        weight_decay=config["weight_decay"],)
 scheduler = SequentialLR(optimizer=optimizer,
                          schedulers=[LinearLR(optimizer=optimizer,
                                               start_factor=1e-4,

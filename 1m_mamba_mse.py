@@ -1,12 +1,10 @@
 USE_WANDB = True
-
 import math
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
-
 from torch.utils.data import DataLoader
 from model.mamba import MambaModel
 from dataset.Dataset import Cifar10_MLP
