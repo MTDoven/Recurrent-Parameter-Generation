@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import functional as F
 import math
 
 
@@ -34,8 +35,8 @@ class AdaptiveLayer(nn.Module):
                 nn.Linear(input_dim, output_dim, bias=True),
                 activation if activation is not None else nn.Identity(),)
 
-    def forward(self, x, z):
-        shift, scale = self.adaptive_layer_norm_modulation(z).chunk(2, dim=-1)
+    def forward(self, x, c):
+        shift, scale = self.adaptive_layer_norm_modulation(c).chunk(2, dim=-1)
         x = self.norm(x) * (1 + scale) + shift
         x = self.linear(x)
         return x
@@ -55,22 +56,30 @@ class ConditionalMLP(nn.Module):
                     activation=activation if (i+2 != len(layer_dims)) else None,
             ),)  # all AdaptiveLayerNorm + linear
 
-    def forward(self, x, t, z):
-        t = self.time_embedder(t).unsqueeze(-2)
+    def forward(self, x, t, c):
+        t = self.time_embedder(t)
         for module in self.module_list:
-            x = module(x, z + t)
+            x = module(x, c + t)
         return x
 
 
-if __name__ == '__main__':
-    model = ConditionalMLP(
-            layer_dims=[2048, 1024, 1024, 512, 512],
-            condition_dim=4096,
-            device="cpu",
-            activation=nn.SiLU())
-    print(model)
-    x = torch.randn((4, 2048))
-    t = torch.tensor([4, 104, 1025, 1245])
-    z = torch.randn((4, 4096))
-    y = model(x, t, z)
-    print(y.shape)
+class ConditionalUNet(nn.Module):
+    def __init__(self, layer_channels: list, condition_dim: int, kernel_size: int, device: torch.device):
+        super().__init__()
+        self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
+        self.module_list = nn.ModuleList([])
+        for i in range(len(layer_channels)-1):
+            self.module_list.append(
+                nn.ModuleList([
+                    nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
+                    nn.ELU() if i+1 != len(layer_channels)-1 else nn.Identity(),
+                ])
+            )
+
+    def forward(self, x, t, c):
+        c = (c + self.time_embedder(t))[:, None, :]
+        x = x[:, None, :]
+        for module, activation in self.module_list:
+            x = module(x + c)
+            x = activation(x)
+        return x[:, 0, :]

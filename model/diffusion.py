@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-from .denoiser import ConditionalMLP
+from .denoiser import ConditionalMLP, ConditionalUNet
 import numpy as np
 
 
@@ -37,8 +37,8 @@ class GaussianDiffusionTrainer(nn.Module):
                extract(self.noise_rate, t, x_0.shape) * epsilon)
         epsilon_theta = self.model(x_t, t, z)
         # get the gradient
-        loss = F.mse_loss(epsilon_theta, epsilon, reduction="mean")
-        return loss
+        loss = F.mse_loss(epsilon_theta, epsilon, reduction="none")
+        return loss.mean()
 
 
 class DDPMSampler(nn.Module):
@@ -144,23 +144,23 @@ class DDIMSampler(nn.Module):
 
 class DiffusionLoss(nn.Module):
     config = {
-        "mlp_layer_dims": [1024, 2048, 1024],
+        "layer_channels": [1, 16, 24, 32, 24, 16, 1],
         "condition_dim": 1024,
-        "mlp_activation": nn.ELU(),
+        "kernel_size": 7,
+        "sample_mode": "ddim",
         "beta": (0.0001, 0.02),
         "T": 1000,
-        "sample_mode": "ddpm"
     }
 
     def __init__(self, device=torch.device("cpu")):
         super().__init__()
         self.device = device
         self.sample_mode = self.config["sample_mode"]
-        self.net = ConditionalMLP(
-            layer_dims=self.config["mlp_layer_dims"],
+        self.net = ConditionalUNet(
+            layer_channels=self.config["layer_channels"],
             condition_dim=self.config["condition_dim"],
+            kernel_size=self.config["kernel_size"],
             device=device,
-            activation=self.config["mlp_activation"],
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(
             model=self.net,
@@ -182,11 +182,19 @@ class DiffusionLoss(nn.Module):
         else:  # NotImplementedError
             raise NotImplementedError
 
-    def forward(self, x, z):
+    def forward(self, x, c):
         # Given condition z and ground truth token x, compute loss
-        return self.diffusion_trainer(x, z)
+        x = x.view(-1, x.size(-1))
+        c = c.view(-1, x.size(-1))
+        loss = self.diffusion_trainer(x, c)
+        return loss
 
     @torch.no_grad()
-    def sample(self, x, z, **kwargs):
+    def sample(self, x, c):
         # Given condition and noise, sample x using reverse diffusion process
-        return self.diffusion_sampler(x, z, **kwargs)
+        # Given condition z and ground truth token x, compute loss
+        x_shape = x.shape
+        x = x.view(-1, x.size(-1))
+        c = c.view(-1, x.size(-1))
+        result = self.diffusion_sampler(x, c)
+        return result.view(x_shape)

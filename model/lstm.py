@@ -42,16 +42,17 @@ class LstmDiffusion(nn.Module):
         self.dim_per_token = self.criteria.config["condition_dim"]
         self.sequence_length = sequence_length
 
-    def forward(self, x, z, **kwargs):
-        x = self.model(x)
-        loss = self.criteria(x, z, **kwargs)
+    def forward(self, output_shape, x_0, **kwargs):
+        c = self.model(output_shape)
+        # Given condition c and ground truth token x, compute loss
+        loss = self.criteria(x=x_0, c=c, **kwargs)
         return loss
 
     @torch.no_grad()
-    def sample(self, x=None):
+    def sample(self, x=None, **kwargs):
         z = self.model(output_shape=[1, self.sequence_length, self.dim_per_token])
         if x is None:
             x = torch.randn((1, self.sequence_length, self.dim_per_token), device=self.criteria.device)
-        x = self.criteria.sample(x, z)
+        x = self.criteria.sample(x, z, **kwargs)
         return x
 
