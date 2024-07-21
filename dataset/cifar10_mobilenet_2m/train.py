@@ -6,9 +6,9 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10
 try:  # relative import
-    from .model import simple_mlp_for_cifar10_classify as Model
+    from .model import mobile_net_for_cifar10_classify as Model
 except:  # absolute import
-    from model import simple_mlp_for_cifar10_classify as Model
+    from model import mobile_net_for_cifar10_classify as Model
 import sys
 import os
 
@@ -19,8 +19,8 @@ config = {
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 1000,
-    "num_workers": 16,
+    "batch_size": 256,
+    "num_workers": 24,
     "learning_rate": 0.01,
     "epochs": 150,
     "test_freq": 10,
@@ -37,7 +37,8 @@ train_loader = DataLoader(
         train=True,
         download=True,
         transform=transforms.Compose([
-            transforms.RandomCrop(32, padding=4),
+            transforms.Resize(256),
+            transforms.RandomCrop(224),
             transforms.RandomHorizontalFlip(),
             transforms.RandAugment(),
             transforms.ToTensor(),
@@ -56,6 +57,8 @@ test_loader = DataLoader(
         train=False,
         download=True,
         transform=transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ])),
@@ -89,7 +92,7 @@ def train(epoch, save_name):
     for batch_idx, (inputs, targets) in enumerate(train_loader):
         inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
         optimizer.zero_grad()
-        outputs = model(inputs.flatten(start_dim=1))
+        outputs = model(inputs)
         loss = criterion(outputs, targets)
         loss.backward()
         optimizer.step()
@@ -116,7 +119,7 @@ def test(save_name):
     with torch.no_grad():
         for batch_idx, (inputs, targets) in enumerate(test_loader):
             inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
-            outputs = model(inputs.flatten(start_dim=1))
+            outputs = model(inputs)
             loss = criterion(outputs, targets)
             # to logging losses
             test_loss += loss.item()

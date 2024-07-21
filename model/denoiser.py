@@ -81,10 +81,10 @@ class ConditionalUNet(nn.Module):
         self.decoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1, len(layer_channels) - 1):
             self.decoder_list.append(nn.ModuleList([
-                nn.Conv1d(layer_channels[i] * 2, layer_channels[i+1], kernel_size, 1, kernel_size // 2),
-                nn.ELU(),
+                nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
+                nn.ELU() if layer_channels[i+1] != 1 else nn.Identity(),
             ]))
-        self.output_layer = nn.Conv1d(2, 1, kernel_size, 1, kernel_size // 2)
+        # self.output_layer = nn.Conv1d(2, 1, kernel_size, 1, kernel_size // 2)
 
     def forward(self, x, t, c):
         c = (c + self.time_embedder(t))[:, None, :]
@@ -96,9 +96,10 @@ class ConditionalUNet(nn.Module):
             if i < len(self.encoder_list) - 2:
                 x_list.append(x)
         for i, (module, activation) in enumerate(self.decoder_list):
-            x = torch.cat((x, x_list[-i-1]), dim=1)
+            # x = torch.cat((x, x_list[-i-1]), dim=1)
+            x = x + x_list[-i-1]
             x = module(x + c)
             x = activation(x)
-        x = torch.cat((x, x_list[0]), dim=1)
-        x = self.output_layer(x)
+        # x = torch.cat((x, x_list[0]), dim=1)
+        # x = self.output_layer(x)
         return x[:, 0, :]

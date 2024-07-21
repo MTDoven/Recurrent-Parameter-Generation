@@ -1,4 +1,5 @@
 USE_WANDB = True
+FINAL_RUNNING = True
 import math
 import torch
 import torch.nn as nn
@@ -18,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:7",
+    "device": "cuda:4",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
@@ -27,8 +28,8 @@ config = {
     # train setting
     "batch_size": 4,
     "num_workers": 4,
-    "total_steps": 50000,
-    "learning_rate": 0.0002,
+    "total_steps": 40000,
+    "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 500,
     "print_every": 50,
@@ -82,7 +83,7 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP", config=config)
+    wandb.init(project="cifar10_MLP_final" if FINAL_RUNNING else "cifar10_MLP", config=config, name="1m_lstm_diffusion")
 
 
 
@@ -110,14 +111,15 @@ def train():
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
-            print('Loss: %.6f' % (train_loss/this_steps))
+            if not FINAL_RUNNING:
+                print('Loss: %.6f' % (train_loss/this_steps))
             this_steps = 0
             train_loss = 0
         if total_steps % config["save_every"] == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "state.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_lstm_diffusion.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break
