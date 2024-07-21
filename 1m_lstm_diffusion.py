@@ -1,13 +1,13 @@
 USE_WANDB = True
 import math
 import torch
+# torch.backends.cudnn.enabled = False
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
-from model.lstm import LstmDiffusion, LstmModel
-from model.diffusion import DiffusionLoss
+from model import LstmDiffusion
 from dataset.Dataset import Cifar10_MLP
 import os
 if USE_WANDB:
@@ -19,19 +19,19 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:6",
+    "device": "cuda:7",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
     "sequence_length": 971,
     "max_input_length": 971,
     # train setting
-    "batch_size": 8,
+    "batch_size": 4,
     "num_workers": 4,
-    "total_steps": 30000,
-    "learning_rate": 0.0001,
+    "total_steps": 50000,
+    "learning_rate": 0.0002,
     "weight_decay": 0.0,
-    "save_every": 2000,
+    "save_every": 500,
     "print_every": 50,
     "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
@@ -40,8 +40,7 @@ config = {
     "generated_path": Cifar10_MLP.generated_path,
     "test_command": Cifar10_MLP.test_command,
     # to log
-    "model_config": LstmModel.config,
-    "diffusion_config": DiffusionLoss.config
+    "model_config": LstmDiffusion.config,
 }
 
 

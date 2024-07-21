@@ -57,9 +57,14 @@ class ConditionalMLP(nn.Module):
             ),)  # all AdaptiveLayerNorm + linear
 
     def forward(self, x, t, c):
-        t = self.time_embedder(t)
-        for module in self.module_list:
-            x = module(x, c + t)
+        c = self.time_embedder(t) + c
+        x_list = []
+        for i, module in enumerate(self.module_list):
+            x = module(x + c)
+            if i < len(self.module_list) // 2 - 1:
+                x_list.append(x)
+            elif len(self.module_list) // 2 - 1 < i < len(self.module_list) - 1:
+                x = x + x_list[len(self.module_list) // 2 - 1 - i]
         return x
 
 
@@ -68,18 +73,23 @@ class ConditionalUNet(nn.Module):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
         self.module_list = nn.ModuleList([])
-        for i in range(len(layer_channels)-1):
-            self.module_list.append(
-                nn.ModuleList([
-                    nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
-                    nn.ELU() if i+1 != len(layer_channels)-1 else nn.Identity(),
-                ])
-            )
+        for i in range(len(layer_channels)-2):
+            self.module_list.append(nn.ModuleList([
+                nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
+                nn.ELU(),
+            ]))
+        self.output_layer = nn.Conv1d(layer_channels[i+1], layer_channels[-1], kernel_size, 1, kernel_size // 2)
 
     def forward(self, x, t, c):
         c = (c + self.time_embedder(t))[:, None, :]
         x = x[:, None, :]
-        for module, activation in self.module_list:
+        x_list = []
+        for i, (module, activation) in enumerate(self.module_list):
             x = module(x + c)
             x = activation(x)
+            if i < len(self.module_list) // 2 - 1:
+                x_list.append(x)
+            elif len(self.module_list) // 2 - 1 < i < len(self.module_list) - 1:
+                x = torch.cat((x, x_list[len(self.module_list) // 2 - 1 - i]), dim=1)
+        x = self.output_layer(x)
         return x[:, 0, :]
