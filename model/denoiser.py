@@ -72,24 +72,33 @@ class ConditionalUNet(nn.Module):
     def __init__(self, layer_channels: list, condition_dim: int, kernel_size: int, device: torch.device):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
-        self.module_list = nn.ModuleList([])
-        for i in range(len(layer_channels)-2):
-            self.module_list.append(nn.ModuleList([
+        self.encoder_list = nn.ModuleList([])
+        for i in range(len(layer_channels) // 2 + 1):
+            self.encoder_list.append(nn.ModuleList([
                 nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
                 nn.ELU(),
             ]))
-        self.output_layer = nn.Conv1d(layer_channels[i+1], layer_channels[-1], kernel_size, 1, kernel_size // 2)
+        self.decoder_list = nn.ModuleList([])
+        for i in range(len(layer_channels) // 2 + 1, len(layer_channels) - 1):
+            self.decoder_list.append(nn.ModuleList([
+                nn.Conv1d(layer_channels[i] * 2, layer_channels[i+1], kernel_size, 1, kernel_size // 2),
+                nn.ELU(),
+            ]))
+        self.output_layer = nn.Conv1d(2, 1, kernel_size, 1, kernel_size // 2)
 
     def forward(self, x, t, c):
         c = (c + self.time_embedder(t))[:, None, :]
         x = x[:, None, :]
-        x_list = []
-        for i, (module, activation) in enumerate(self.module_list):
+        x_list = [x]
+        for i, (module, activation) in enumerate(self.encoder_list):
             x = module(x + c)
             x = activation(x)
-            if i < len(self.module_list) // 2 - 1:
+            if i < len(self.encoder_list) - 2:
                 x_list.append(x)
-            elif len(self.module_list) // 2 - 1 < i < len(self.module_list) - 1:
-                x = torch.cat((x, x_list[len(self.module_list) // 2 - 1 - i]), dim=1)
+        for i, (module, activation) in enumerate(self.decoder_list):
+            x = torch.cat((x, x_list[-i-1]), dim=1)
+            x = module(x + c)
+            x = activation(x)
+        x = torch.cat((x, x_list[0]), dim=1)
         x = self.output_layer(x)
         return x[:, 0, :]

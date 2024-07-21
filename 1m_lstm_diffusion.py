@@ -1,7 +1,6 @@
 USE_WANDB = True
 import math
 import torch
-# torch.backends.cudnn.enabled = False
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
