@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:4",
+    "device": "cuda:6",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
@@ -29,7 +29,7 @@ config = {
     "batch_size": 4,
     "num_workers": 4,
     "total_steps": 40000,
-    "learning_rate": 0.0005,
+    "learning_rate": 0.0002,
     "weight_decay": 0.0,
     "save_every": 500,
     "print_every": 50,

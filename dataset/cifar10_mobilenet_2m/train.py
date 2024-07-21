@@ -18,10 +18,10 @@ config = {
     "dataset_root": "/home/wangkai/AR-Param-Generation/Datasets",
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
-    "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+    "device": "cuda",
     "batch_size": 256,
     "num_workers": 24,
-    "learning_rate": 0.01,
+    "learning_rate": 0.005,
     "epochs": 150,
     "test_freq": 10,
     "weight_decay": 0.005,
@@ -77,7 +77,8 @@ optimizer = optim.AdamW(model.parameters(),
                        lr=config["learning_rate"],
                        weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
-                                                 T_max=config["epochs"])
+                                                 T_max=config["epochs"],
+                                                 eta_min=1e-5,)
 
 
 # Training
@@ -103,7 +104,7 @@ def train(epoch, save_name):
         correct += predicted.eq(targets).sum().item()
     print('\r', 'Loss: %.3f | Acc: %.3f%% (%d/%d)' %
           (train_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
-    if epoch >= config["epochs"] * 2 / 3:
+    if epoch >= config["epochs"] * 1 / 3:
         state = {}
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
