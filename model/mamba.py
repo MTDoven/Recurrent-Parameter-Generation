@@ -6,8 +6,8 @@ import math
 
 class MambaModel(nn.Module):
     config = {
-        "d_input": 64,
-        "d_model": 1024,
+        "d_output": 1024,
+        "d_model": 2048,
         "d_state": 16,
         "d_conv": 4,
         "expand": 2,
@@ -21,21 +21,10 @@ class MambaModel(nn.Module):
             d_conv=self.config["d_conv"],
             expand=self.config["expand"],
         )
-        pe = self.get_sinusoid(sequence_length, self.config["d_input"]).unsqueeze(0)
-        self.register_buffer("pe", pe)
-        self.in_linear = nn.Linear(self.config["d_input"], self.config["d_model"])
-
-    @staticmethod
-    def get_sinusoid(max_len, d_model):
-        pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        return pe
+        self.input = nn.Parameter(nn.init.normal_(torch.empty(1, sequence_length, self.config["d_model"])))
+        self.to_out = nn.Linear(self.config["d_model"], self.config["d_output"])
 
     def forward(self, output_shape):
-        x = self.pe.repeat(output_shape[0], 1, 1)
-        x = self.in_linear(x)
-        x = self.model(x)
+        x = self.model(self.input.repeat(output_shape[0], 1, 1))
+        x = self.to_out(x)
         return x

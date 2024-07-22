@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:2",
+    "device": "cuda:3",
     # dataset setting
     "dataset": Cifar10_GoogleNet,
     "dim_per_token": 1024,
@@ -29,7 +29,7 @@ config = {
     "batch_size": 1,
     "num_workers": 2,
     "total_steps": 40000,
-    "learning_rate": 0.001,
+    "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 1000,
     "print_every": 50,
@@ -122,7 +122,8 @@ def train():
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_lstm_diffusion.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"],
+                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break

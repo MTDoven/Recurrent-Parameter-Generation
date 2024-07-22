@@ -72,8 +72,8 @@ print('==> Building model..')
 model = Model().to(config["device"])
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.AdamW(model.parameters(),
-                       lr=config["learning_rate"],
-                       weight_decay=config["weight_decay"])
+                        lr=config["learning_rate"],
+                        weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                  T_max=config["epochs"],
                                                  eta_min=1e-5,)

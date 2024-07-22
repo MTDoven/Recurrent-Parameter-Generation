@@ -34,6 +34,9 @@ class BaseDataset(Dataset, ABC):
         self.structure = {}
         diction = torch.load(self.checkpoint_list[0], map_location="cpu")
         for key, value in diction.items():
+            if len(value.shape) == 0:
+                self.structure[key] = (value.shape, value, None)
+                continue
             self.structure[key] = (value.shape, value.mean(), value.std())
         self.kwargs = kwargs
 
@@ -81,8 +84,8 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            _, mean, std = self.structure[key]
-            if torch.isnan(std):
+            shape, mean, std = self.structure[key]
+            if std is None:
                 continue
             value = value.flatten()
             value = (value - mean) / std
@@ -97,14 +100,15 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, (shape, mean, std) in self.structure.items():
-            if torch.isnan(std).all():
+            if std is None:
                 diction[key] = mean
-                assert not torch.isnan(mean).any()
                 continue
             num_elements = math.prod(shape)
             this_param = params[:num_elements].view(*shape)
             this_param = this_param * std + mean
             diction[key] = this_param
+            if "running_var" in key:
+                diction[key] = torch.clip(this_param, min=1e-6)
             params = params[num_elements:]
         return diction
 

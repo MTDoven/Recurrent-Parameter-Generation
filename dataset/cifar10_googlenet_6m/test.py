@@ -6,7 +6,7 @@ import sys
 
 
 if __name__ == '__main__':
-    config["test_model_path"] = sys.argv[1]
+    config["test_model_path"] = "/home/wangkai/arpgen/AR-Param-Generation/dataset/cifar10_googlenet_6m/generated/generated_classifier.pth" #sys.argv[1]
 
     state = torch.load(config["test_model_path"], map_location="cpu")
     diction = {}

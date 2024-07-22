@@ -8,7 +8,7 @@ from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
 class LstmDiffusion(nn.Module):
     config = {
         # lstm config
-        "input_size": 64,
+        "input_size": 4096,
         "hidden_size": 4096,
         "output_size": 1024,
         "num_layers": 2,
@@ -52,8 +52,9 @@ class LstmDiffusion(nn.Module):
 class MambaDiffusion(nn.Module):
     config = {
         # mamba config
-        "d_model": 1024,
-        "d_state": 16,
+        "d_output": 1024,
+        "d_model": 4096,
+        "d_state": 32,
         "d_conv": 4,
         "expand": 2,
         # diffusion config
@@ -68,12 +69,12 @@ class MambaDiffusion(nn.Module):
     def __init__(self, sequence_length, device):
         super().__init__()
         # pass config
-        LstmModel.config = self.config
+        MambaModel.config = self.config
         DiffusionLoss.config = self.config
         # this module init
         self.model = MambaModel(sequence_length=sequence_length)
         self.criteria = DiffusionLoss(device=device)
-        assert self.model.config["d_model"] == self.criteria.config["condition_dim"]
+        assert self.model.config["d_output"] == self.criteria.config["condition_dim"]
         self.dim_per_token = self.criteria.config["condition_dim"]
         self.sequence_length = sequence_length
 

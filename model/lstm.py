@@ -5,7 +5,7 @@ from .diffusion import DiffusionLoss
 
 class LstmModel(nn.Module):
     config = {
-        "input_size": 64,
+        "input_size": 4096,
         "hidden_size": 4096,
         "output_size": 1024,
         "num_layers": 2,
