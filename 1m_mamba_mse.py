@@ -18,21 +18,21 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:6",
+    "device": "cuda:5",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
     "sequence_length": 971,
-    "max_input_length": 256,
+    "max_input_length": 971,
     # train setting
-    "batch_size": 32,
-    "num_workers": 8,
+    "batch_size": 4,
+    "num_workers": 4,
     "total_steps": 100000,
     "learning_rate": 0.0001,
     "weight_decay": 0.0,
-    "save_every": 2000,
+    "save_every": 500,
     "print_every": 100,
-    "warmup_steps": 1000,
+    "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -47,7 +47,7 @@ config = {
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"],
                               max_input_length=config["max_input_length"],)
-train_set.set_infinite_dataset()
+train_set.set_infinite_dataset().set_return_full_param()
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
@@ -60,7 +60,7 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-model = MambaModel()  # model setting is in model
+model = MambaModel(sequence_length=config["sequence_length"])  # model setting is in model
 model = model.to(config["device"])
 
 
@@ -77,13 +77,6 @@ scheduler = SequentialLR(optimizer=optimizer,
                                      CosineAnnealingLR(optimizer=optimizer,
                                                        T_max=config["total_steps"]-config["warmup_steps"])],
                          milestones=[config["warmup_steps"]],)
-def weighted_mse_loss(result, target):
-    loss = (result - target) ** 2
-    loss = loss.mean(dim=[1, 2])
-    no_grad_const = loss.detach()
-    loss = loss / no_grad_const * no_grad_const.mean()
-    loss = loss.mean()
-    return loss
 
 
 # wandb
@@ -102,12 +95,12 @@ this_steps = 0
 def train():
     global total_steps, train_loss, this_steps
     model.train()
-    for batch_idx, (inputs, targets) in enumerate(train_loader):
+    for batch_idx, param in enumerate(train_loader):
         optimizer.zero_grad()
-        inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+        param = param.to(config["device"])
         # train
-        prediction = model(inputs)
-        loss = weighted_mse_loss(prediction, targets)
+        prediction = model(param.shape)
+        loss = F.mse_loss(prediction, param)
         loss.backward()
         optimizer.step()
         scheduler.step()
@@ -136,16 +129,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
     with torch.no_grad():
-        x = torch.zeros(size=(1, config["max_input_length"], config["dim_per_token"]), device=config["device"])
-        prediction_list = []
-        while True:
-            this_prediction = model(x)
-            prediction_list.append(this_prediction.cpu())
-            x = torch.cat((x, this_prediction), dim=1)
-            x = x[:, -config["max_input_length"]:, :]
-            if len(prediction_list) == config["sequence_length"]:
-                break
-    prediction = torch.cat(prediction_list, dim=1)
+        prediction = model((1, config["max_input_length"], config["dim_per_token"]))
     print("Generated_norm:", prediction.abs().mean())
     train_set.save_params(prediction, save_path=save_path)
     if need_test:

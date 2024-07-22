@@ -1,0 +1,362 @@
+==> Defining training..
+
+==> Generating..
+Generated_norm: tensor(132.7825)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1117948.925 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(113.0853)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 824381.106 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(112.0406)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 534803.872 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(96.9056)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 617621.094 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(85.2540)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 356573.131 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(69.7465)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 253007.670 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(66.5759)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 246521.142 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(62.1946)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 228757.955 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(45.3919)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 152379.091 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(52.8429)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 157919.775 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(52.5655)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 3.018 | Acc: 21.550% (2155/10000)
+
+
+==> Generating..
+Generated_norm: tensor(44.8214)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 103927.402 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(46.7985)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 113255.754 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(46.1236)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 118233.706 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(54.1370)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 128952.375 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(45.3230)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 101478.794 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(50.3864)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 161468.136 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(61.9801)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 224084.644 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(66.0849)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 262524.741 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(61.6279)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 261760.045 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(70.0876)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 310187.556 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(58.6835)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 267802.283 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(59.9119)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 262426.753 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(67.8839)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 315023.037 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(68.8809)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 317290.528 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(52.8093)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 239425.922 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(68.2035)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 330105.234 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(63.1785)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 285769.300 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(61.0237)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 281812.903 | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: tensor(64.4820)
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 294122.912 | Acc: 10.000% (1000/10000)
+
+Finished Training!

@@ -1,6 +1,7 @@
 import torch
 import einops
 from torch.utils.data import Dataset
+from model.transformer import get_sinusoid
 
 import os
 import math
@@ -23,11 +24,10 @@ class BaseDataset(Dataset, ABC):
     generated_path = None
     test_command = None
 
-    def __init__(self, checkpoint_path=None, dim_per_token=1024, max_input_length=1, **kwargs):
+    def __init__(self, checkpoint_path=None, dim_per_token=1024, **kwargs):
         checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
         assert os.path.exists(checkpoint_path)
         self.dim_per_token = dim_per_token
-        self.max_input_length = max_input_length
         self.sequence_length = None
         self.return_full_param = False
         checkpoint_list = os.listdir(checkpoint_path)
@@ -46,18 +46,12 @@ class BaseDataset(Dataset, ABC):
         index = index % self.real_length
         diction = torch.load(self.checkpoint_list[index], map_location="cpu")
         param = self.preprocess(diction)
-        max_input_length = self.max_input_length
         self.sequence_length = param.size(0)
         if self.return_full_param:
             return param
-        random_cutting = index % self.sequence_length
-        inputs = param[max(random_cutting - max_input_length, 0):random_cutting, :]
-        if inputs.size(0) < max_input_length:
-            padding = torch.zeros((max_input_length-inputs.size(0), self.dim_per_token))
-            inputs = torch.cat((padding, inputs), dim=0)
-        assert inputs.size(0) == max_input_length
-        targets = param[random_cutting:random_cutting + 1, :]
-        inputs, targets = inputs.to(torch.float32), targets.to(torch.float32)
+        if self.kwargs.get("use_pe"):
+            param += get_sinusoid(self.sequence_length, self.dim_per_token)
+        inputs, targets = param[:-1], param[:]
         return inputs, targets
 
     def preprocess_data(self, datas):
@@ -104,8 +98,9 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, (shape, mean, std) in self.structure.items():
-            if torch.isnan(std):
+            if torch.isnan(std).all():
                 diction[key] = mean
+                assert not torch.isnan(mean).any()
                 continue
             num_elements = math.prod(shape)
             this_param = params[:num_elements].view(*shape)

@@ -6,7 +6,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
-from model.transformer import TransformerModel
+from model.transformer import TransformerModel, get_sinusoid
 from dataset.Dataset import Cifar10_MLP
 import os
 if USE_WANDB:
@@ -18,19 +18,19 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:7",
+    "device": "cuda:2",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,
     "sequence_length": 971,
-    "max_input_length": 512,
+    "max_input_length": 971,
     # train setting
-    "batch_size": 256,
-    "num_workers": 48,
-    "total_steps": 100000,
-    "learning_rate": 0.00002,
+    "batch_size": 32,
+    "num_workers": 8,
+    "total_steps": 30000,
+    "learning_rate": 0.0005,
     "weight_decay": 0.0,
-    "save_every": 2000,
+    "save_every": 1000,
     "print_every": 100,
     "warmup_steps": 1000,
     "checkpoint_save_path": "./checkpoint",
@@ -46,7 +46,8 @@ config = {
 # Data
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"],
-                              max_input_length=config["max_input_length"],)
+                              max_input_length=config["max_input_length"],
+                              use_pe=True)
 train_set.set_infinite_dataset()
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
@@ -61,6 +62,7 @@ train_loader = DataLoader(dataset=train_set,
 # Model
 print('==> Building model..')
 model = TransformerModel()  # model setting is in model
+#model.load_state_dict(torch.load("/home/wangkai/arpgen/AR-Param-Generation/checkpoint/state.pth")["model"])
 model = model.to(config["device"])
 
 
@@ -81,7 +83,7 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP_final", config=config)
+    wandb.init(project="cifar10_MLP_final", config=config, name="1m_transformer_mse")
 
 
 
@@ -111,14 +113,15 @@ def train():
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
-            # print('Loss: %.6f' % (train_loss/this_steps))
+            if not USE_WANDB:
+                print('Loss: %.6f' % (train_loss/this_steps))
             this_steps = 0
             train_loss = 0
         if total_steps % config["save_every"] == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "state.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_transformer_mse.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break
@@ -128,13 +131,12 @@ def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
     with torch.no_grad():
-        x = torch.zeros(size=(1, config["max_input_length"], config["dim_per_token"]), device=config["device"])
+        x = torch.zeros(size=(1, 0, config["dim_per_token"]), device=config["device"])
         prediction_list = []
         while True:
-            this_prediction = model(x)
+            this_prediction = model(x)[:, -1:, :]
             prediction_list.append(this_prediction.cpu())
             x = torch.cat((x, this_prediction), dim=1)
-            x = x[:, -config["max_input_length"]:, :]
             if len(prediction_list) == config["sequence_length"]:
                 break
     prediction = torch.cat(prediction_list, dim=1)
@@ -150,6 +152,7 @@ def generate(save_path=config["generated_path"], need_test=True):
 if __name__ == '__main__':
     # model = torch.compile(model, mode="default")
     train()
+    #generate()
 
     # deal problems by dataloder
     del train_loader

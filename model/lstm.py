@@ -4,7 +4,13 @@ from .diffusion import DiffusionLoss
 
 
 class LstmModel(nn.Module):
-    config = {}
+    config = {
+        "input_size": 64,
+        "hidden_size": 4096,
+        "output_size": 1024,
+        "num_layers": 2,
+        "dropout": 0.,
+    }
 
     def __init__(self, sequence_length):
         super().__init__()

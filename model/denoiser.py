@@ -76,20 +76,21 @@ class ConditionalUNet(nn.Module):
         for i in range(len(layer_channels) // 2 + 1):
             self.encoder_list.append(nn.ModuleList([
                 nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
-                nn.ELU(),
+                nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU(),),
             ]))
         self.decoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1, len(layer_channels) - 1):
             self.decoder_list.append(nn.ModuleList([
                 nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
-                nn.ELU() if layer_channels[i+1] != 1 else nn.Identity(),
+                nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU())
+                    if layer_channels[i+1] != 1 else nn.Identity(),
             ]))
         # self.output_layer = nn.Conv1d(2, 1, kernel_size, 1, kernel_size // 2)
 
     def forward(self, x, t, c):
         c = (c + self.time_embedder(t))[:, None, :]
         x = x[:, None, :]
-        x_list = [x]
+        x_list = []
         for i, (module, activation) in enumerate(self.encoder_list):
             x = module(x + c)
             x = activation(x)

@@ -29,7 +29,7 @@ config = {
     "batch_size": 4,
     "num_workers": 4,
     "total_steps": 40000,
-    "learning_rate": 0.0002,
+    "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 500,
     "print_every": 50,
@@ -83,7 +83,9 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP_final" if FINAL_RUNNING else "cifar10_MLP", config=config, name="1m_lstm_diffusion")
+    wandb.init(project="cifar10_MLP_final" if FINAL_RUNNING else "cifar10_MLP",
+               name=__file__.split("/")[-1],
+               config=config,)
 
 
 

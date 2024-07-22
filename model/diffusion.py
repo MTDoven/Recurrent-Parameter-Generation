@@ -143,7 +143,14 @@ class DDIMSampler(nn.Module):
 
 
 class DiffusionLoss(nn.Module):
-    config = {}
+    config = {
+        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
+        "condition_dim": 1024,
+        "kernel_size": 5,
+        "sample_mode": DDPMSampler,
+        "beta": (0.0001, 0.02),
+        "T": 1000,
+    }
 
     def __init__(self, device=torch.device("cpu")):
         super().__init__()
