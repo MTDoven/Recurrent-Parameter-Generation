@@ -15,11 +15,11 @@ import os
 
 config = {
     # dataset setting
-    "dataset_root": "/home/wangkai/AR-Param-Generation/Datasets",
+    "dataset_root": "/home/wangkai/arpgen/Datasets",
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": "cuda",
-    "batch_size": 32,
+    "batch_size": 256,
     "num_workers": 24,
     "learning_rate": 0.005,
     "epochs": 150,
@@ -37,8 +37,7 @@ train_loader = DataLoader(
         train=True,
         download=True,
         transform=transforms.Compose([
-            transforms.Resize(256),
-            transforms.RandomCrop(224),
+            transforms.Resize(64),
             transforms.RandomHorizontalFlip(),
             transforms.RandAugment(),
             transforms.ToTensor(),
@@ -57,8 +56,7 @@ test_loader = DataLoader(
         train=False,
         download=True,
         transform=transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
+            transforms.Resize(64),
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ])),

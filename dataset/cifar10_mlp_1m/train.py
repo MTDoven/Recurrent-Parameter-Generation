@@ -15,7 +15,7 @@ import os
 
 config = {
     # dataset setting
-    "dataset_root": "/home/wangkai/AR-Param-Generation/Datasets",
+    "dataset_root": "/home/wangkai/arpgen/Datasets",
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),

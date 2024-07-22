@@ -14,7 +14,7 @@ class LstmDiffusion(nn.Module):
         "num_layers": 2,
         "dropout": 0.,
         # diffusion config
-        "layer_channels": [1, 8, 16, 24, 16, 8, 1],
+        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
         "condition_dim": 1024,
         "kernel_size": 5,
         "sample_mode": DDPMSampler,

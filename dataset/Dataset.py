@@ -82,10 +82,10 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            value = value.flatten()
             _, mean, std = self.structure[key]
             if torch.isnan(std):
                 continue
+            value = value.flatten()
             value = (value - mean) / std
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
@@ -166,9 +166,9 @@ class Cifar10_MLP(BaseDataset):
                    "./dataset/cifar10_mlp_1m/generated/generated_classifier.pth"
 
 
-class Cifar10_MobileNet(BaseDataset):
-    data_path = "./dataset/cifar10_mobilenet_2m/checkpoint"
-    generated_path = "./dataset/cifar10_mobilenet_2m/generated/generated_classifier.pth"
+class Cifar10_GoogleNet(BaseDataset):
+    data_path = "./dataset/cifar10_googlenet_6m/checkpoint"
+    generated_path = "./dataset/cifar10_googlenet_6m/generated/generated_classifier.pth"
     test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
-                   "./dataset/cifar10_mobilenet_2m/test.py " + \
-                   "./dataset/cifar10_mobilenet_2m/generated/generated_classifier.pth"
+                   "./dataset/cifar10_googlenet_6m/test.py " + \
+                   "./dataset/cifar10_googlenet_6m/generated/generated_classifier.pth"

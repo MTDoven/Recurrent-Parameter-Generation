@@ -7,8 +7,8 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
-from model import LstmDiffusion
-from dataset.Dataset import Cifar10_MLP
+from model import MambaDiffusion
+from dataset.Dataset import Cifar10_GoogleNet
 import os
 if USE_WANDB:
     import wandb
@@ -19,16 +19,16 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:6",
+    "device": "cuda:5",
     # dataset setting
-    "dataset": Cifar10_MLP,
+    "dataset": Cifar10_GoogleNet,
     "dim_per_token": 1024,
-    "sequence_length": 971,
-    "max_input_length": 971,
+    "sequence_length": 6179,
+    "max_input_length": 6179,
     # train setting
-    "batch_size": 4,
-    "num_workers": 4,
-    "total_steps": 40000,
+    "batch_size": 1,
+    "num_workers": 2,
+    "total_steps": 80000,
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 1000,
@@ -37,10 +37,10 @@ config = {
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
-    "generated_path": Cifar10_MLP.generated_path,
-    "test_command": Cifar10_MLP.test_command,
+    "generated_path": Cifar10_GoogleNet.generated_path,
+    "test_command": Cifar10_GoogleNet.test_command,
     # to log
-    "model_config": LstmDiffusion.config,
+    "model_config": MambaDiffusion.config,
 }
 
 
@@ -61,8 +61,8 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-model = LstmDiffusion(sequence_length=config["sequence_length"],
-                      device=config["device"])  # model setting is in model
+model = MambaDiffusion(sequence_length=config["sequence_length"],
+                       device=config["device"])  # model setting is in model
 model = model.to(config["device"])
 
 
@@ -121,7 +121,8 @@ def train():
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_lstm_diffusion.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"],
+                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break

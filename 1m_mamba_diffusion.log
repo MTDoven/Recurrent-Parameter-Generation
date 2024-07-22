@@ -383,18 +383,6 @@ Files already downloaded and verified
 
 
 ==> Generating..
-Generated_norm: 0.6606308221817017
-==> Preparing data..
-Files already downloaded and verified
-Files already downloaded and verified
-==> Building model..
-==> Defining training..
-
-==> Testing..
- 9 10 Loss: 2.887 | Acc: 28.120% (2812/10000)
-
-
-==> Generating..
 Generated_norm: 0.6609073281288147
 ==> Preparing data..
 Files already downloaded and verified

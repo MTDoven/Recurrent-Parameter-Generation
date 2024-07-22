@@ -31,8 +31,8 @@ config = {
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 1000,
-    "print_every": 100,
-    "warmup_steps": 1000,
+    "print_every": 50,
+    "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this

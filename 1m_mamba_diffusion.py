@@ -31,7 +31,7 @@ config = {
     "total_steps": 40000,
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
-    "save_every": 500,
+    "save_every": 1000,
     "print_every": 50,
     "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
@@ -121,7 +121,8 @@ def train():
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_mamba_diffusion.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"],
+                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break
