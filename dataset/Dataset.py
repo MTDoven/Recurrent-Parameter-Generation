@@ -1,8 +1,6 @@
 import torch
 import einops
 from torch.utils.data import Dataset
-from model.transformer import get_sinusoid
-
 import os
 import math
 from abc import ABC
@@ -50,6 +48,7 @@ class BaseDataset(Dataset, ABC):
         if self.return_full_param:
             return param
         if self.kwargs.get("use_pe"):
+            from model.transformer import get_sinusoid
             param += get_sinusoid(self.sequence_length, self.dim_per_token)
         inputs, targets = param[:-1], param[:]
         return inputs, targets

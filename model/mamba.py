@@ -6,6 +6,7 @@ import math
 
 class MambaModel(nn.Module):
     config = {
+        "d_input": 64,
         "d_model": 1024,
         "d_state": 16,
         "d_conv": 4,
@@ -20,8 +21,9 @@ class MambaModel(nn.Module):
             d_conv=self.config["d_conv"],
             expand=self.config["expand"],
         )
-        pe = self.get_sinusoid(sequence_length, self.config["d_model"]).unsqueeze(0)
+        pe = self.get_sinusoid(sequence_length, self.config["d_input"]).unsqueeze(0)
         self.register_buffer("pe", pe)
+        self.in_linear = nn.Linear(self.config["d_input"], self.config["d_model"])
 
     @staticmethod
     def get_sinusoid(max_len, d_model):
@@ -33,5 +35,7 @@ class MambaModel(nn.Module):
         return pe
 
     def forward(self, output_shape):
-        x = self.model(self.pe.repeat(output_shape[0], 1, 1))
+        x = self.pe.repeat(output_shape[0], 1, 1)
+        x = self.in_linear(x)
+        x = self.model(x)
         return x
