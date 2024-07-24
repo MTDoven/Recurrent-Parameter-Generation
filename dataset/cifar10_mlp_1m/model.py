@@ -19,13 +19,16 @@ class SimpleMLP(nn.Module):
         return self.model(x)
 
 
-def simple_mlp_for_cifar10_classify():
+def cifar10_classifier():
     """ this model size is 0.001B parameters (0,000,992,768) """
     return SimpleMLP([3072, 256, 768, 10])
 
 
+
+
 if __name__ == "__main__":
-    model = simple_mlp_for_cifar10_classify()
-    x = torch.randn((4, 3072))
-    y = model(x)
-    print(y.shape)
+    model = cifar10_classifier()
+    size = 0
+    for name, param in model.named_parameters():
+        size += len(param.flatten())
+    print(size)

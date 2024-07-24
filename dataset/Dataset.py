@@ -175,3 +175,46 @@ class Cifar10_GoogleNet(BaseDataset):
     test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
                    "./dataset/cifar10_googlenet_6m/test.py " + \
                    "./dataset/cifar10_googlenet_6m/generated/generated_classifier.pth"
+
+
+class ConditionalDataset(BaseDataset):
+    def _extract_condition(self, index: int):
+        name = self.checkpoint_list[index]
+        condition_list = os.path.basename(name).split("_")
+        return condition_list
+    def __getitem__(self, index):
+        index = index % self.real_length
+        diction = torch.load(self.checkpoint_list[index], map_location="cpu")
+        condition = self._extract_condition(index)
+        param = self.preprocess(diction)
+        self.sequence_length = param.size(0)
+        if self.return_full_param:
+            return param, condition
+        if self.kwargs.get("use_pe"):
+            from model.transformer import get_sinusoid
+            param += get_sinusoid(self.sequence_length, self.dim_per_token)
+        inputs, targets = param[:-1], param[:]
+        return inputs, targets, condition
+
+
+
+class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
+    def _extract_condition(self, index: int):
+        float_number = float(super()._extract_condition(index)[2][4:])
+        return torch.tensor(float_number, dtype=torch.float32)
+
+
+class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-20-85"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
+    def _extract_condition(self, index: int):
+        float_number = float(super()._extract_condition(index)[1][3:])
+        return torch.tensor(float_number, dtype=torch.float32)

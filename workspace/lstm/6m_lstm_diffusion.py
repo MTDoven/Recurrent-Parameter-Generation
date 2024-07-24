@@ -1,3 +1,6 @@
+import os
+os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+
 USE_WANDB = True
 FINAL_RUNNING = True
 import math
@@ -7,9 +10,8 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
-from model import MambaDiffusion
-from dataset.Dataset import Cifar10_MLP
-import os
+from model import LstmDiffusion
+from dataset.Dataset import Cifar10_GoogleNet
 if USE_WANDB:
     import wandb
 import random
@@ -19,15 +21,15 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:5",
+    "device": "cuda:3",
     # dataset setting
-    "dataset": Cifar10_MLP,
+    "dataset": Cifar10_GoogleNet,
     "dim_per_token": 1024,
-    "sequence_length": 971,
-    "max_input_length": 971,
+    "sequence_length": 6179,
+    "max_input_length": 6179,
     # train setting
-    "batch_size": 4,
-    "num_workers": 4,
+    "batch_size": 1,
+    "num_workers": 2,
     "total_steps": 40000,
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
@@ -37,10 +39,10 @@ config = {
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
-    "generated_path": Cifar10_MLP.generated_path,
-    "test_command": Cifar10_MLP.test_command,
+    "generated_path": Cifar10_GoogleNet.generated_path,
+    "test_command": Cifar10_GoogleNet.test_command,
     # to log
-    "model_config": MambaDiffusion.config,
+    "model_config": LstmDiffusion.config,
 }
 
 
@@ -61,8 +63,8 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-model = MambaDiffusion(sequence_length=config["sequence_length"],
-                       device=config["device"])  # model setting is in model
+model = LstmDiffusion(sequence_length=config["sequence_length"],
+                      device=config["device"])  # model setting is in model
 model = model.to(config["device"])
 
 
@@ -100,7 +102,8 @@ def train():
     model.train()
     for batch_idx, param in enumerate(train_loader):
         optimizer.zero_grad()
-        param = param.to(config["device"])
+        with torch.cuda.amp.autocast(enabled=batch_idx < config["total_steps"] * 0.75, dtype=torch.bfloat16):
+            param = param.to(config["device"])
         # train
         loss = model(param.shape, param)
         loss.backward()

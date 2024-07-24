@@ -54,13 +54,12 @@ class MambaDiffusion(nn.Module):
         # mamba config
         "d_output": 1024,
         "d_model": 4096,
-        "d_state": 32,
+        "d_state": 64,
         "d_conv": 4,
         "expand": 2,
         # diffusion config
-        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
+        "layer_dims": [1024, 1024, 1024, 1024],
         "condition_dim": 1024,
-        "kernel_size": 5,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,

@@ -1,3 +1,6 @@
+import os
+os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+
 USE_WANDB = True
 import math
 import torch
@@ -8,7 +11,6 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model.mamba import MambaModel
 from dataset.Dataset import Cifar10_MLP
-import os
 if USE_WANDB:
     import wandb
 import random

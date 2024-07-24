@@ -1,4 +1,8 @@
+import os
+os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+
 USE_WANDB = True
+FINAL_RUNNING = True
 import math
 import torch
 import torch.nn as nn
@@ -6,9 +10,8 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
-from model.lstm import LstmModel
+from model import LstmDiffusion
 from dataset.Dataset import Cifar10_MLP
-import os
 if USE_WANDB:
     import wandb
 import random
@@ -25,12 +28,12 @@ config = {
     "sequence_length": 971,
     "max_input_length": 971,
     # train setting
-    "batch_size": 16,
-    "num_workers": 8,
-    "total_steps": 10000,
-    "learning_rate": 0.00005,
+    "batch_size": 4,
+    "num_workers": 4,
+    "total_steps": 40000,
+    "learning_rate": 0.0005,
     "weight_decay": 0.0,
-    "save_every": 2000,
+    "save_every": 1000,
     "print_every": 50,
     "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
@@ -39,7 +42,7 @@ config = {
     "generated_path": Cifar10_MLP.generated_path,
     "test_command": Cifar10_MLP.test_command,
     # to log
-    "model_config": LstmModel.config,
+    "model_config": LstmDiffusion.config,
 }
 
 
@@ -60,15 +63,16 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-model = LstmModel(config["sequence_length"])  # model setting is in model
+model = LstmDiffusion(sequence_length=config["sequence_length"],
+                      device=config["device"])  # model setting is in model
 model = model.to(config["device"])
 
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.RMSprop(params=model.parameters(),
-                          lr=config["learning_rate"],
-                          weight_decay=config["weight_decay"],)
+optimizer = optim.AdamW(params=model.parameters(),
+                        lr=config["learning_rate"],
+                        weight_decay=config["weight_decay"],)
 scheduler = SequentialLR(optimizer=optimizer,
                          schedulers=[LinearLR(optimizer=optimizer,
                                               start_factor=1e-4,
@@ -81,7 +85,9 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP", config=config)
+    wandb.init(project="cifar10_MLP_final" if FINAL_RUNNING else "cifar10_MLP",
+               name=__file__.split("/")[-1],
+               config=config,)
 
 
 
@@ -98,27 +104,26 @@ def train():
         optimizer.zero_grad()
         param = param.to(config["device"])
         # train
-        prediction = model(param.shape)
-        loss = F.mse_loss(prediction, param)
+        loss = model(param.shape, param)
         loss.backward()
         optimizer.step()
         scheduler.step()
         # to logging losses and print and save
         train_loss += loss.item()
         if USE_WANDB:
-            wandb.log({"train_loss": loss.item(),
-                       "z_norm": prediction.abs().mean(),})
+            wandb.log({"train_loss": loss.item()})
         this_steps += 1
         total_steps += 1
         if this_steps % config["print_every"] == 0:
-            print('Loss: %.6f' % (train_loss/this_steps))
+            if not FINAL_RUNNING:
+                print('Loss: %.6f' % (train_loss/this_steps))
             this_steps = 0
             train_loss = 0
         if total_steps % config["save_every"] == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
-            torch.save(state, os.path.join(config["checkpoint_save_path"], "state.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"], "1m_lstm_diffusion.pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if total_steps >= config["total_steps"]:
             break
@@ -128,8 +133,11 @@ def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
     with torch.no_grad():
-        prediction = model([1, config["sequence_length"], config["dim_per_token"]])
-    print("Generated_norm:", prediction.abs().mean())
+        prediction = model.sample()
+        generated_norm = prediction.abs().mean()
+    print("Generated_norm:", generated_norm.item())
+    if USE_WANDB:
+        wandb.log({"generated_norm": generated_norm.item()})
     train_set.save_params(prediction, save_path=save_path)
     if need_test:
         os.system(config["test_command"])
