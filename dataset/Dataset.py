@@ -206,7 +206,7 @@ class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
                    "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
     def _extract_condition(self, index: int):
         float_number = float(super()._extract_condition(index)[2][4:])
-        return torch.tensor(float_number, dtype=torch.float32)
+        return (torch.tensor(float_number, dtype=torch.float32) - 15.) / 5.
 
 
 class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
@@ -217,4 +217,4 @@ class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
                    "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
     def _extract_condition(self, index: int):
         float_number = float(super()._extract_condition(index)[1][3:])
-        return torch.tensor(float_number, dtype=torch.float32)
+        return (torch.tensor(float_number, dtype=torch.float32) - 0.5) / 0.5

@@ -1,8 +1,9 @@
-import os
+import sys, os
+sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
 os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 
-USE_WANDB = False
-FINAL_RUNNING = False
+USE_WANDB = True
+FINAL_RUNNING = True
 import math
 import torch
 import torch.nn as nn
@@ -11,6 +12,7 @@ from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model import MambaDiffusion
+from model.diffusion import DDIMSampler
 from dataset.Dataset import Cifar10_ResNet18_MultiSeed
 if USE_WANDB:
     import wandb
@@ -21,16 +23,16 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:7",
+    "device": "cuda:4",
     # dataset setting
     "dataset": Cifar10_ResNet18_MultiSeed,
-    "dim_per_token": 4096,
-    "sequence_length": 6179,
-    "max_input_length": 6179,
+    "dim_per_token": 1024,
+    "sequence_length": 11425,
+    "max_input_length": 11425,
     # train setting
-    "batch_size": 1,
-    "num_workers": 2,
-    "total_steps": 60000,
+    "batch_size": 4,
+    "num_workers": 4,
+    "total_steps": 80000,
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
     "save_every": 1000,
@@ -42,17 +44,35 @@ config = {
     "generated_path": Cifar10_ResNet18_MultiSeed.generated_path.format(None),
     "test_command": Cifar10_ResNet18_MultiSeed.test_command.format(None),
     # to log
-    "model_config": MambaDiffusion.config,
+    "model_config": {
+        # mamba config
+        "d_condition": 1,
+        "d_model": 4096,
+        "d_state": 32,
+        "d_conv": 4,
+        "expand": 2,
+        # diffusion config
+        "diffusion_batch": 256,
+        "layer_channels": [1, 32, 48, 64, 48, 32, 1],
+        "model_dim": 1024,
+        "condition_dim": 4096,
+        "kernel_size": 5,
+        "sample_mode": DDIMSampler,
+        "beta": (0.0001, 0.02),
+        "T": 1000,
+        "forward_once": True,
+    },
 }
 
 
 # Data
 print('==> Preparing data..')
+MambaDiffusion.config = config["model_config"]
 train_set = config["dataset"](dim_per_token=config["dim_per_token"],
                               max_input_length=config["max_input_length"],)
 train_set.set_infinite_dataset().set_return_full_param()
 print("Dataset length:", train_set.real_length)
-print("input shape:", train_set[0].shape)
+print("input shape:", train_set[0][0].shape)
 assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
@@ -100,12 +120,12 @@ this_steps = 0
 def train():
     global total_steps, train_loss, this_steps
     model.train()
-    for batch_idx, param in enumerate(train_loader):
+    for batch_idx, (param, condition) in enumerate(train_loader):
         optimizer.zero_grad()
-        param = param.to(config["device"])
+        param, condition = param.to(config["device"]), condition.to(config["device"])
         # train
-        # with torch.cuda.amp.autocast(enabled=batch_idx < config["total_steps"] * 0.75, dtype=torch.bfloat16):
-        loss = model(param.shape, param)
+        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
+            loss = model(param.shape, param, condition)
         loss.backward()
         optimizer.step()
         scheduler.step()
@@ -134,8 +154,9 @@ def train():
 def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
+    _, condition = train_set[0]
     with torch.no_grad():
-        prediction = model.sample()
+        prediction = model.sample(condition=condition)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB:

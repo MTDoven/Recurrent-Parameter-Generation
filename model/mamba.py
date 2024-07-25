@@ -18,6 +18,7 @@ class MambaModel(nn.Module):
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         self.register_buffer("pe", pe)
+        # self.pe = nn.Parameter(torch.empty(size=(1, sequence_length, self.config["d_model"])))
 
     @staticmethod
     def get_sinusoid(max_len, d_model):
@@ -28,7 +29,7 @@ class MambaModel(nn.Module):
         pe[:, 1::2] = torch.cos(position * div_term)
         return pe
 
-    def forward(self, output_shape, condition: torch.Tensor = torch.tensor([0.])):
-        condition = self.to_condition(condition.view(1, 1, 1).to(self.pe.device))
+    def forward(self, output_shape, condition):
+        condition = self.to_condition(condition.view(-1, 1, 1).to(self.pe.device))
         x = self.model(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x

@@ -1,8 +1,9 @@
-import os
+import sys, os
+sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
 os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 
-USE_WANDB = False
-FINAL_RUNNING = False
+USE_WANDB = True
+FINAL_RUNNING = True
 import math
 import torch
 import torch.nn as nn
@@ -11,6 +12,7 @@ from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model import MambaDiffusion
+from model.diffusion import DDIMSampler
 from dataset.Dataset import Cifar10_MLP
 if USE_WANDB:
     import wandb
@@ -33,7 +35,7 @@ config = {
     "total_steps": 40000,
     "learning_rate": 0.0005,
     "weight_decay": 0.0,
-    "save_every": 100,
+    "save_every": 1000,
     "print_every": 50,
     "warmup_steps": 500,
     "checkpoint_save_path": "./checkpoint",
@@ -42,7 +44,23 @@ config = {
     "generated_path": Cifar10_MLP.generated_path,
     "test_command": Cifar10_MLP.test_command,
     # to log
-    "model_config": MambaDiffusion.config,
+    "model_config": {
+        # mamba config
+        "d_condition": 1,
+        "d_model": 2048,
+        "d_state": 32,
+        "d_conv": 4,
+        "expand": 2,
+        # diffusion config
+        "diffusion_batch": None,
+        "layer_channels": [1, 32, 48, 64, 48, 32, 1],
+        "model_dim": 1024,
+        "condition_dim": 2048,
+        "kernel_size": 5,
+        "sample_mode": DDIMSampler,
+        "beta": (0.0001, 0.02),
+        "T": 1000,
+    },
 }
 
 
@@ -63,6 +81,7 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
+MambaDiffusion.config = config["model_config"]
 model = MambaDiffusion(sequence_length=config["sequence_length"],
                        device=config["device"])  # model setting is in model
 model = model.to(config["device"])

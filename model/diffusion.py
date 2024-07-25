@@ -170,15 +170,39 @@ class DiffusionLoss(nn.Module):
         # Given condition z and ground truth token x, compute loss
         x = x.view(-1, x.size(-1))
         c = c.view(-1, c.size(-1))
-        loss = self.diffusion_trainer(x, c)
+        real_batch = x.size(0)
+        batch = self.config["diffusion_batch"]
+        if self.config.get("forward_once"):
+            random_indices = torch.randperm(x.size(0))[:batch]
+            x, c = x[random_indices], c[random_indices]
+            real_batch = x.size(0)
+        if batch is not None and real_batch > batch:
+            loss = 0.
+            num_loops = x.size(0) // batch if x.size(0) % batch != 0 else x.size(0) // batch - 1
+            for _ in range(num_loops):
+                loss += self.diffusion_trainer(x[:batch], c[:batch]) * batch
+                x, c = x[batch:], c[batch:]
+            loss += self.diffusion_trainer(x, c) * x.size(0)
+            loss = loss / real_batch
+        else:  # all as a batch
+            loss = self.diffusion_trainer(x, c)
         return loss
 
     @torch.no_grad()
     def sample(self, x, c):
         # Given condition and noise, sample x using reverse diffusion process
         # Given condition z and ground truth token x, compute loss
+        batch = self.config["diffusion_batch"]
         x_shape = x.shape
         x = x.view(-1, x.size(-1))
         c = c.view(-1, c.size(-1))
-        result = self.diffusion_sampler(x, c)
-        return result.view(x_shape)
+        if batch is not None and x.size(0) > batch:
+            result = []
+            num_loops = x.size(0) // batch if x.size(0) % batch != 0 else x.size(0) // batch - 1
+            for _ in range(num_loops):
+                result.append(self.diffusion_sampler(x[:batch], c[:batch]))
+                x, c = x[batch:], c[batch:]
+            result.append(self.diffusion_sampler(x, c))
+            return torch.cat(result, dim=0).view(x_shape)
+        else:  # all as a batch
+            return self.diffusion_sampler(x, c).view(x_shape)
