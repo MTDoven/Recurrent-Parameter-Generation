@@ -27,7 +27,7 @@ class ConditionalUNet(nn.Module):
     def __init__(self, layer_channels: list, model_dim: int, condition_dim: int,
                  kernel_size: int, device: torch.device):
         super().__init__()
-        self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
+        self.time_embedder = TimestepEmbedder(hidden_dim=model_dim, device=device)
         self.condi_embedder = nn.Linear(condition_dim, model_dim)
         self.encoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1):
@@ -44,9 +44,9 @@ class ConditionalUNet(nn.Module):
             ]))
 
     def forward(self, x, t, c):
+        x = x[:, None, :]
         t = self.time_embedder(t)[:, None, :]
         c = self.condi_embedder(c)[:, None, :]
-        x = x[:, None, :]
         x_list = []
         for i, (module, activation) in enumerate(self.encoder_list):
             x = module((x + c) * t)

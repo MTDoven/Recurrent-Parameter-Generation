@@ -143,15 +143,7 @@ class DDIMSampler(nn.Module):
 
 
 class DiffusionLoss(nn.Module):
-    config = {
-        "layer_channels": [1, 32, 48, 64, 48, 32, 1],
-        "model_dim": 1024,
-        "condition_dim": 1024,
-        "kernel_size": 5,
-        "sample_mode": DDPMSampler,
-        "beta": (0.0001, 0.02),
-        "T": 1000,
-    }
+    config = {}
 
     def __init__(self, device=torch.device("cpu")):
         super().__init__()
@@ -177,7 +169,7 @@ class DiffusionLoss(nn.Module):
     def forward(self, x, c):
         # Given condition z and ground truth token x, compute loss
         x = x.view(-1, x.size(-1))
-        c = c.view(-1, x.size(-1))
+        c = c.view(-1, c.size(-1))
         loss = self.diffusion_trainer(x, c)
         return loss
 
@@ -187,6 +179,6 @@ class DiffusionLoss(nn.Module):
         # Given condition z and ground truth token x, compute loss
         x_shape = x.shape
         x = x.view(-1, x.size(-1))
-        c = c.view(-1, x.size(-1))
+        c = c.view(-1, c.size(-1))
         result = self.diffusion_sampler(x, c)
         return result.view(x_shape)

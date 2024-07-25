@@ -52,7 +52,7 @@ class LstmDiffusion(nn.Module):
 class MambaDiffusion(nn.Module):
     config = {
         # mamba config
-        "d_output": 1024,
+        "d_condition": 1,
         "d_model": 4096,
         "d_state": 64,
         "d_conv": 4,
@@ -60,7 +60,7 @@ class MambaDiffusion(nn.Module):
         # diffusion config
         "layer_channels": [1, 32, 48, 64, 48, 32, 1],
         "model_dim": 1024,
-        "condition_dim": 1024,
+        "condition_dim": 4096,
         "kernel_size": 5,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
@@ -75,8 +75,7 @@ class MambaDiffusion(nn.Module):
         # this module init
         self.model = MambaModel(sequence_length=sequence_length)
         self.criteria = DiffusionLoss(device=device)
-        assert self.model.config["d_output"] == self.criteria.config["condition_dim"]
-        self.dim_per_token = self.criteria.config["condition_dim"]
+        assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
 
     def forward(self, output_shape, x_0, **kwargs):
@@ -87,8 +86,8 @@ class MambaDiffusion(nn.Module):
 
     @torch.no_grad()
     def sample(self, x=None, **kwargs):
-        z = self.model(output_shape=[1, self.sequence_length, self.dim_per_token])
+        z = self.model(output_shape=[1, self.sequence_length, self.config["d_model"]])
         if x is None:
-            x = torch.randn((1, self.sequence_length, self.dim_per_token), device=self.criteria.device)
+            x = torch.randn((1, self.sequence_length, self.config["model_dim"]), device=self.criteria.device)
         x = self.criteria.sample(x, z, **kwargs)
         return x
