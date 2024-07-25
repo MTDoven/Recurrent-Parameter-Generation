@@ -6,9 +6,9 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10
 try:  # relative import
-    from .model import simple_mlp_for_cifar10_classify as Model
+    from .model import cifar10_classifier as Model
 except:  # absolute import
-    from model import simple_mlp_for_cifar10_classify as Model
+    from model import cifar10_classifier as Model
 import sys
 import os
 

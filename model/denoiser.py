@@ -23,51 +23,12 @@ class TimestepEmbedder(nn.Module):
         return t_emb
 
 
-class ConditionalMLP(nn.Module):
-    def __init__(self, layer_dims: list, condition_dim: int, device: torch.device):
-        super().__init__()
-        self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
-        self.encoder_list = nn.ModuleList([])
-        for i in range(len(layer_dims) // 2 + 1):
-            self.encoder_list.append(nn.ModuleList([
-                nn.Linear(layer_dims[i], layer_dims[i+1]),
-                nn.Sequential(nn.LayerNorm(layer_dims[i+1]), nn.LeakyReLU()),
-            ]))
-        self.decoder_list = nn.ModuleList([])
-        for i in range(len(layer_dims) // 2 + 1, len(layer_dims) - 1):
-            self.decoder_list.append(nn.ModuleList([
-                nn.Linear(layer_dims[i], layer_dims[i+1]),
-                nn.Sequential(nn.LayerNorm(layer_dims[i+1]), nn.LeakyReLU())
-                    if layer_channels[i+1] != 1 else nn.Identity(),
-            ]))
-        self._init_weight()
-
-    def _init_weight(self):
-        for module in self.modules():
-            if isinstance(module, nn.Linear):
-                nn.init.kaiming_normal_(module.weight)
-                nn.init.zeros_(module.bias)
-
-    def forward(self, x, t, c):
-        c = (c + self.time_embedder(t))[:, None, :]
-        x = x[:, None, :]
-        x_list = []
-        for i, (module, activation) in enumerate(self.encoder_list):
-            x = module(x + c)
-            x = activation(x)
-            if i < len(self.encoder_list) - 2:
-                x_list.append(x)
-        for i, (module, activation) in enumerate(self.decoder_list):
-            x = x + x_list[-i-1]
-            x = module(x + c)
-            x = activation(x)
-        return x[:, 0, :]
-
-
 class ConditionalUNet(nn.Module):
-    def __init__(self, layer_channels: list, condition_dim: int, kernel_size: int, device: torch.device):
+    def __init__(self, layer_channels: list, model_dim: int, condition_dim: int,
+                 kernel_size: int, device: torch.device):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=condition_dim, device=device)
+        self.condi_embedder = nn.Linear(condition_dim, model_dim)
         self.encoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1):
             self.encoder_list.append(nn.ModuleList([
@@ -81,19 +42,19 @@ class ConditionalUNet(nn.Module):
                 nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU())
                     if layer_channels[i+1] != 1 else nn.Identity(),
             ]))
-        # self.output_layer = nn.Conv1d(2, 1, kernel_size, 1, kernel_size // 2)
 
     def forward(self, x, t, c):
-        c = (c + self.time_embedder(t))[:, None, :]
+        t = self.time_embedder(t)[:, None, :]
+        c = self.condi_embedder(c)[:, None, :]
         x = x[:, None, :]
         x_list = []
         for i, (module, activation) in enumerate(self.encoder_list):
-            x = module(x + c)
+            x = module((x + c) * t)
             x = activation(x)
             if i < len(self.encoder_list) - 2:
                 x_list.append(x)
         for i, (module, activation) in enumerate(self.decoder_list):
             x = x + x_list[-i-1]
-            x = module(x + c)
+            x = module((x + c) * t)
             x = activation(x)
         return x[:, 0, :]

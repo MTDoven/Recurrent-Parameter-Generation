@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
-from .denoiser import ConditionalMLP, ConditionalUNet
+from .denoiser import ConditionalUNet
 import numpy as np
 
 
@@ -144,8 +144,10 @@ class DDIMSampler(nn.Module):
 
 class DiffusionLoss(nn.Module):
     config = {
-        "layer_dims": [1024, 1024, 1024, 1024],
+        "layer_channels": [1, 32, 48, 64, 48, 32, 1],
+        "model_dim": 1024,
         "condition_dim": 1024,
+        "kernel_size": 5,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
@@ -154,9 +156,11 @@ class DiffusionLoss(nn.Module):
     def __init__(self, device=torch.device("cpu")):
         super().__init__()
         self.device = device
-        self.net = ConditionalMLP(
-            layer_dims=self.config["layer_dims"],
+        self.net = ConditionalUNet(
+            layer_channels=self.config["layer_channels"],
+            model_dim=self.config["model_dim"],
             condition_dim=self.config["condition_dim"],
+            kernel_size=self.config["kernel_size"],
             device=device,
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(
