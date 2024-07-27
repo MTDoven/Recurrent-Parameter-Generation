@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from mamba_ssm import Mamba
+from mamba_ssm import Mamba2
 import math
 
 
@@ -9,16 +9,17 @@ class MambaModel(nn.Module):
 
     def __init__(self, sequence_length):
         super().__init__()
-        self.model = Mamba(
-            d_model=self.config["d_model"],
-            d_state=self.config["d_state"],
-            d_conv=self.config["d_conv"],
-            expand=self.config["expand"],
-        )
+        mamba_config = {
+            "d_model": self.config["d_model"],
+            "d_state": self.config["d_state"],
+            "d_conv": self.config["d_conv"],
+            "expand": self.config["expand"],
+        }
+        self.mamba_forward = nn.Sequential(*[Mamba2(**mamba_config) for _ in range(self.config["num_layers"])])
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         self.register_buffer("pe", pe)
-        # self.pe = nn.Parameter(torch.empty(size=(1, sequence_length, self.config["d_model"])))
+        # self.pe = nn.Parameter(nn.init.normal_(torch.empty((1, sequence_length, self.config["d_model"]))))
 
     @staticmethod
     def get_sinusoid(max_len, d_model):
@@ -29,7 +30,7 @@ class MambaModel(nn.Module):
         pe[:, 1::2] = torch.cos(position * div_term)
         return pe
 
-    def forward(self, output_shape, condition):
+    def forward(self, output_shape, condition=torch.tensor([0.])):
         condition = self.to_condition(condition.view(-1, 1, 1).to(self.pe.device))
-        x = self.model(self.pe.repeat(output_shape[0], 1, 1) + condition)
+        x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x

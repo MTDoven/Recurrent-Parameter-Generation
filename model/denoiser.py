@@ -42,6 +42,7 @@ class ConditionalUNet(nn.Module):
                 nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU())
                     if layer_channels[i+1] != 1 else nn.Identity(),
             ]))
+        self.to_condition = nn.Linear(condition_dim, model_dim)
 
     def forward(self, x, t, c):
         x = x[:, None, :]

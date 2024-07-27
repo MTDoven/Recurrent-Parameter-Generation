@@ -1,7 +1,7 @@
 import random
 import torch
 import numpy as np
-seed = SEED = 18
+seed = SEED = 20
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -89,7 +89,8 @@ optimizer = optim.AdamW(model.parameters(),
                        lr=config["learning_rate"],
                        weight_decay=config["weight_decay"])
 scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
-                                                 T_max=config["epochs"])
+                                                 T_max=config["epochs"],
+                                                 eta_min=1e-4)
 
 
 # Training
@@ -142,9 +143,9 @@ def test(save_name):
         state = {}
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
-        if not os.path.isdir('checkpoint-92-94'):
-            os.mkdir('checkpoint-92-94')
-        torch.save(state, f'checkpoint-92-94/{save_name}_acc{correct / total:.4f}_seed{SEED}_resnet18.pth')
+        if not os.path.isdir('checkpoint-single'):
+            os.mkdir('checkpoint-single')
+        torch.save(state, f'checkpoint-single/{save_name}_acc{correct / total:.4f}_seed{SEED}_resnet18.pth')
         best_acc = acc
 
 

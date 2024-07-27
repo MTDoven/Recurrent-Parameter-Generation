@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 config = {
     # device setting
-    "device": "cuda:4",
+    "device": "cuda:5",
     # dataset setting
     "dataset": Cifar10_MLP,
     "dim_per_token": 1024,

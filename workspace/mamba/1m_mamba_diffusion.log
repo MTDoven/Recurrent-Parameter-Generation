@@ -1,5 +1,4 @@
-==> Generating..
-Generated_norm: 0.6601049900054932
+Generated_norm: 0.6541237235069275
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -7,11 +6,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.193 | Acc: 57.860% (5786/10000)
+ 9 10 Loss: 1.190 | Acc: 58.080% (5808/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6628220081329346
+Generated_norm: 0.6624423265457153
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -19,11 +18,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.191 | Acc: 58.230% (5823/10000)
+ 9 10 Loss: 1.209 | Acc: 57.620% (5762/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6598417162895203
+Generated_norm: 0.6643751859664917
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -31,11 +30,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.195 | Acc: 58.220% (5822/10000)
+ 9 10 Loss: 1.213 | Acc: 57.410% (5741/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6606099009513855
+Generated_norm: 0.6490237712860107
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -43,11 +42,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.227 | Acc: 57.090% (5709/10000)
+ 9 10 Loss: 1.200 | Acc: 58.260% (5826/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6592700481414795
+Generated_norm: 0.6721428036689758
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -55,11 +54,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.206 | Acc: 57.830% (5783/10000)
+ 9 10 Loss: 1.189 | Acc: 57.770% (5777/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6625658869743347
+Generated_norm: 0.6588932275772095
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -67,11 +66,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.196 | Acc: 57.890% (5789/10000)
+ 9 10 Loss: 1.194 | Acc: 58.020% (5802/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6592351794242859
+Generated_norm: 0.6556239724159241
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -79,11 +78,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.193 | Acc: 57.870% (5787/10000)
+ 9 10 Loss: 1.201 | Acc: 57.780% (5778/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6620652675628662
+Generated_norm: 0.6575322151184082
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -91,11 +90,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.172 | Acc: 58.380% (5838/10000)
+ 9 10 Loss: 1.199 | Acc: 57.470% (5747/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6654999256134033
+Generated_norm: 0.6606571674346924
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -103,11 +102,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.203 | Acc: 58.170% (5817/10000)
+ 9 10 Loss: 1.191 | Acc: 58.150% (5815/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6646718978881836
+Generated_norm: 0.6663042902946472
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -115,11 +114,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.182 | Acc: 58.630% (5863/10000)
+ 9 10 Loss: 1.186 | Acc: 58.230% (5823/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6627224087715149
+Generated_norm: 0.6650303602218628
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -127,11 +126,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.202 | Acc: 58.420% (5842/10000)
+ 9 10 Loss: 1.200 | Acc: 58.020% (5802/10000)
 
 
 ==> Generating..
-Generated_norm: 0.662168025970459
+Generated_norm: 0.6662935018539429
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -139,11 +138,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.187 | Acc: 58.330% (5833/10000)
+ 9 10 Loss: 1.180 | Acc: 58.130% (5813/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6646735072135925
+Generated_norm: 0.656766951084137
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -151,11 +150,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.192 | Acc: 58.340% (5834/10000)
+ 9 10 Loss: 1.189 | Acc: 57.710% (5771/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6591188907623291
+Generated_norm: 0.6589531898498535
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -163,11 +162,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.194 | Acc: 57.870% (5787/10000)
+ 9 10 Loss: 1.193 | Acc: 57.970% (5797/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6613587737083435
+Generated_norm: 0.6610503792762756
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -175,11 +174,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.191 | Acc: 58.170% (5817/10000)
+ 9 10 Loss: 1.191 | Acc: 58.050% (5805/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6601199507713318
+Generated_norm: 0.6619522571563721
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -187,11 +186,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.190 | Acc: 58.280% (5828/10000)
+ 9 10 Loss: 1.182 | Acc: 58.360% (5836/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6612140536308289
+Generated_norm: 0.6616321802139282
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -199,11 +198,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 3.280 | Acc: 26.370% (2637/10000)
+ 9 10 Loss: 1.185 | Acc: 58.230% (5823/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6612160801887512
+Generated_norm: 0.6596805453300476
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -211,11 +210,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.186 | Acc: 58.470% (5847/10000)
+ 9 10 Loss: 1.182 | Acc: 58.270% (5827/10000)
 
 
 ==> Generating..
-Generated_norm: 0.661600649356842
+Generated_norm: 0.6585628390312195
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -223,11 +222,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.192 | Acc: 58.390% (5839/10000)
+ 9 10 Loss: 1.186 | Acc: 58.240% (5824/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6587650775909424
+Generated_norm: 0.6625964045524597
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -235,11 +234,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.194 | Acc: 57.970% (5797/10000)
+ 9 10 Loss: 1.181 | Acc: 58.620% (5862/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6608150601387024
+Generated_norm: 0.6630929112434387
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -247,11 +246,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.215 | Acc: 57.690% (5769/10000)
+ 9 10 Loss: 1.179 | Acc: 58.680% (5868/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6595780849456787
+Generated_norm: 0.6584641337394714
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -259,11 +258,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.187 | Acc: 58.650% (5865/10000)
+ 9 10 Loss: 1.182 | Acc: 58.240% (5824/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6613795757293701
+Generated_norm: 0.6597185134887695
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -271,11 +270,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.186 | Acc: 58.290% (5829/10000)
+ 9 10 Loss: 1.171 | Acc: 58.730% (5873/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6611819863319397
+Generated_norm: 0.6612988710403442
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -283,11 +282,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.186 | Acc: 58.610% (5861/10000)
+ 9 10 Loss: 1.178 | Acc: 58.680% (5868/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6590049862861633
+Generated_norm: 0.6610742807388306
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -295,11 +294,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.184 | Acc: 58.740% (5874/10000)
+ 9 10 Loss: 1.175 | Acc: 58.760% (5876/10000)
 
 
 ==> Generating..
-Generated_norm: 0.659987211227417
+Generated_norm: 0.6607896089553833
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -307,11 +306,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.190 | Acc: 58.540% (5854/10000)
+ 9 10 Loss: 1.179 | Acc: 58.590% (5859/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6599592566490173
+Generated_norm: 0.6612107157707214
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -319,11 +318,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.179 | Acc: 58.490% (5849/10000)
+ 9 10 Loss: 1.180 | Acc: 58.500% (5850/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6595317125320435
+Generated_norm: 0.6607198119163513
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -331,11 +330,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.188 | Acc: 58.430% (5843/10000)
+ 9 10 Loss: 1.178 | Acc: 58.520% (5852/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6603766679763794
+Generated_norm: 0.6613551378250122
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -343,11 +342,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.192 | Acc: 58.500% (5850/10000)
+ 9 10 Loss: 1.175 | Acc: 58.680% (5868/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6617476940155029
+Generated_norm: 0.6607605814933777
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -355,11 +354,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.179 | Acc: 58.700% (5870/10000)
+ 9 10 Loss: 1.175 | Acc: 58.760% (5876/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6611613631248474
+Generated_norm: 0.6608101725578308
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -367,11 +366,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.182 | Acc: 58.650% (5865/10000)
+ 9 10 Loss: 1.176 | Acc: 58.770% (5877/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6601113080978394
+Generated_norm: 0.6608620285987854
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -379,11 +378,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.182 | Acc: 58.570% (5857/10000)
+ 9 10 Loss: 1.174 | Acc: 58.650% (5865/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6609073281288147
+Generated_norm: 0.660831868648529
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -391,11 +390,11 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.181 | Acc: 58.700% (5870/10000)
+ 9 10 Loss: 1.175 | Acc: 58.560% (5856/10000)
 
 
 ==> Generating..
-Generated_norm: 0.6607354283332825
+Generated_norm: 0.6608039736747742
 ==> Preparing data..
 Files already downloaded and verified
 Files already downloaded and verified
@@ -403,18 +402,4 @@ Files already downloaded and verified
 ==> Defining training..
 
 ==> Testing..
- 9 10 Loss: 1.187 | Acc: 58.400% (5840/10000)
-
-
-==> Generating..
-Generated_norm: 0.6608240008354187
-==> Preparing data..
-Files already downloaded and verified
-Files already downloaded and verified
-==> Building model..
-==> Defining training..
-
-==> Testing..
- 9 10 Loss: 1.188 | Acc: 58.590% (5859/10000)
-
-Finished Training!
+ 9 10 Loss: 1.177 | Acc: 58.710% (5871/10000)
