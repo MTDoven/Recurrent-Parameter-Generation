@@ -12,7 +12,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model import MambaDiffusion
 from model.diffusion import DDIMSampler
-from dataset.Dataset import Cifar10_ResNet18
+from dataset.Dataset import Cifar10_ResNet18 as Dataset
 if USE_WANDB:
     import wandb
 import random
@@ -24,12 +24,12 @@ config = {
     # device setting
     "device": "cuda",
     # dataset setting
-    "dataset": Cifar10_ResNet18,
+    "dataset": Dataset,
     "dim_per_token": 8192,
-    "sequence_length": 1429,
-    "max_input_length": 1429,
+    "sequence_length": 1490,
+    "max_input_length": 1490,
     # train setting
-    "batch_size": 2,
+    "batch_size": 4,
     "num_workers": 4,
     "total_steps": 80000,
     "learning_rate": 0.00003,
@@ -41,23 +41,23 @@ config = {
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
-    "generated_path": Cifar10_ResNet18.generated_path,
-    "test_command": Cifar10_ResNet18.test_command,
+    "generated_path": Dataset.generated_path,
+    "test_command": Dataset.test_command,
     # to log
     "model_config": {
         # mamba config
         "d_condition": 1,
         "d_model": 8192,
-        "d_state": 256,
+        "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 512,
-        "layer_channels": [1, 64, 128, 64, 1],
+        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
-        "kernel_size": 5,
+        "kernel_size": 7,
         "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,

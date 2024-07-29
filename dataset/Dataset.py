@@ -12,7 +12,8 @@ def pad_to_length(x, common_factor):
     # print(f"padding {x.shape} according to {common_factor}")
     full_length = (len(x.flatten()) // common_factor + 1) * common_factor
     padding_length = full_length - len(x.flatten())
-    padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
+    # padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
+    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=torch.nan)
     x = torch.cat((x.flatten(), padding), dim=0)
     return x
 
@@ -34,7 +35,8 @@ class BaseDataset(Dataset, ABC):
         self.structure = {}
         diction = torch.load(self.checkpoint_list[0], map_location="cpu")
         for key, value in diction.items():
-            if len(value.shape) == 0:
+            # FIXME: how will we handle the running_var in batch_norm?
+            if "num_batches_tracked" in key or "running_var" in key:
                 self.structure[key] = (value.shape, value, None)
                 continue
             self.structure[key] = (value.shape, value.mean(), value.std())
@@ -89,6 +91,7 @@ class BaseDataset(Dataset, ABC):
                 continue
             value = value.flatten()
             value = (value - mean) / std
+            value = pad_to_length(value, self.dim_per_token)  # FIXME: delete this line if not use padding
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
         param = pad_to_length(param, self.dim_per_token)
@@ -107,9 +110,10 @@ class BaseDataset(Dataset, ABC):
             this_param = params[:num_elements].view(*shape)
             this_param = this_param * std + mean
             diction[key] = this_param
-            if "running_var" in key:
-                diction[key] = torch.clip(this_param, min=1e-6)
-            params = params[num_elements:]
+            # params = params[num_elements:]  # FIXME: not use padding to use this line
+            cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
+                    else (num_elements // self.dim_per_token + 1) * self.dim_per_token
+            params = params[cutting_length:]  # FIXME: use padding to use these three lines
         return diction
 
 
@@ -179,6 +183,14 @@ class Cifar10_GoogleNet(BaseDataset):
 
 class Cifar10_ResNet18(BaseDataset):
     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-single"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_classifier.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_classifier.pth"
+
+
+class Cifar10_ResNet18_One(BaseDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-one"
     generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_classifier.pth"
     test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
                    "./dataset/cifar10_resnet18_11m/test.py " + \

@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-from mamba_ssm import Mamba2
+from mamba_ssm import Mamba2 as Mamba
 import math
 
 
@@ -15,7 +15,7 @@ class MambaModel(nn.Module):
             "d_conv": self.config["d_conv"],
             "expand": self.config["expand"],
         }
-        self.mamba_forward = nn.Sequential(*[Mamba2(**mamba_config) for _ in range(self.config["num_layers"])])
+        self.mamba_forward = nn.Sequential(*[Mamba(**mamba_config) for _ in range(self.config["num_layers"])])
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         self.register_buffer("pe", pe)

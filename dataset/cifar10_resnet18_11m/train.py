@@ -29,8 +29,8 @@ config = {
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 500,
-    "num_workers": 32,
+    "batch_size": 50,
+    "num_workers": 16,
     "learning_rate": 0.02,
     "epochs": 150,
     "test_freq": 1,
@@ -114,7 +114,7 @@ def train(epoch, save_name):
         _, predicted = outputs.max(1)
         total += targets.size(0)
         correct += predicted.eq(targets).sum().item()
-    print('\r', 'Loss: %.3f | Acc: %.3f%% (%d/%d)' %
+    print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
           (train_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
 
 def test(save_name):
@@ -134,7 +134,7 @@ def test(save_name):
             _, predicted = outputs.max(1)
             total += targets.size(0)
             correct += predicted.eq(targets).sum().item()
-        print('\r', batch_idx, len(test_loader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)' %
+        print('\r', batch_idx, len(test_loader), 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
               (test_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
     # Save checkpoint.
     acc = 100.*correct/total

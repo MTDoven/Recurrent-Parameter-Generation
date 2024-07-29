@@ -28,6 +28,9 @@ class GaussianDiffusionTrainer(nn.Module):
         self.register_buffer("noise_rate", torch.sqrt(1.0 - alpha_t_bar))
 
     def forward(self, x_0, z):
+        # preprocess nan to zero
+        mask = torch.isnan(x_0)
+        x_0 = torch.nan_to_num(x_0, 0.)
         # get a random training step $t \sim Uniform({1, ..., T})$
         t = torch.randint(self.T, size=(x_0.shape[0],), device=x_0.device)
         # generate $\epsilon \sim N(0, 1)$
@@ -38,7 +41,8 @@ class GaussianDiffusionTrainer(nn.Module):
         epsilon_theta = self.model(x_t, t, z)
         # get the gradient
         loss = F.mse_loss(epsilon_theta, epsilon, reduction="none")
-        return loss.mean()
+        loss[mask] = torch.nan
+        return loss.nanmean()
 
 
 class DDPMSampler(nn.Module):
