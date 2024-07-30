@@ -14,7 +14,7 @@ for key, value in diction.items():
     #if ("conv" in key) or ("downsample.0" in key):
     #if ("fc" in key):
         #print(key, value.shape)
-        pre_mean = value.numel() - 1
+        pre_mean = value.mean()
         value = torch.log(value / pre_mean)
         mean, std = value.mean(), value.std()
         value = (value - mean) / std

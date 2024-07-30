@@ -49,8 +49,9 @@ class BaseDataset(Dataset, ABC):
                 if "num_batches_tracked" in key:
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
-                    value = torch.log(value / (value.numel() - 1))
-                    structures[i][key] = (value.shape, value.mean(), value.std())
+                    pre_mean = value.mean()
+                    value = torch.log(value / pre_mean)
+                    structures[i][key] = (value.shape, pre_mean, torch.cat([value.mean(), value.std()]))
                 else:  # conv & linear
                     structures[i][key] = (value.shape, value.mean(), value.std())
         final_structure = {}
@@ -93,9 +94,14 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            shape, mean, std = self.structure[key]
-            if std is None:
+            if "num_batches_tracked" in key:
                 continue
+            elif "running_var" in key:
+                shape, pre_mean, mean_std = self.structure[key]
+                mean, std = mean_std
+                value = torch.log(value / pre_mean)
+            else:  # normal
+                shape, mean, std = self.structure[key]
             value = value.flatten()
             value = (value - mean) / std
             value = pad_to_length(value, self.dim_per_token)
@@ -110,12 +116,17 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, (shape, mean, std) in self.structure.items():
-            if std is None:
+            if "num_batches_tracked" in key:
                 diction[key] = mean
                 continue
+            elif "running_var" in key:
+                pre_mean, mean_std = mean, std
+                mean, std = mean_std
             num_elements = math.prod(shape)
             this_param = params[:num_elements].view(*shape)
             this_param = this_param * std + mean
+            if "running_var" in key:
+                this_param = torch.exp(this_param) * pre_mean
             diction[key] = this_param
             cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
                     else (num_elements // self.dim_per_token + 1) * self.dim_per_token
