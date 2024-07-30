@@ -20,8 +20,9 @@ from model import MambaDiffusion as Model
 from model.diffusion import DDIMSampler as Sampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 # dataset
+from dataset import Cifar10_ResNet18 as Dataset
 from torch.utils.data import DataLoader
-from dataset.Dataset import Cifar10_ResNet18 as Dataset
+
 
 
 config = {
@@ -31,7 +32,6 @@ config = {
     "dataset": Dataset,
     "dim_per_token": 8192,
     "sequence_length": 1490,
-    "max_input_length": 1490,
     # train setting
     "batch_size": 4,
     "num_workers": 4,
@@ -72,8 +72,7 @@ config = {
 
 # Data
 print('==> Preparing data..')
-train_set = config["dataset"](dim_per_token=config["dim_per_token"],
-                              max_input_length=config["max_input_length"],)
+train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"

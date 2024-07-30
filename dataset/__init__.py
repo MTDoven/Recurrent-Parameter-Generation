@@ -128,19 +128,22 @@ class BaseDataset(Dataset, ABC):
 class Cifar10_MLPTesting(BaseDataset):
     data_path = "./dataset/cifar10_mlptesting_1m/checkpoint"
     generated_path = "./dataset/cifar10_mlptesting_1m/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_mlptesting_1m/test.py " + generated_path
+    test_command = "python ./dataset/cifar10_mlptesting_1m/test.py " + \
+                   "./dataset/cifar10_mlptesting_1m/generated/generated_model.pth"
 
 
 class Cifar10_GoogleNet(BaseDataset):
     data_path = "./dataset/cifar10_googlenet_6m/checkpoint"
     generated_path = "./dataset/cifar10_googlenet_6m/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_googlenet_6m/test.py " + generated_path
+    test_command = "python ./dataset/cifar10_googlenet_6m/test.py " + \
+                   "./dataset/cifar10_googlenet_6m/generated/generated_model.pth"
 
 
 class Cifar10_ResNet18(BaseDataset):
     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-single"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_classifier.pth"
-    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + generated_path
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
 
 
 
@@ -163,10 +166,9 @@ class ConditionalDataset(BaseDataset):
 
 class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
-    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
-                   "./dataset/cifar10_resnet18_11m/test.py " + \
-                   "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
+    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
 
     def _extract_condition(self, index: int):
         float_number = float(super()._extract_condition(index)[2][4:])
@@ -175,10 +177,9 @@ class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
 
 class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-20-85"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
-    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
-                   "./dataset/cifar10_resnet18_11m/test.py " + \
-                   "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_acc{}.pth"
+    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_model_acc{}.pth"
 
     def _extract_condition(self, index: int):
         float_number = float(super()._extract_condition(index)[1][3:])
