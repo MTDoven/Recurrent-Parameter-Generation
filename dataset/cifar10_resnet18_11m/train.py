@@ -16,9 +16,9 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10
 try:  # relative import
-    from .model import simple_mlp_for_cifar10_classify as Model
+    from .model import cifar10_classify as Model
 except:  # absolute import
-    from model import simple_mlp_for_cifar10_classify as Model
+    from model import cifar10_classify as Model
 import sys
 import os
 
@@ -29,7 +29,7 @@ config = {
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 50,
+    "batch_size": 1000,
     "num_workers": 16,
     "learning_rate": 0.02,
     "epochs": 150,

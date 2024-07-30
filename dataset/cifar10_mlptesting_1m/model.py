@@ -22,13 +22,3 @@ class SimpleMLP(nn.Module):
 def cifar10_classifier():
     """ this model size is 0.001B parameters (0,000,992,768) """
     return SimpleMLP([3072, 256, 768, 10])
-
-
-
-
-if __name__ == "__main__":
-    model = cifar10_classifier()
-    size = 0
-    for name, param in model.named_parameters():
-        size += len(param.flatten())
-    print(size)

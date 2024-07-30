@@ -1,23 +1,27 @@
 import sys, os
 sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
 os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+USE_WANDB = True
 
-USE_WANDB = FINAL_RUNNING = True
+# other
 import math
+import random
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+if USE_WANDB: import wandb
+# torch
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
+from torch.cuda.amp import autocast
+# model
+from model import MambaDiffusion as Model
+from model.diffusion import DDIMSampler as Sampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
+# dataset
 from torch.utils.data import DataLoader
-from model import MambaDiffusion
-from model.diffusion import DDIMSampler
 from dataset.Dataset import Cifar10_ResNet18 as Dataset
-if USE_WANDB:
-    import wandb
-import random
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
 
 
 config = {
@@ -58,7 +62,7 @@ config = {
         "model_dim": 8192,
         "condition_dim": 8192,
         "kernel_size": 7,
-        "sample_mode": DDIMSampler,
+        "sample_mode": Sampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
@@ -70,7 +74,6 @@ config = {
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"],
                               max_input_length=config["max_input_length"],)
-train_set.set_infinite_dataset().set_return_full_param()
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
@@ -84,8 +87,8 @@ train_loader = DataLoader(dataset=train_set,
 # Model
 print('==> Building model..')
 MambaDiffusion.config = config["model_config"]
-model = MambaDiffusion(sequence_length=config["sequence_length"],
-                       device=config["device"])  # model setting is in model
+model = Model(sequence_length=config["sequence_length"],
+              device=config["device"])  # model setting is in model
 model = model.to(config["device"])
 
 
@@ -106,49 +109,46 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="cifar10_MLP_final" if FINAL_RUNNING else "cifar10_MLP",
-               name=__file__.split("/")[-1],
-               config=config,)
+    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1], config=config,)
 
 
 
 
 # Training
 print('==> Defining training..')
-total_steps = 0
-train_loss = 0
-this_steps = 0
 def train():
-    global total_steps, train_loss, this_steps
+    if not USE_WANDB:
+        train_loss = 0
+        this_steps = 0
+    print("==> start training..")
     model.train()
     for batch_idx, param in enumerate(train_loader):
         optimizer.zero_grad()
         param = param.to(config["device"])
         # train
-        with torch.cuda.amp.autocast(enabled=config["autocast"] and batch_idx < config["total_steps"] * 0.75, dtype=torch.bfloat16):
+        with autocast(enabled=config["autocast"] and batch_idx < config["total_steps"] * 0.75, dtype=torch.bfloat16):
             loss = model(param.shape, param)
         loss.backward()
         optimizer.step()
         scheduler.step()
         # to logging losses and print and save
-        train_loss += loss.item()
         if USE_WANDB:
             wandb.log({"train_loss": loss.item()})
-        this_steps += 1
-        total_steps += 1
-        if this_steps % config["print_every"] == 0:
-            if not FINAL_RUNNING:
+        else:  # not use wandb
+            train_loss += loss.item()
+            this_steps += 1
+            if this_steps % config["print_every"] == 0:
                 print('Loss: %.6f' % (train_loss/this_steps))
-            this_steps = 0
-            train_loss = 0
-        if total_steps % config["save_every"] == 0:
+                this_steps = 0
+                train_loss = 0
+        if batch_idx % config["save_every"] == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
             torch.save(state, os.path.join(config["checkpoint_save_path"],
                                            f"{__file__.split('/')[-1].split('.')[0]}.pth"))
             generate(save_path=config["generated_path"], need_test=True)
-        if total_steps >= config["total_steps"]:
+        if batch_idx >= config["total_steps"]:
             break
 
 
@@ -171,11 +171,7 @@ def generate(save_path=config["generated_path"], need_test=True):
 
 
 if __name__ == '__main__':
-    # model = torch.compile(model, mode="default")
     train()
-
-    # deal problems by dataloder
-    del train_loader
+    del train_loader  # deal problems by dataloader
     print("Finished Training!")
     exit(0)
-

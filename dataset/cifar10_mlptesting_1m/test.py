@@ -7,6 +7,7 @@ import sys
 
 if __name__ == '__main__':
     config["test_model_path"] = sys.argv[1]
+    config["batch_size"] = 50
 
     state = torch.load(config["test_model_path"], map_location="cpu")
     diction = {}

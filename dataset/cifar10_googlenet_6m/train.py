@@ -19,7 +19,7 @@ config = {
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": "cuda",
-    "batch_size": 256,
+    "batch_size": 1000,
     "num_workers": 24,
     "learning_rate": 0.005,
     "epochs": 150,

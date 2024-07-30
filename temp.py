@@ -14,5 +14,4 @@ for (key1, value1), (key2, value2) in zip(diction1.items(), diction2.items()):
     if "running_var" in key1 or True:
         print(value1.flatten()[:8], "\n", value2.flatten()[:8])
         print()
-
     #break

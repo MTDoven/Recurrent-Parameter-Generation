@@ -33,13 +33,16 @@ class BaseDataset(Dataset, ABC):
         self.checkpoint_list = list([os.path.join(checkpoint_path, item) for item in checkpoint_list])
         self.length = self.real_length = len(self.checkpoint_list)
         self.structure = {}
-        diction = torch.load(self.checkpoint_list[0], map_location="cpu")
-        for key, value in diction.items():
-            # FIXME: how will we handle the running_var in batch_norm?
-            if "num_batches_tracked" in key or "running_var" in key:
-                self.structure[key] = (value.shape, value, None)
-                continue
-            self.structure[key] = (value.shape, value.mean(), value.std())
+        for checkpoint in self.checkpoint_list:
+            diction = torch.load(checkpoint, map_location="cpu")
+            for key, value in diction.items():
+                if "num_batches_tracked" in key:
+                    self.structure[key] = (value.shape, value, None)
+                elif "running_var" in key:
+                    value = torch.log(value / (value.numel() - 1))
+                    self.structure[key] = (value.shape, value.mean(), value.std())
+                else:  # conv & linear
+                    self.structure[key] = (value.shape, value.mean(), value.std())
         self.kwargs = kwargs
 
     def __len__(self):

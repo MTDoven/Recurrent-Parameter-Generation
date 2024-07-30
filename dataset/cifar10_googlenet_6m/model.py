@@ -94,13 +94,3 @@ class GoogleNet(nn.Module):
 def cifar10_classifier():
     """ this model size is 0.006B parameters (0,005,941,552) """
     return GoogleNet()
-
-
-
-
-if __name__ == "__main__":
-    model = cifar10_classifier()
-    size = 0
-    for name, param in model.named_parameters():
-        size += len(param.flatten())
-    print(size)

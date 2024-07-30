@@ -1,0 +1,185 @@
+import torch
+import einops
+from torch.utils.data import Dataset
+import os
+import math
+from abc import ABC
+from tqdm.auto import tqdm
+
+
+def pad_to_length(x, common_factor):
+    if len(x.flatten()) % common_factor == 0:
+        return x.flatten()
+    # print(f"padding {x.shape} according to {common_factor}")
+    full_length = (len(x.flatten()) // common_factor + 1) * common_factor
+    padding_length = full_length - len(x.flatten())
+    # padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
+    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=torch.nan)
+    x = torch.cat((x.flatten(), padding), dim=0)
+    return x
+
+
+class BaseDataset(Dataset, ABC):
+    data_path = None
+    generated_path = None
+    test_command = None
+
+    def __init__(self, checkpoint_path=None, dim_per_token=1024, **kwargs):
+        checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
+        assert os.path.exists(checkpoint_path)
+        self.dim_per_token = dim_per_token
+        self.structure = None  # set in get_structure()
+        self.sequence_length = None  # set in get_structure()
+        # load checkpoint_list
+        checkpoint_list = os.listdir(checkpoint_path)
+        self.checkpoint_list = list([os.path.join(checkpoint_path, item) for item in checkpoint_list])
+        self.length = self.real_length = len(self.checkpoint_list)
+        self.set_infinite_dataset()
+        self.get_structure()
+        # other kwargs
+        self.kwargs = kwargs
+
+    def get_structure(self):
+        # get structure
+        checkpoint_list = self.checkpoint_list
+        structures = [{} for _ in range(len(checkpoint_list))]
+        for i, checkpoint in tqdm(enumerate(checkpoint_list)):
+            diction = torch.load(checkpoint, map_location="cpu")
+            for key, value in diction.items():
+                if "num_batches_tracked" in key:
+                    structures[i][key] = (value.shape, value, None)
+                elif "running_var" in key:
+                    value = torch.log(value / (value.numel() - 1))
+                    structures[i][key] = (value.shape, value.mean(), value.std())
+                else:  # conv & linear
+                    structures[i][key] = (value.shape, value.mean(), value.std())
+        final_structure = {}
+        structure_diction = torch.load(checkpoint_list[0], map_location="cpu")
+        for key, param in tqdm(structure_diction.items()):
+            if "num_batches_tracked" in key:
+                final_structure[key] = (param.shape, param, None)
+                continue
+            value = [param.shape, 0., 0.]
+            for structure in structures:
+                value[1] += structure[key][1]
+                value[2] += structure[key][2]
+            value[1] /= len(structures)
+            value[2] /= len(structures)
+            final_structure[key] = tuple(value)
+        self.structure = final_structure
+        # get sequence_length
+        param = self.preprocess(structure_diction)
+        self.sequence_length = param.size(0)
+
+    def set_infinite_dataset(self, max_num=None):
+        if max_num is None:
+            max_num = self.length * 10000000
+        self.length = max_num
+        return self
+
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, index):
+        index = index % self.real_length
+        diction = torch.load(self.checkpoint_list[index], map_location="cpu")
+        param = self.preprocess(diction)
+        return param
+
+    def save_params(self, params, save_path):
+        diction = self.postprocess(params.cpu())
+        torch.save(diction, save_path)
+
+    def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
+        param_list = []
+        for key, value in diction.items():
+            shape, mean, std = self.structure[key]
+            if std is None:
+                continue
+            value = value.flatten()
+            value = (value - mean) / std
+            value = pad_to_length(value, self.dim_per_token)
+            param_list.append(value)
+        param = torch.cat(param_list, dim=0)
+        param = pad_to_length(param, self.dim_per_token)
+        param = param.view(-1, self.dim_per_token)
+        # print("Sequence length:", param.size(0))
+        return param
+
+    def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
+        diction = {}
+        params = params.flatten()
+        for key, (shape, mean, std) in self.structure.items():
+            if std is None:
+                diction[key] = mean
+                continue
+            num_elements = math.prod(shape)
+            this_param = params[:num_elements].view(*shape)
+            this_param = this_param * std + mean
+            diction[key] = this_param
+            cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
+                    else (num_elements // self.dim_per_token + 1) * self.dim_per_token
+            params = params[cutting_length:]
+        return diction
+
+
+
+
+class Cifar10_MLPTesting(BaseDataset):
+    data_path = "./dataset/cifar10_mlptesting_1m/checkpoint"
+    generated_path = "./dataset/cifar10_mlptesting_1m/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_mlptesting_1m/test.py " + generated_path
+
+
+class Cifar10_GoogleNet(BaseDataset):
+    data_path = "./dataset/cifar10_googlenet_6m/checkpoint"
+    generated_path = "./dataset/cifar10_googlenet_6m/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_googlenet_6m/test.py " + generated_path
+
+
+class Cifar10_ResNet18(BaseDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-single"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_classifier.pth"
+    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + generated_path
+
+
+
+
+class ConditionalDataset(BaseDataset):
+    def _extract_condition(self, index: int):
+        name = self.checkpoint_list[index]
+        condition_list = os.path.basename(name).split("_")
+        return condition_list
+
+    def __getitem__(self, index):
+        index = index % self.real_length
+        diction = torch.load(self.checkpoint_list[index], map_location="cpu")
+        condition = self._extract_condition(index)
+        param = self.preprocess(diction)
+        return param, condition
+
+
+
+
+class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_seed{}.pth"
+
+    def _extract_condition(self, index: int):
+        float_number = float(super()._extract_condition(index)[2][4:])
+        return (torch.tensor(float_number, dtype=torch.float32) - 15.) / 5.
+
+
+class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-20-85"
+    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
+    test_command = "CUDA_VISIBLE_DEVICE=0 python " + \
+                   "./dataset/cifar10_resnet18_11m/test.py " + \
+                   "./dataset/cifar10_resnet18_11m/generated/generated_acc{}.pth"
+
+    def _extract_condition(self, index: int):
+        float_number = float(super()._extract_condition(index)[1][3:])
+        return (torch.tensor(float_number, dtype=torch.float32) - 0.5) / 0.5

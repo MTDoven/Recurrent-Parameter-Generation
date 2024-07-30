@@ -178,16 +178,6 @@ def ResNet18(**kwargs):
     return _resnet(BasicBlock, [2, 2, 2, 2], **kwargs)
 
 
-def simple_mlp_for_cifar10_classify():
+def cifar10_classify():
     """ this model size is 0.001B parameters (0,011,689,512) """
     return ResNet18()
-
-
-
-
-if __name__ == "__main__":
-    model = cifar10_classifier()
-    size = 0
-    for name, param in model.named_parameters():
-        size += len(param.flatten())
-    print(size)
