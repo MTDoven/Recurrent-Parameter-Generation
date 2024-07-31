@@ -30,8 +30,8 @@ config = {
     "device": "cuda",
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 4096,
-    "sequence_length": 5363,
+    "dim_per_token": 8192,
+    "sequence_length": 2797,
     # train setting
     "batch_size": 4,
     "num_workers": 4,
@@ -51,7 +51,7 @@ config = {
     "model_config": {
         # mamba config
         "d_condition": 1,
-        "d_model": 4096,
+        "d_model": 8192,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
@@ -59,8 +59,8 @@ config = {
         # diffusion config
         "diffusion_batch": 512,
         "layer_channels": [1, 64, 96, 64, 1],
-        "model_dim": 4096,
-        "condition_dim": 4096,
+        "model_dim": 8192,
+        "condition_dim": 8192,
         "kernel_size": 7,
         "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
