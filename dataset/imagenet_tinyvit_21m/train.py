@@ -171,7 +171,7 @@ def train(epoch, save_name):
 
 
 @torch.no_grad()
-def test(epoch, save_name):
+def test(save_name):
     print("\n==> Testing..")
     global best_acc
     model.eval()
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     for epoch in range(0, config["epochs"]):
         epoch += 1
         train(epoch, str(save_name).zfill(4))
-        test(epoch, str(save_name).zfill(4))
+        test(str(save_name).zfill(4))
         scheduler.step()
         save_name += 1
 

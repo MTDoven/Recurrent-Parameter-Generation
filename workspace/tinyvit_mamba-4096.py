@@ -58,7 +58,7 @@ config = {
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 512,
-        "layer_channels": [1, 32, 64, 32, 1],
+        "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 4096,
         "condition_dim": 4096,
         "kernel_size": 7,
