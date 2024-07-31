@@ -144,9 +144,7 @@ def test(save_name):
     correct = 0
     total = 0
     with torch.no_grad():
-        for batch_idx, (inputs, targets) in tqdm(
-                enumerate(test_loader),
-                total=len(test_loader.dataset) // config["batch_size"]):
+        for batch_idx, (inputs, targets) in tqdm(enumerate(test_loader)):
             inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
             outputs = model(inputs)
             loss = criterion(outputs, targets)
