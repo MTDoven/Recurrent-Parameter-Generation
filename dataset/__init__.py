@@ -4,7 +4,6 @@ from torch.utils.data import Dataset
 import os
 import math
 from abc import ABC
-from tqdm.auto import tqdm
 
 
 def pad_to_length(x, common_factor):
@@ -43,7 +42,7 @@ class BaseDataset(Dataset, ABC):
         # get structure
         checkpoint_list = self.checkpoint_list
         structures = [{} for _ in range(len(checkpoint_list))]
-        for i, checkpoint in tqdm(enumerate(checkpoint_list)):
+        for i, checkpoint in enumerate(checkpoint_list):
             diction = torch.load(checkpoint, map_location="cpu")
             for key, value in diction.items():
                 if "num_batches_tracked" in key:
@@ -51,12 +50,12 @@ class BaseDataset(Dataset, ABC):
                 elif "running_var" in key:
                     pre_mean = value.mean()
                     value = torch.log(value / pre_mean)
-                    structures[i][key] = (value.shape, pre_mean, torch.cat([value.mean(), value.std()]))
+                    structures[i][key] = (value.shape, pre_mean, torch.tensor([value.mean(), value.std()]))
                 else:  # conv & linear
                     structures[i][key] = (value.shape, value.mean(), value.std())
         final_structure = {}
         structure_diction = torch.load(checkpoint_list[0], map_location="cpu")
-        for key, param in tqdm(structure_diction.items()):
+        for key, param in structure_diction.items():
             if "num_batches_tracked" in key:
                 final_structure[key] = (param.shape, param, None)
                 continue
@@ -155,6 +154,12 @@ class Cifar10_ResNet18(BaseDataset):
     generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
     test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
                    "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
+
+class ImageNet_TinyViT(BaseDataset):
+    data_path = "./dataset/imagenet_tinyvit_21m/checkpoint"
+    generated_path = "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_tinyvit_21m/test.py " + \
+                   "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
 
 
 

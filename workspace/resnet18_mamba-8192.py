@@ -17,7 +17,7 @@ from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
 from model import MambaDiffusion as Model
-from model.diffusion import DDIMSampler as Sampler
+from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 # dataset
 from dataset import Cifar10_ResNet18 as Dataset
@@ -31,14 +31,14 @@ config = {
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
-    "sequence_length": 1490,
+    "sequence_length": 1510,
     # train setting
     "batch_size": 4,
     "num_workers": 4,
     "total_steps": 80000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 1000,
+    "save_every": 80000//25,
     "print_every": 50,
     "warmup_steps": 1000,
     "autocast": True,
@@ -58,11 +58,11 @@ config = {
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 512,
-        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
+        "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
         "kernel_size": 7,
-        "sample_mode": Sampler,
+        "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
@@ -74,7 +74,7 @@ config = {
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
-print("input shape:", train_set[0][0].shape)
+print("input shape:", train_set[0].shape)
 assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
@@ -85,7 +85,7 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-MambaDiffusion.config = config["model_config"]
+Model.config = config["model_config"]
 model = Model(sequence_length=config["sequence_length"],
               device=config["device"])  # model setting is in model
 model = model.to(config["device"])
@@ -108,7 +108,7 @@ scheduler = SequentialLR(optimizer=optimizer,
 # wandb
 if USE_WANDB:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1], config=config,)
+    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
 
 
 
