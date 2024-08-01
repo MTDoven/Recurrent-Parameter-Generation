@@ -143,9 +143,9 @@ def test(save_name):
         state = {}
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
-        if not os.path.isdir('checkpoint-single'):
-            os.mkdir('checkpoint-single')
-        torch.save(state, f'checkpoint-single/{save_name}_acc{correct / total:.4f}_seed{SEED}_resnet18.pth')
+        if not os.path.isdir('checkpoint'):
+            os.mkdir('checkpoint')
+        torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_resnet18.pth')
         best_acc = acc
 
 

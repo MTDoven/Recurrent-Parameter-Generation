@@ -91,6 +91,6 @@ class GoogleNet(nn.Module):
         return x
 
 
-def cifar10_classifier():
+def cifar10_classify():
     """ this model size is 0.006B parameters (0,005,941,552) """
     return GoogleNet()

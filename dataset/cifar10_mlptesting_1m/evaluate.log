@@ -1,0 +1,517 @@
+start testing: ./checkpoint/0117.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.184 | Acc: 58.380% (5838/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0118.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.186 | Acc: 58.120% (5812/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0142.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.620% (5862/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0136.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.880% (5888/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0149.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.720% (5872/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0120.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.187 | Acc: 58.400% (5840/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0132.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.178 | Acc: 58.700% (5870/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0147.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.730% (5873/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0140.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.710% (5871/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0121.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.179 | Acc: 58.490% (5849/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0113.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.191 | Acc: 57.890% (5789/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0148.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.730% (5873/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0129.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.178 | Acc: 58.840% (5884/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0127.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.179 | Acc: 58.700% (5870/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0138.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.172 | Acc: 58.910% (5891/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0137.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.173 | Acc: 58.940% (5894/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0114.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.185 | Acc: 57.980% (5798/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0139.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.173 | Acc: 58.770% (5877/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0145.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.660% (5866/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0111.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.203 | Acc: 57.870% (5787/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0116.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.180 | Acc: 58.220% (5822/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0125.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.172 | Acc: 58.850% (5885/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0135.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.760% (5876/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0124.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.178 | Acc: 58.560% (5856/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0144.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.650% (5865/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0126.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.182 | Acc: 58.430% (5843/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0146.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.720% (5872/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0134.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.730% (5873/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0112.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.191 | Acc: 57.960% (5796/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0131.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.177 | Acc: 58.570% (5857/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0119.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.185 | Acc: 58.160% (5816/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0128.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.178 | Acc: 58.660% (5866/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0122.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.179 | Acc: 58.500% (5850/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0130.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.176 | Acc: 58.850% (5885/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0133.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.810% (5881/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0143.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.174 | Acc: 58.690% (5869/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0123.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.176 | Acc: 58.800% (5880/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0110.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.193 | Acc: 57.870% (5787/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0115.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.181 | Acc: 58.180% (5818/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0141.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 1.175 | Acc: 58.570% (5857/10000)
+============================================================================

@@ -128,7 +128,7 @@ def train(epoch, save_name):
             for key, value in model.state_dict().items():
                 state[key] = value.cpu().to(torch.float32)
             os.makedirs('checkpoint', exist_ok=True)
-            torch.save(state, f'checkpoint/{save_name}_acc{correct/total:.4f}_seed{SEED}_tinyvit.pth')
+            torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_tinyvit.pth')
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
@@ -162,7 +162,7 @@ def test(save_name):
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
         os.makedirs('checkpoint', exist_ok=True)
-        torch.save(state, f'checkpoint/{save_name}_acc{correct/total:.4f}_seed{SEED}_tinyvit.pth')
+        torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_tinyvit.pth')
 
 
 

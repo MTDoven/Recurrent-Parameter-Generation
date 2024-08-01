@@ -20,7 +20,7 @@ from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 # dataset
-from dataset import ImageNet_TinyViT as Dataset
+from dataset import ImageNet_ConvNeXt as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -31,7 +31,7 @@ config = {
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
-    "sequence_length": 2797,
+    "sequence_length": 552,
     # train setting
     "batch_size": 4,
     "num_workers": 4,
@@ -57,7 +57,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
+        "diffusion_batch": None,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 8192,
         "condition_dim": 8192,

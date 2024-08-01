@@ -155,6 +155,14 @@ class Cifar10_ResNet18(BaseDataset):
     test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
                    "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
 
+
+class ImageNet_ConvNeXt(BaseDataset):
+    data_path = "./dataset/imagenet_convnext_4m/checkpoint"
+    generated_path = "./dataset/imagenet_convnext_4m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_convnext_4m/test.py " + \
+                   "./dataset/imagenet_convnext_4m/generated/generated_model.pth"
+
+
 class ImageNet_TinyViT(BaseDataset):
     data_path = "./dataset/imagenet_tinyvit_21m/checkpoint"
     generated_path = "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
@@ -180,23 +188,12 @@ class ConditionalDataset(BaseDataset):
 
 
 
-class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
-    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
-    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
-                   "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
-
-    def _extract_condition(self, index: int):
-        float_number = float(super()._extract_condition(index)[2][4:])
-        return (torch.tensor(float_number, dtype=torch.float32) - 15.) / 5.
-
-
-class Cifar10_ResNet18_MultiAbility(ConditionalDataset):
-    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-20-85"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_acc{}.pth"
-    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
-                   "./dataset/cifar10_resnet18_11m/generated/generated_model_acc{}.pth"
-
-    def _extract_condition(self, index: int):
-        float_number = float(super()._extract_condition(index)[1][3:])
-        return (torch.tensor(float_number, dtype=torch.float32) - 0.5) / 0.5
+# class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
+#     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
+#     generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
+#     test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
+#                    "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
+#
+#     def _extract_condition(self, index: int):
+#         float_number = float(super()._extract_condition(index)[2][4:])
+#         return (torch.tensor(float_number, dtype=torch.float32) - 15.) / 5.

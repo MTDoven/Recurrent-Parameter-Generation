@@ -1,0 +1,517 @@
+start testing: ./checkpoint-single/0149_acc0.9399_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3430 | Acc: 93.9900% (9399/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0124_acc0.9360_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3427 | Acc: 93.6000% (9360/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0135_acc0.9381_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3448 | Acc: 93.8100% (9381/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0112_acc0.9365_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3605 | Acc: 93.6500% (9365/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0121_acc0.9383_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3388 | Acc: 93.8300% (9383/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0132_acc0.9377_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3465 | Acc: 93.7700% (9377/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0139_acc0.9390_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3424 | Acc: 93.9000% (9390/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0128_acc0.9377_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3386 | Acc: 93.7700% (9377/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0136_acc0.9385_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3414 | Acc: 93.8500% (9385/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0125_acc0.9360_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3420 | Acc: 93.6000% (9360/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0111_acc0.9318_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3549 | Acc: 93.1800% (9318/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0140_acc0.9385_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3424 | Acc: 93.8500% (9385/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0146_acc0.9400_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3422 | Acc: 94.0000% (9400/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0115_acc0.9345_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3457 | Acc: 93.4500% (9345/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0110_acc0.9323_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3389 | Acc: 93.2300% (9323/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0127_acc0.9360_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3472 | Acc: 93.6000% (9360/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0126_acc0.9377_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3359 | Acc: 93.7700% (9377/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0147_acc0.9398_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3427 | Acc: 93.9800% (9398/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0133_acc0.9381_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3450 | Acc: 93.8100% (9381/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0145_acc0.9395_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3435 | Acc: 93.9500% (9395/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0114_acc0.9331_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3488 | Acc: 93.3100% (9331/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0131_acc0.9369_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3437 | Acc: 93.6900% (9369/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0130_acc0.9370_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3389 | Acc: 93.7000% (9370/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0137_acc0.9390_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3420 | Acc: 93.9000% (9390/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0143_acc0.9388_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3417 | Acc: 93.8800% (9388/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0117_acc0.9366_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3368 | Acc: 93.6600% (9366/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0138_acc0.9389_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3401 | Acc: 93.8900% (9389/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0123_acc0.9368_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3352 | Acc: 93.6800% (9368/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0142_acc0.9390_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3425 | Acc: 93.9000% (9390/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0122_acc0.9379_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3399 | Acc: 93.7900% (9379/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0129_acc0.9380_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3345 | Acc: 93.8000% (9380/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0113_acc0.9301_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3609 | Acc: 93.0100% (9301/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0148_acc0.9396_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3419 | Acc: 93.9600% (9396/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0120_acc0.9364_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3498 | Acc: 93.6400% (9364/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0118_acc0.9349_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3435 | Acc: 93.4900% (9349/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0141_acc0.9392_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3458 | Acc: 93.9200% (9392/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0134_acc0.9374_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3482 | Acc: 93.7400% (9374/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0119_acc0.9384_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3391 | Acc: 93.8400% (9384/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0144_acc0.9392_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3435 | Acc: 93.9200% (9392/10000)
+============================================================================
+
+
+
+start testing: ./checkpoint-single/0116_acc0.9369_seed20_resnet18.pth
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.3426 | Acc: 93.6900% (9369/10000)
+============================================================================
