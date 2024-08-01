@@ -62,7 +62,7 @@ config = {
         "model_dim": 8192,
         "condition_dim": 8192,
         "kernel_size": 7,
-        "sample_mode": DDIMSampler,
+        "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,

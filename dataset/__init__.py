@@ -48,7 +48,7 @@ class BaseDataset(Dataset, ABC):
                 if "num_batches_tracked" in key:
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
-                    pre_mean = value.mean()
+                    pre_mean = value.median()
                     value = torch.log(value / pre_mean)
                     structures[i][key] = (value.shape, pre_mean, torch.tensor([value.mean(), value.std()]))
                 else:  # conv & linear
