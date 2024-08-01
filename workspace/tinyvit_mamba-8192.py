@@ -41,7 +41,7 @@ config = {
     "save_every": 80000//25,
     "print_every": 50,
     "warmup_steps": 1000,
-    "autocast": False,
+    "autocast": True,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
