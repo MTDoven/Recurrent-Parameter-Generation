@@ -1,9 +1,9 @@
 accelerate launch \
-  --main_process_port=29500 \
+  --main_process_port=29501 \
   --multi_gpu \
   --num_processes 2 \
-  --gpu_ids='1,2' \
+  --gpu_ids='3,4' \
   --num_machines=1 \
   --mixed_precision=no \
   --dynamo_backend=no \
-  convnext_mamba-8192.py \
+  tinyvit_mamba-8192.py \
