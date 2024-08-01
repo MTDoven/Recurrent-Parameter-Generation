@@ -31,7 +31,7 @@ config = {
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
-    "sequence_length": 1510,
+    "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
     "num_workers": 4,
@@ -75,7 +75,11 @@ print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0].shape)
-assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
+if config["sequence_length"] == "auto":
+    config["sequence_length"] = train_set.sequence_length
+    print(f"sequence length: {config['sequence_length']}")
+else:  # set fix sequence_length
+    assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(dataset=train_set,
                           batch_size=config["batch_size"],
                           num_workers=config["num_workers"],

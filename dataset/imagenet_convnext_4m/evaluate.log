@@ -1,0 +1,477 @@
+start testing: ./checkpoint/0006_acc0.8215_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.33it/s]
+ 781 782 Loss: 12.9970 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8217_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.65it/s]
+ 781 782 Loss: 12.9872 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8216_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.59it/s]
+ 781 782 Loss: 13.0112 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.8183_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:24, 32.08it/s]
+ 781 782 Loss: 12.8808 | Acc: 0.0200% (10/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8241_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:24, 31.66it/s]
+ 781 782 Loss: 13.0158 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8236_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.69it/s]
+ 781 782 Loss: 13.0808 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8240_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.62it/s]
+ 781 782 Loss: 13.0630 | Acc: 0.0200% (10/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8272_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.71it/s]
+ 781 782 Loss: 13.0444 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8213_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.65it/s]
+ 781 782 Loss: 12.9981 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8211_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.40it/s]
+ 781 782 Loss: 12.9635 | Acc: 0.0260% (13/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8210_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.86it/s]
+ 781 782 Loss: 13.0041 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8294_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:24, 32.09it/s]
+ 781 782 Loss: 13.0507 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8271_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.62it/s]
+ 781 782 Loss: 13.0806 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8231_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.93it/s]
+ 781 782 Loss: 13.0369 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8273_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.82it/s]
+ 781 782 Loss: 13.0737 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8281_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.06it/s]
+ 781 782 Loss: 13.0811 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8207_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.67it/s]
+ 781 782 Loss: 13.0456 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8272_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.11it/s]
+ 781 782 Loss: 13.0721 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8279_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.97it/s]
+ 781 782 Loss: 13.0793 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8266_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.69it/s]
+ 781 782 Loss: 13.0767 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8239_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:24, 32.01it/s]
+ 781 782 Loss: 13.0693 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8276_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.11it/s]
+ 781 782 Loss: 13.0761 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8265_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.60it/s]
+ 781 782 Loss: 13.0721 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8237_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.34it/s]
+ 781 782 Loss: 13.0568 | Acc: 0.0200% (10/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8263_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.36it/s]
+ 781 782 Loss: 13.0648 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8288_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.82it/s]
+ 781 782 Loss: 13.0830 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8270_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.93it/s]
+ 781 782 Loss: 13.0805 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.8191_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.78it/s]
+ 781 782 Loss: 12.8878 | Acc: 0.0200% (10/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8277_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.39it/s]
+ 781 782 Loss: 13.0479 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8206_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.16it/s]
+ 781 782 Loss: 13.0484 | Acc: 0.0200% (10/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8209_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.90it/s]
+ 781 782 Loss: 12.9998 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8271_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.03it/s]
+ 781 782 Loss: 13.0529 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8278_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:24, 32.56it/s]
+ 781 782 Loss: 13.0838 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.8238_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.90it/s]
+ 781 782 Loss: 13.0355 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8224_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.02it/s]
+ 781 782 Loss: 12.9729 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8268_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.28it/s]
+ 781 782 Loss: 13.0371 | Acc: 0.0240% (12/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.8208_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 33.66it/s]
+ 781 782 Loss: 13.0031 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8262_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.16it/s]
+ 781 782 Loss: 13.0689 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8283_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.04it/s]
+ 781 782 Loss: 13.0780 | Acc: 0.0220% (11/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8275_seed20_convnext.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:23, 32.89it/s]
+ 781 782 Loss: 13.0760 | Acc: 0.0220% (11/50000)
+============================================================================
