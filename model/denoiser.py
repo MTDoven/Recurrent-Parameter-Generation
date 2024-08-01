@@ -5,7 +5,7 @@ import math
 
 
 class TimestepEmbedder(nn.Module):
-    def __init__(self, hidden_dim, device, frequency_embedding_size=256, max_period=10000):
+    def __init__(self, hidden_dim, frequency_embedding_size=256, max_period=10000):
         super().__init__()
         assert frequency_embedding_size % 2 == 0
         self.frequency_embedding_size = frequency_embedding_size
@@ -13,7 +13,7 @@ class TimestepEmbedder(nn.Module):
                 nn.Linear(frequency_embedding_size, hidden_dim, bias=True), nn.SiLU(),
                 nn.Linear(hidden_dim, hidden_dim, bias=True))
         half = frequency_embedding_size // 2
-        freqs = torch.exp(-math.log(max_period) * torch.arange(start=0, end=half, device=device) / half)
+        freqs = torch.exp(-math.log(max_period) * torch.arange(start=0, end=half) / half)
         self.register_buffer("freqs", freqs)
 
     def forward(self, t):
@@ -24,10 +24,9 @@ class TimestepEmbedder(nn.Module):
 
 
 class ConditionalUNet(nn.Module):
-    def __init__(self, layer_channels: list, model_dim: int, condition_dim: int,
-                 kernel_size: int, device: torch.device):
+    def __init__(self, layer_channels: list, model_dim: int, condition_dim: int, kernel_size: int):
         super().__init__()
-        self.time_embedder = TimestepEmbedder(hidden_dim=model_dim, device=device)
+        self.time_embedder = TimestepEmbedder(hidden_dim=model_dim)
         self.condi_embedder = nn.Linear(condition_dim, model_dim)
         self.encoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1):

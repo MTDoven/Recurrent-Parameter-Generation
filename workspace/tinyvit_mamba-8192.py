@@ -41,7 +41,7 @@ config = {
     "save_every": 80000//25,
     "print_every": 50,
     "warmup_steps": 1000,
-    "autocast": False,
+    "autocast": lambda i: 10000 < i < 70000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -125,7 +125,7 @@ def train():
         optimizer.zero_grad()
         param = param.to(config["device"])
         # train
-        with autocast(enabled=config["autocast"] and batch_idx < config["total_steps"] * 0.75, dtype=torch.bfloat16):
+        with autocast(enabled=config["autocast"](batch_idx), dtype=torch.bfloat16):
             loss = model(param.shape, param)
         loss.backward()
         optimizer.step()

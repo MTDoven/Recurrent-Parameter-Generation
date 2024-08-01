@@ -19,6 +19,9 @@ from torch.cuda.amp import autocast
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
+from accelerate.utils import DistributedDataParallelKwargs
+from accelerate import Accelerator
+import torch.distributed as dist
 # dataset
 from dataset import ImageNet_ConvNeXt as Dataset
 from torch.utils.data import DataLoader
@@ -26,14 +29,12 @@ from torch.utils.data import DataLoader
 
 
 config = {
-    # device setting
-    "device": "cuda",
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
     "sequence_length": 552,
     # train setting
-    "batch_size": 4,
+    "batch_size": 2,
     "num_workers": 4,
     "total_steps": 80000,
     "learning_rate": 0.00003,
@@ -57,7 +58,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": None,
+        "diffusion_batch": 512,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
@@ -68,6 +69,8 @@ config = {
         "forward_once": True,
     },
 }
+
+
 
 
 # Data
@@ -85,12 +88,8 @@ train_loader = DataLoader(dataset=train_set,
 
 # Model
 print('==> Building model..')
-accelerator = Accelerator()
 Model.config = config["model_config"]
-model = Model(sequence_length=config["sequence_length"],
-              device=config["device"])  # model setting is in model
-model = model.to(config["device"])
-
+model = Model(sequence_length=config["sequence_length"])  # model setting is in model
 
 # Optimizer
 print('==> Building optimizer..')
@@ -106,8 +105,14 @@ scheduler = SequentialLR(optimizer=optimizer,
                                                        T_max=config["total_steps"]-config["warmup_steps"])],
                          milestones=[config["warmup_steps"]],)
 
+# accelerator
+kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
+accelerator = Accelerator(kwargs_handlers=[kwargs,])
+model, optimizer, train_loader, scheduler = accelerator.prepare(model, optimizer, train_loader, scheduler)
+
+
 # wandb
-if USE_WANDB:
+if USE_WANDB and dist.get_rank() == 0:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
     wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
 
@@ -124,16 +129,17 @@ def train():
     model.train()
     for batch_idx, param in enumerate(train_loader):
         optimizer.zero_grad()
-        param = param.to(config["device"])
         # train
         with autocast(enabled=config["autocast"](batch_idx), dtype=torch.bfloat16):
-            loss = model(param.shape, param)
-        loss.backward()
+            loss = model(output_shape=param.shape, x_0=param)
+        accelerator.backward(loss)
         optimizer.step()
         scheduler.step()
         # to logging losses and print and save
-        if USE_WANDB:
+        if USE_WANDB and dist.get_rank() == 0:
             wandb.log({"train_loss": loss.item()})
+        elif USE_WANDB:
+            pass  # don't print
         else:  # not use wandb
             train_loss += loss.item()
             this_steps += 1
@@ -141,7 +147,7 @@ def train():
                 print('Loss: %.6f' % (train_loss/this_steps))
                 this_steps = 0
                 train_loss = 0
-        if batch_idx % config["save_every"] == 0:
+        if batch_idx % config["save_every"] == 0 and dist.get_rank() == 0:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = {"model": model.state_dict(),
                      "optimizer": optimizer.state_dict()}
@@ -157,12 +163,13 @@ def generate(save_path=config["generated_path"], need_test=True):
     model.eval()
     # _, condition = train_set[0]
     with torch.no_grad():
-        prediction = model.sample()  # condition=condition)
+        prediction = model(sample=True)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
-    if USE_WANDB:
+    if USE_WANDB and dist.get_rank() == 0:
         wandb.log({"generated_norm": generated_norm.item()})
-    train_set.save_params(prediction, save_path=save_path)
+    if dist.get_rank() == 0:
+        train_set.save_params(prediction, save_path=save_path)
     if need_test:
         os.system(config["test_command"])
         print("\n")

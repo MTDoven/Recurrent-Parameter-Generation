@@ -150,7 +150,7 @@ class Cifar10_GoogleNet(BaseDataset):
 
 
 class Cifar10_ResNet18(BaseDataset):
-    data_path = "./dataset/cifar10_resnet18_11m/checkpoint-single"
+    data_path = "./dataset/cifar10_resnet18_11m/checkpoint"
     generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
     test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
                    "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"

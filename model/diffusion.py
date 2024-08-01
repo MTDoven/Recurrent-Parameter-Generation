@@ -149,15 +149,13 @@ class DDIMSampler(nn.Module):
 class DiffusionLoss(nn.Module):
     config = {}
 
-    def __init__(self, device=torch.device("cpu")):
+    def __init__(self):
         super().__init__()
-        self.device = device
         self.net = ConditionalUNet(
             layer_channels=self.config["layer_channels"],
             model_dim=self.config["model_dim"],
             condition_dim=self.config["condition_dim"],
             kernel_size=self.config["kernel_size"],
-            device=device,
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(
             model=self.net,
