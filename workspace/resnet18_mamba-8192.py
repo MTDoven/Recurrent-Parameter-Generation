@@ -21,7 +21,6 @@ from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
 from accelerate import Accelerator
-import torch.distributed as dist
 # dataset
 from dataset import Cifar10_ResNet18 as Dataset
 from torch.utils.data import DataLoader
@@ -116,7 +115,7 @@ model, optimizer, train_loader, scheduler = accelerator.prepare(model, optimizer
 
 
 # wandb
-if USE_WANDB and dist.get_rank() == 0:
+if USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
     wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
 
@@ -140,7 +139,7 @@ def train():
         optimizer.step()
         scheduler.step()
         # to logging losses and print and save
-        if USE_WANDB and dist.get_rank() == 0:
+        if USE_WANDB and accelerator.is_main_process:
             wandb.log({"train_loss": loss.item()})
         elif USE_WANDB:
             pass  # don't print
@@ -151,10 +150,9 @@ def train():
                 print('Loss: %.6f' % (train_loss/this_steps))
                 this_steps = 0
                 train_loss = 0
-        if batch_idx % config["save_every"] == 0 and dist.get_rank() == 0:
+        if batch_idx % config["save_every"] == 0 and accelerator.is_main_process:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
-            state = {"model": model.state_dict(),
-                     "optimizer": optimizer.state_dict()}
+            state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"],
                                            f"{__file__.split('/')[-1].split('.')[0]}.pth"))
             generate(save_path=config["generated_path"], need_test=True)
@@ -170,9 +168,9 @@ def generate(save_path=config["generated_path"], need_test=True):
         prediction = model(sample=True)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
-    if USE_WANDB and dist.get_rank() == 0:
+    if USE_WANDB and accelerator.is_main_process:
         wandb.log({"generated_norm": generated_norm.item()})
-    if dist.get_rank() == 0:
+    if accelerator.is_main_process:
         train_set.save_params(prediction, save_path=save_path)
     if need_test:
         os.system(config["test_command"])
