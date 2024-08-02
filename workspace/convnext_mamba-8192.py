@@ -20,6 +20,7 @@ from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
+from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
 from dataset import ImageNet_ConvNeXt as Dataset
@@ -33,15 +34,14 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 2,
-    "num_workers": 4,
-    "total_steps": 80000,
+    "batch_size": 1,
+    "num_workers": 2,
+    "total_steps": 60000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 80000//25,
+    "save_every": 60000//25,
     "print_every": 50,
-    "warmup_steps": 1000,
-    "autocast": lambda i: 10000 < i < 70000,
+    "autocast": lambda i: 5000 < i < 50000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -99,19 +99,13 @@ print('==> Building optimizer..')
 optimizer = optim.AdamW(params=model.parameters(),
                         lr=config["learning_rate"],
                         weight_decay=config["weight_decay"])
-scheduler = SequentialLR(optimizer=optimizer,
-                         schedulers=[LinearLR(optimizer=optimizer,
-                                              start_factor=1e-4,
-                                              end_factor=1.0,
-                                              total_iters=config["warmup_steps"]),
-                                     CosineAnnealingLR(optimizer=optimizer,
-                                                       T_max=config["total_steps"]-config["warmup_steps"])],
-                         milestones=[config["warmup_steps"]],)
+scheduler = CosineAnnealingLR(optimizer=optimizer,
+                              T_max=config["total_steps"])
 
 # accelerator
 kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
 accelerator = Accelerator(kwargs_handlers=[kwargs,])
-model, optimizer, train_loader, scheduler = accelerator.prepare(model, optimizer, train_loader, scheduler)
+model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
 
 
 # wandb
@@ -133,11 +127,13 @@ def train():
     for batch_idx, param in enumerate(train_loader):
         optimizer.zero_grad()
         # train
-        with autocast(enabled=config["autocast"](batch_idx), dtype=torch.bfloat16):
+        # noinspection PyArgumentList
+        with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
             loss = model(output_shape=param.shape, x_0=param)
         accelerator.backward(loss)
         optimizer.step()
-        scheduler.step()
+        if accelerator.is_main_process:
+            scheduler.step()
         # to logging losses and print and save
         if USE_WANDB and accelerator.is_main_process:
             wandb.log({"train_loss": loss.item()})

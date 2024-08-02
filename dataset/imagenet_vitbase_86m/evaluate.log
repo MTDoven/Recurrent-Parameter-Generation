@@ -1,0 +1,1197 @@
+start testing: ./checkpoint/0003_acc0.9072_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.95it/s]
+ 781 782 Loss: 0.7262 | Acc: 82.2660% (41133/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9062_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.92it/s]
+ 781 782 Loss: 0.7289 | Acc: 81.7880% (40894/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9595_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.68it/s]
+ 781 782 Loss: 0.7459 | Acc: 82.7300% (41365/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9210_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.89it/s]
+ 781 782 Loss: 0.7317 | Acc: 82.2240% (41112/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9632_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.91it/s]
+ 781 782 Loss: 0.7512 | Acc: 82.7820% (41391/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9333_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.85it/s]
+ 781 782 Loss: 0.7305 | Acc: 82.4480% (41224/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.8284_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.50it/s]
+ 781 782 Loss: 0.7495 | Acc: 82.8380% (41419/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9688_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.81it/s]
+ 781 782 Loss: 0.7342 | Acc: 82.5440% (41272/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9439_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.57it/s]
+ 781 782 Loss: 0.7414 | Acc: 82.5880% (41294/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9335_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.63it/s]
+ 781 782 Loss: 0.7368 | Acc: 82.4980% (41249/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9216_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.12it/s]
+ 781 782 Loss: 0.7345 | Acc: 82.1860% (41093/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9331_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.78it/s]
+ 781 782 Loss: 0.7292 | Acc: 82.5220% (41261/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.8285_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.78it/s]
+ 781 782 Loss: 0.7520 | Acc: 82.8520% (41426/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9223_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:04, 12.18it/s]
+ 781 782 Loss: 0.7280 | Acc: 82.2820% (41141/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9327_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:03, 12.36it/s]
+ 781 782 Loss: 0.7342 | Acc: 82.4360% (41218/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9060_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.79it/s]
+ 781 782 Loss: 0.7098 | Acc: 82.3220% (41161/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8934_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.58it/s]
+ 781 782 Loss: 0.7138 | Acc: 82.0360% (41018/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8928_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.82it/s]
+ 781 782 Loss: 0.7176 | Acc: 82.0420% (41021/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9635_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.85it/s]
+ 781 782 Loss: 0.7525 | Acc: 82.7600% (41380/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9688_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.73it/s]
+ 781 782 Loss: 0.7105 | Acc: 81.9180% (40959/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9596_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.71it/s]
+ 781 782 Loss: 0.7462 | Acc: 82.8020% (41401/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9535_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.83it/s]
+ 781 782 Loss: 0.7522 | Acc: 82.5820% (41291/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9221_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.82it/s]
+ 781 782 Loss: 0.7289 | Acc: 82.3880% (41194/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9534_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.09it/s]
+ 781 782 Loss: 0.7523 | Acc: 82.6940% (41347/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8921_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.93it/s]
+ 781 782 Loss: 0.7062 | Acc: 82.4480% (41224/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9085_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.92it/s]
+ 781 782 Loss: 0.7281 | Acc: 82.2260% (41113/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8940_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.99it/s]
+ 781 782 Loss: 0.7292 | Acc: 82.0500% (41025/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9063_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.53it/s]
+ 781 782 Loss: 0.7181 | Acc: 82.1620% (41081/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9197_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.82it/s]
+ 781 782 Loss: 0.7285 | Acc: 82.2860% (41143/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9427_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.86it/s]
+ 781 782 Loss: 0.7310 | Acc: 82.8160% (41408/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8933_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.91it/s]
+ 781 782 Loss: 0.7226 | Acc: 81.9080% (40954/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9096_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.88it/s]
+ 781 782 Loss: 0.7192 | Acc: 82.2840% (41142/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9206_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 13.03it/s]
+ 781 782 Loss: 0.7245 | Acc: 82.4460% (41223/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9324_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.91it/s]
+ 781 782 Loss: 0.7321 | Acc: 82.5220% (41261/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9590_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.45it/s]
+ 781 782 Loss: 0.7452 | Acc: 82.7760% (41388/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8942_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.53it/s]
+ 781 782 Loss: 0.7213 | Acc: 81.8560% (40928/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9079_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.90it/s]
+ 781 782 Loss: 0.7282 | Acc: 82.1560% (41078/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9440_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.59it/s]
+ 781 782 Loss: 0.7404 | Acc: 82.5740% (41287/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9321_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.93it/s]
+ 781 782 Loss: 0.7293 | Acc: 82.5420% (41271/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8936_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.92it/s]
+ 781 782 Loss: 0.7296 | Acc: 81.8880% (40944/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9084_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.68it/s]
+ 781 782 Loss: 0.7171 | Acc: 82.3740% (41187/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9328_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.83it/s]
+ 781 782 Loss: 0.7288 | Acc: 82.5440% (41272/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9067_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.41it/s]
+ 781 782 Loss: 0.7189 | Acc: 82.1620% (41081/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9634_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:24,  9.25it/s]
+ 781 782 Loss: 0.7512 | Acc: 82.8720% (41436/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8927_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.71it/s]
+ 781 782 Loss: 0.7122 | Acc: 82.1860% (41093/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9438_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.86it/s]
+ 781 782 Loss: 0.7440 | Acc: 82.5080% (41254/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9199_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.76it/s]
+ 781 782 Loss: 0.7255 | Acc: 82.3720% (41186/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9688_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.21it/s]
+ 781 782 Loss: 0.7464 | Acc: 82.7960% (41398/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9435_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.68it/s]
+ 781 782 Loss: 0.7364 | Acc: 82.5920% (41296/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9432_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.42it/s]
+ 781 782 Loss: 0.7274 | Acc: 82.6720% (41336/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9543_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.84it/s]
+ 781 782 Loss: 0.7430 | Acc: 82.6660% (41333/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9431_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.87it/s]
+ 781 782 Loss: 0.7427 | Acc: 82.5420% (41271/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9598_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.08it/s]
+ 781 782 Loss: 0.7460 | Acc: 82.9020% (41451/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9233_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.70it/s]
+ 781 782 Loss: 0.7156 | Acc: 82.5820% (41291/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9194_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.80it/s]
+ 781 782 Loss: 0.7252 | Acc: 82.4600% (41230/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9074_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.50it/s]
+ 781 782 Loss: 0.7181 | Acc: 82.2560% (41128/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9329_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.60it/s]
+ 781 782 Loss: 0.7357 | Acc: 82.4400% (41220/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9205_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.87it/s]
+ 781 782 Loss: 0.7418 | Acc: 82.1900% (41095/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9599_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.89it/s]
+ 781 782 Loss: 0.7482 | Acc: 82.8040% (41402/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8951_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.85it/s]
+ 781 782 Loss: 0.7193 | Acc: 82.0940% (41047/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9536_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.72it/s]
+ 781 782 Loss: 0.7480 | Acc: 82.7320% (41366/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9213_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.08it/s]
+ 781 782 Loss: 0.7275 | Acc: 82.5600% (41280/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9688_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.73it/s]
+ 781 782 Loss: 0.7495 | Acc: 82.8380% (41419/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9531_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.72it/s]
+ 781 782 Loss: 0.7280 | Acc: 82.4080% (41204/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0008_acc0.9597_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.53it/s]
+ 781 782 Loss: 0.7495 | Acc: 82.7980% (41399/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9077_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.80it/s]
+ 781 782 Loss: 0.7238 | Acc: 82.2180% (41109/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9226_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:03, 12.38it/s]
+ 781 782 Loss: 0.7227 | Acc: 82.4580% (41229/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9436_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.71it/s]
+ 781 782 Loss: 0.7451 | Acc: 82.5800% (41290/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9539_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.94it/s]
+ 781 782 Loss: 0.7483 | Acc: 82.7080% (41354/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9200_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.48it/s]
+ 781 782 Loss: 0.7274 | Acc: 82.3940% (41197/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8948_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:03, 12.23it/s]
+ 781 782 Loss: 0.7306 | Acc: 81.9140% (40957/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8923_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.47it/s]
+ 781 782 Loss: 0.7190 | Acc: 82.1440% (41072/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9069_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.50it/s]
+ 781 782 Loss: 0.7233 | Acc: 82.3140% (41157/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9441_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.98it/s]
+ 781 782 Loss: 0.7360 | Acc: 82.6600% (41330/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9375_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.85it/s]
+ 781 782 Loss: 0.7159 | Acc: 82.1820% (41091/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9208_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.49it/s]
+ 781 782 Loss: 0.7294 | Acc: 82.2600% (41130/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0004_acc0.9203_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.55it/s]
+ 781 782 Loss: 0.7290 | Acc: 82.2180% (41109/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9375_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.85it/s]
+ 781 782 Loss: 0.7118 | Acc: 82.4260% (41213/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9540_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.74it/s]
+ 781 782 Loss: 0.7455 | Acc: 82.6500% (41325/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9444_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.58it/s]
+ 781 782 Loss: 0.7432 | Acc: 82.5460% (41273/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8931_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.63it/s]
+ 781 782 Loss: 0.7246 | Acc: 82.0260% (41013/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9070_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.57it/s]
+ 781 782 Loss: 0.7215 | Acc: 82.3140% (41157/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9633_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.66it/s]
+ 781 782 Loss: 0.7523 | Acc: 82.7960% (41398/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9083_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.78it/s]
+ 781 782 Loss: 0.7209 | Acc: 82.1740% (41087/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9068_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.51it/s]
+ 781 782 Loss: 0.7207 | Acc: 82.1780% (41089/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9437_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.93it/s]
+ 781 782 Loss: 0.7420 | Acc: 82.6140% (41307/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9636_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.89it/s]
+ 781 782 Loss: 0.7518 | Acc: 82.8440% (41422/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0009_acc0.9631_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.96it/s]
+ 781 782 Loss: 0.7523 | Acc: 82.8260% (41413/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9443_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.97it/s]
+ 781 782 Loss: 0.7456 | Acc: 82.4760% (41238/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8947_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.10it/s]
+ 781 782 Loss: 0.7297 | Acc: 82.0440% (41022/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9323_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.62it/s]
+ 781 782 Loss: 0.7318 | Acc: 82.4860% (41243/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9334_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.83it/s]
+ 781 782 Loss: 0.7328 | Acc: 82.4200% (41210/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9531_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:01, 12.80it/s]
+ 781 782 Loss: 0.7486 | Acc: 82.7260% (41363/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9320_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.98it/s]
+ 781 782 Loss: 0.7375 | Acc: 82.5380% (41269/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0005_acc0.9319_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.93it/s]
+ 781 782 Loss: 0.7358 | Acc: 82.4000% (41200/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0006_acc0.9442_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:02, 12.48it/s]
+ 781 782 Loss: 0.7402 | Acc: 82.4160% (41208/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9530_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 12.96it/s]
+ 781 782 Loss: 0.7442 | Acc: 82.8420% (41421/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8967_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.18it/s]
+ 781 782 Loss: 0.7197 | Acc: 82.1000% (41050/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0003_acc0.9088_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:59, 13.07it/s]
+ 781 782 Loss: 0.7218 | Acc: 82.1900% (41095/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0007_acc0.9532_seed20_tinyvit.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:00, 13.00it/s]
+ 781 782 Loss: 0.7444 | Acc: 82.7220% (41361/50000)
+============================================================================
