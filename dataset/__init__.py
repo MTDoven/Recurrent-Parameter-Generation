@@ -23,7 +23,7 @@ class BaseDataset(Dataset, ABC):
     generated_path = None
     test_command = None
 
-    def __init__(self, checkpoint_path=None, dim_per_token=1024, **kwargs):
+    def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
         checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
         assert os.path.exists(checkpoint_path)
         self.dim_per_token = dim_per_token
@@ -177,6 +177,13 @@ class ImageNet_TinyViT(BaseDataset):
     generated_path = "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
     test_command = "python ./dataset/imagenet_tinyvit_21m/test.py " + \
                    "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
+
+
+class ImageNet_ViTBase(BaseDataset):
+    data_path = "./dataset/imagenet_vitbase_86m/checkpoint"
+    generated_path = "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vitbase_86m/test.py " + \
+                   "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
 
 
 

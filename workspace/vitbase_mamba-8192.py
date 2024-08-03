@@ -23,7 +23,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ConvNeXt as Dataset
+from dataset import ImageNet_ViTBase as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -34,14 +34,14 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 2,
-    "num_workers": 2,
-    "total_steps": 60000,
+    "batch_size": 1,
+    "num_workers": 4,
+    "total_steps": 80000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 60000//25,
+    "save_every": 80000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 50000,
+    "autocast": lambda i: 10000 < i < 60000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -57,12 +57,12 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
+        "diffusion_batch": 1024,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
         "kernel_size": 7,
-        "sample_mode": DDPMSampler,
+        "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
