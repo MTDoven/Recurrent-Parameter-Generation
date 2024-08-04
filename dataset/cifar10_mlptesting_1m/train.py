@@ -11,11 +11,15 @@ except:  # absolute import
     from model import cifar10_classifier as Model
 import sys
 import os
+import json
+config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Cifar10")
+with open(os.path.join(config_root, "config.json"), "r") as f:
+    additional_config = json.load(f)
 
 
 config = {
     # dataset setting
-    "dataset_root": "/home/wangkai/arpgen/Datasets",
+    "dataset_root": "from_additional_config",
     "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
@@ -26,6 +30,9 @@ config = {
     "test_freq": 10,
     "weight_decay": 0.005,
 }
+config.update(additional_config)
+
+
 
 
 # Data
