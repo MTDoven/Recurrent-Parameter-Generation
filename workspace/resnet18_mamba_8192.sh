@@ -6,4 +6,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  resnet18_mamba-8192.py \
+  resnet18_mamba_8192.py \

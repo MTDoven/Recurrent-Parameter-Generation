@@ -5,4 +5,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  convnext_mamba-8192.py \
+  convnext_mamba_8192.py \

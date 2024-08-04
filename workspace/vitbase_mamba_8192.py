@@ -103,13 +103,14 @@ scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
 # accelerator
-kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
-accelerator = Accelerator(kwargs_handlers=[kwargs,])
-model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
+if __name__ == "__main__":
+    kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
+    accelerator = Accelerator(kwargs_handlers=[kwargs,])
+    model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
 
 
 # wandb
-if USE_WANDB and accelerator.is_main_process:
+if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
     wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
 
