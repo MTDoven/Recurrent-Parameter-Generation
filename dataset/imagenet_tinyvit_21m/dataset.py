@@ -12,9 +12,18 @@ class ImageNet1k(Dataset):
         new_mapping = []
         with open(mapping_dict, "rb") as f:
             mapping_dict = pickle.load(f)
+        file_list = {}
+        for item in os.listdir(image_root):
+            item = os.path.join(image_root, item)
+            if os.path.isdir(item):
+                for file in os.listdir(item):
+                    file = os.path.join(item, file)
+                    file_list[os.path.basename(file)] = file
+            elif os.path.isfile(item):
+                file_list[os.path.basename(item)] = item
         for class_index, (key, name_list) in enumerate(mapping_dict.items()):
             for name in name_list:
-                path = os.path.join(image_root, name)
+                path = file_list[name]
                 new_mapping.append((path, class_index))
         self.mapping = new_mapping
         # transforms

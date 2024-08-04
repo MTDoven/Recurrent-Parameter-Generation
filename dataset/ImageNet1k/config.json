@@ -1,0 +1,6 @@
+{
+  "train_image_root": "/home/wangkai/datasets/imagenet/train",
+  "test_image_root": "/home/wangkai/datasets/imagenet/val",
+  "train_mapping_dict": "/home/wangkai/arpgen/AR-Param-Generation/dataset/ImageNet1k/train_mapping.dict",
+  "test_mapping_dict": "/home/wangkai/arpgen/AR-Param-Generation/dataset/ImageNet1k/val_mapping.dict"
+}

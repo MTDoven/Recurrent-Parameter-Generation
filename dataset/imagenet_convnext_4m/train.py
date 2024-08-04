@@ -22,32 +22,39 @@ try:  # relative import
 except:  # absolute import
     from model import imagenet_classify as Model
     from dataset import ImageNet1k as Dataset
-
-from tqdm import tqdm
+# other
+from tqdm.auto import tqdm
+import json
 import sys
 import os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
+config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ImageNet1k")
+with open(os.path.join(config_root, "config.json"), "r") as f:
+    additional_config = json.load(f)
 
 
 config = {
     # dataset setting
-    "train_image_root": "/home/wangkai/datasets/imagenet/train",
-    "test_image_root": "/home/wangkai/datasets/imagenet/val",
-    "train_mapping_dict": "/home/wangkai/datasets/imagenet/train_mapping.dict",
-    "test_mapping_dict": "/home/wangkai/datasets/imagenet/val_mapping.dict",
+    "train_image_root": "from_additional_config",
+    "test_image_root": "from_additional_config",
+    "train_mapping_dict": "from_additional_config",
+    "test_mapping_dict": "from_additional_config",
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 64,
     "num_workers": 16,
+    "pre_learning_rate": 0.001,
+    "pre_epochs": 2,
     "learning_rate": 0.00001,
     "epochs": 10,
-    "start_save_ratio": 0.2,
+    "start_save_ratio": 0.3,
     "save_every": 1200,
     "weight_decay": 0.0001,
     "autocast": True,
     "debug_iteration": sys.maxsize,
 }
+config.update(additional_config)
 
 
 # Data
@@ -79,10 +86,15 @@ test_loader = DataLoader(
 # Model
 print('==> Building model..')
 
-model = Model()
+model, out_layer = Model()
 model = model.to(config["device"])
 criterion = nn.CrossEntropyLoss()
 
+pre_optimizer = optim.AdamW(
+    out_layer.parameters(),
+    lr=config["pre_learning_rate"],
+    weight_decay=config["weight_decay"],
+)
 optimizer = optim.AdamW(
     model.parameters(),
     lr=config["learning_rate"],
@@ -97,6 +109,34 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(
 
 # Training
 print('==> Defining training..')
+
+def pre_train():
+    model.train()
+    train_loss = 0
+    correct = 0
+    total = 0
+    for e in range(config["pre_epochs"]):
+        print(f"pre_epoch {e}")
+        for batch_idx, (inputs, targets) in tqdm(
+                enumerate(train_loader),
+                total=len(train_loader.dataset) // config["batch_size"]):
+            inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+            pre_optimizer.zero_grad()
+            with autocast(enabled=config["autocast"], dtype=torch.bfloat16):
+                outputs = model(inputs)
+                loss = criterion(outputs, targets)
+            loss.backward()
+            pre_optimizer.step()
+            # to logging losses
+            train_loss += loss.item()
+            _, predicted = outputs.max(1)
+            total += targets.size(0)
+            correct += predicted.eq(targets).sum().item()
+            if batch_idx > config["debug_iteration"]:
+                break
+        print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
+              (train_loss / (batch_idx + 1), 100. * correct / total, correct, total), end="")
+
 def train(epoch, save_name):
     print(f"\nEpoch: {epoch}", end=": ")
     model.train()
@@ -128,7 +168,7 @@ def train(epoch, save_name):
             for key, value in model.state_dict().items():
                 state[key] = value.cpu().to(torch.float32)
             os.makedirs('checkpoint', exist_ok=True)
-            torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_tinyvit.pth')
+            torch.save(state, f'checkpoint/{save_name}_acc{correct/total:.4f}_seed{SEED}_convnext.pth')
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
@@ -162,7 +202,7 @@ def test(save_name):
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
         os.makedirs('checkpoint', exist_ok=True)
-        torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_tinyvit.pth')
+        torch.save(state, f'checkpoint/{save_name}_acc{correct/total:.4f}_seed{SEED}_tinyvit.pth')
 
 
 
@@ -171,8 +211,8 @@ best_acc = 0  # best test accuracy
 if __name__ == '__main__':
     # config save name
     save_name = 0
-
     # main train
+    pre_train()
     for epoch in range(0, config["epochs"]):
         epoch += 1
         train(epoch, str(save_name).zfill(4))

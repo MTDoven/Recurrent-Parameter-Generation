@@ -22,20 +22,24 @@ try:  # relative import
 except:  # absolute import
     from model import imagenet_classify as Model
     from dataset import ImageNet1k as Dataset
-
-from tqdm import tqdm
+# other
+from tqdm.auto import tqdm
+import json
 import sys
 import os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
+config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ImageNet1k")
+with open(os.path.join(config_root, "config.json"), "r") as f:
+    additional_config = json.load(f)
 
 
 config = {
     # dataset setting
-    "train_image_root": "/home/wangkai/datasets/imagenet/train",
-    "test_image_root": "/home/wangkai/datasets/imagenet/val",
-    "train_mapping_dict": "/home/wangkai/datasets/imagenet/train_mapping.dict",
-    "test_mapping_dict": "/home/wangkai/datasets/imagenet/val_mapping.dict",
+    "train_image_root": "from_additional_config",
+    "test_image_root": "from_additional_config",
+    "train_mapping_dict": "from_additional_config",
+    "test_mapping_dict": "from_additional_config",
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 64,
@@ -50,6 +54,7 @@ config = {
     "autocast": True,
     "debug_iteration": sys.maxsize,
 }
+config.update(additional_config)
 
 
 # Data
