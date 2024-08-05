@@ -41,7 +41,7 @@ config = {
     "weight_decay": 0.0,
     "save_every": 60000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 50000,
+    "autocast": lambda i: 10000 < i < 50000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this

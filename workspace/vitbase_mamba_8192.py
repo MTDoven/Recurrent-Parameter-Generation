@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
@@ -37,7 +37,7 @@ config = {
     "batch_size": 1,
     "num_workers": 4,
     "total_steps": 80000,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.000005,
     "weight_decay": 0.0,
     "save_every": 80000//25,
     "print_every": 50,
