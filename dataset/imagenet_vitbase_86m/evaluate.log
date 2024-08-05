@@ -1,0 +1,867 @@
+/home/wangkai/anaconda3/envs/arpgen/bin/python /home/wangkai/arpgen/AR-Param-Generation/dataset/imagenet_vitbase_86m/evaluate.py
+start testing: ./checkpoint/0000_acc0.8980_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.06it/s]
+ 781 782 Loss: 0.6036 | Acc: 84.0520% (42026/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9318_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.11it/s]
+ 781 782 Loss: 0.6101 | Acc: 83.9360% (41968/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9028_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:19,  9.83it/s]
+ 781 782 Loss: 0.5951 | Acc: 83.9500% (41975/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9018_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18, 10.00it/s]
+ 781 782 Loss: 0.6028 | Acc: 83.8580% (41929/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8981_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:20,  9.68it/s]
+ 781 782 Loss: 0.5995 | Acc: 84.0220% (42011/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.8393_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:22,  9.53it/s]
+ 781 782 Loss: 0.6069 | Acc: 83.9300% (41965/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9320_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18, 10.01it/s]
+ 781 782 Loss: 0.6097 | Acc: 84.1320% (42066/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9192_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.97it/s]
+ 781 782 Loss: 0.6058 | Acc: 83.9260% (41963/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8387_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:20,  9.69it/s]
+ 781 782 Loss: 0.5990 | Acc: 83.8660% (41933/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9311_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.92it/s]
+ 781 782 Loss: 0.6110 | Acc: 83.8620% (41931/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9015_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18, 10.00it/s]
+ 781 782 Loss: 0.6073 | Acc: 83.8280% (41914/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9195_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.03it/s]
+ 781 782 Loss: 0.6117 | Acc: 83.7860% (41893/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9203_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:20,  9.74it/s]
+ 781 782 Loss: 0.6069 | Acc: 83.7820% (41891/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9326_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:21,  9.62it/s]
+ 781 782 Loss: 0.6125 | Acc: 84.0960% (42048/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9027_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.10it/s]
+ 781 782 Loss: 0.5950 | Acc: 83.8620% (41931/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9333_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18, 10.02it/s]
+ 781 782 Loss: 0.6118 | Acc: 84.0040% (42002/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9014_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.03it/s]
+ 781 782 Loss: 0.5987 | Acc: 83.9020% (41951/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.8402_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.13it/s]
+ 781 782 Loss: 0.6130 | Acc: 84.0220% (42011/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9004_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.90it/s]
+ 781 782 Loss: 0.6010 | Acc: 83.8180% (41909/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9199_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:14, 10.48it/s]
+ 781 782 Loss: 0.6135 | Acc: 83.8500% (41925/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9062_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.90it/s]
+ 781 782 Loss: 0.6068 | Acc: 83.9340% (41967/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9330_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.15it/s]
+ 781 782 Loss: 0.6131 | Acc: 84.0240% (42012/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9025_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:19,  9.84it/s]
+ 781 782 Loss: 0.5927 | Acc: 83.8460% (41923/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9019_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.97it/s]
+ 781 782 Loss: 0.5976 | Acc: 83.8920% (41946/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9321_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:20,  9.76it/s]
+ 781 782 Loss: 0.6075 | Acc: 84.1240% (42062/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9191_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.95it/s]
+ 781 782 Loss: 0.6076 | Acc: 83.9640% (41982/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9263_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:22,  9.53it/s]
+ 781 782 Loss: 0.6086 | Acc: 83.8080% (41904/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9194_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.03it/s]
+ 781 782 Loss: 0.6107 | Acc: 83.7460% (41873/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9006_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:21,  9.58it/s]
+ 781 782 Loss: 0.6016 | Acc: 83.8760% (41938/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9210_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.99it/s]
+ 781 782 Loss: 0.6123 | Acc: 83.7420% (41871/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9316_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:21,  9.61it/s]
+ 781 782 Loss: 0.6108 | Acc: 83.9920% (41996/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9336_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.05it/s]
+ 781 782 Loss: 0.6147 | Acc: 83.9460% (41973/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9016_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.98it/s]
+ 781 782 Loss: 0.5989 | Acc: 83.9540% (41977/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9201_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18, 10.00it/s]
+ 781 782 Loss: 0.6069 | Acc: 84.0480% (42024/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8997_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.94it/s]
+ 781 782 Loss: 0.6044 | Acc: 83.9120% (41956/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9335_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.93it/s]
+ 781 782 Loss: 0.6143 | Acc: 84.0000% (42000/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9189_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.10it/s]
+ 781 782 Loss: 0.6107 | Acc: 83.7160% (41858/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9332_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.08it/s]
+ 781 782 Loss: 0.6136 | Acc: 84.0440% (42022/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9688_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:19,  9.85it/s]
+ 781 782 Loss: 0.5991 | Acc: 83.8620% (41931/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9009_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:16, 10.22it/s]
+ 781 782 Loss: 0.6006 | Acc: 83.8840% (41942/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9331_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.10it/s]
+ 781 782 Loss: 0.6120 | Acc: 84.0140% (42007/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9337_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:14, 10.44it/s]
+ 781 782 Loss: 0.6127 | Acc: 84.0700% (42035/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8281_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:15, 10.34it/s]
+ 781 782 Loss: 0.7769 | Acc: 81.1080% (40554/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9200_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:17, 10.15it/s]
+ 781 782 Loss: 0.6066 | Acc: 83.9060% (41953/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9197_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:18,  9.95it/s]
+ 781 782 Loss: 0.6129 | Acc: 83.8980% (41949/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9188_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:09, 11.33it/s]
+ 781 782 Loss: 0.6072 | Acc: 83.8620% (41931/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8906_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:12, 10.78it/s]
+ 781 782 Loss: 0.6125 | Acc: 84.0020% (42001/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9196_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:11, 10.98it/s]
+ 781 782 Loss: 0.6079 | Acc: 83.8860% (41943/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9024_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:13, 10.66it/s]
+ 781 782 Loss: 0.5966 | Acc: 83.9660% (41983/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9206_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:07, 11.52it/s]
+ 781 782 Loss: 0.6061 | Acc: 83.9880% (41994/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9022_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:05, 11.86it/s]
+ 781 782 Loss: 0.5986 | Acc: 83.8060% (41903/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9020_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:05, 11.90it/s]
+ 781 782 Loss: 0.5953 | Acc: 83.8280% (41914/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9023_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:07, 11.66it/s]
+ 781 782 Loss: 0.5996 | Acc: 83.8640% (41932/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9202_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:08, 11.36it/s]
+ 781 782 Loss: 0.6090 | Acc: 83.7080% (41854/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9281_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:07, 11.66it/s]
+ 781 782 Loss: 0.6086 | Acc: 83.8400% (41920/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9328_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:06, 11.84it/s]
+ 781 782 Loss: 0.6121 | Acc: 84.0900% (42045/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8961_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:07, 11.66it/s]
+ 781 782 Loss: 0.6093 | Acc: 84.0140% (42007/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9334_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [01:04, 12.13it/s]
+ 781 782 Loss: 0.6127 | Acc: 84.0940% (42047/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9325_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.67it/s]
+ 781 782 Loss: 0.6126 | Acc: 84.0140% (42007/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8962_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.71it/s]
+ 781 782 Loss: 0.6028 | Acc: 84.0080% (42004/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9026_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.83it/s]
+ 781 782 Loss: 0.5987 | Acc: 83.8380% (41919/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9193_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.79it/s]
+ 781 782 Loss: 0.6108 | Acc: 83.8460% (41923/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9208_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.67it/s]
+ 781 782 Loss: 0.6046 | Acc: 83.9740% (41987/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.9190_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.76it/s]
+ 781 782 Loss: 0.6062 | Acc: 83.9000% (41950/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9011_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.67it/s]
+ 781 782 Loss: 0.6001 | Acc: 83.9040% (41952/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9012_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.59it/s]
+ 781 782 Loss: 0.6022 | Acc: 83.9040% (41952/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9327_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.67it/s]
+ 781 782 Loss: 0.6149 | Acc: 84.0740% (42037/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9008_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.74it/s]
+ 781 782 Loss: 0.6070 | Acc: 83.7420% (41871/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9021_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.70it/s]
+ 781 782 Loss: 0.6088 | Acc: 83.8220% (41911/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.9003_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.73it/s]
+ 781 782 Loss: 0.6051 | Acc: 83.8940% (41947/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.8990_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:56, 13.72it/s]
+ 781 782 Loss: 0.6019 | Acc: 83.9680% (41984/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.9295_seed20_vitbase.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:57, 13.72it/s]
+ 781 782 Loss: 0.6102 | Acc: 83.8660% (41933/50000)
+============================================================================
+
+
+
+
+Process finished with exit code 0
