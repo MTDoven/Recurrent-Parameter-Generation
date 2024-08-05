@@ -48,8 +48,8 @@ class BaseDataset(Dataset, ABC):
                 if "num_batches_tracked" in key:
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
-                    pre_mean = value.mean() * 0.9
-                    value = torch.log(value / pre_mean + 0.1)
+                    pre_mean = value.mean() * 0.95
+                    value = torch.log(value / pre_mean + 0.05)
                     structures[i][key] = (value.shape, pre_mean, value.mean(), value.std())
                 else:  # conv & linear
                     structures[i][key] = (value.shape, value.mean(), value.std())
@@ -105,7 +105,7 @@ class BaseDataset(Dataset, ABC):
                 continue
             elif "running_var" in key:
                 shape, pre_mean, mean, std = self.structure[key]
-                value = torch.log(value / pre_mean + 0.1)
+                value = torch.log(value / pre_mean + 0.05)
             else:  # normal
                 shape, mean, std = self.structure[key]
             value = value.flatten()
@@ -134,7 +134,7 @@ class BaseDataset(Dataset, ABC):
             this_param = params[:num_elements].view(*shape)
             this_param = this_param * std + mean
             if "running_var" in key:
-                this_param = torch.clip(torch.exp(this_param) - 0.1, min=0.001) * pre_mean
+                this_param = torch.clip(torch.exp(this_param) - 0.05, min=0.001) * pre_mean
             diction[key] = this_param
             cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
                     else (num_elements // self.dim_per_token + 1) * self.dim_per_token
