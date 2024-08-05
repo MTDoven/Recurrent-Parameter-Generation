@@ -14,14 +14,12 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
-from torchvision.datasets import CIFAR10
+from torchvision.datasets import ImageFolder
 from torch.cuda.amp import autocast
 try:  # relative import
     from .model import imagenet_classify as Model
-    from .dataset import ImageNet1k as Dataset
 except:  # absolute import
     from model import imagenet_classify as Model
-    from dataset import ImageNet1k as Dataset
 # other
 from tqdm.auto import tqdm
 import json
@@ -38,19 +36,18 @@ config = {
     # dataset setting
     "train_image_root": "from_additional_config",
     "test_image_root": "from_additional_config",
-    "train_mapping_dict": "from_additional_config",
-    "test_mapping_dict": "from_additional_config",
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 64,
     "num_workers": 16,
-    "learning_rate": 0.00001,
-    "epochs": 10,
-    "start_save_ratio": 0.2,
-    "save_every": 1200,
+    "learning_rate": 0.000005,
+    "epochs": 3,
+    "start_save_ratio": 0.0,
+    "save_every": 300,
     "weight_decay": 0.1,
     "autocast": True,
     "debug_iteration": sys.maxsize,
+    "tag": os.path.dirname(__file__).split("_")[-2],
 }
 config.update(additional_config)
 
@@ -59,9 +56,15 @@ config.update(additional_config)
 print('==> Preparing data..')
 
 train_loader = DataLoader(
-    dataset=Dataset(
-        image_root=config["train_image_root"],
-        mapping_dict=config["train_mapping_dict"],
+    dataset=ImageFolder(
+        root=config["train_image_root"],
+        transform=transforms.Compose([
+            transforms.AutoAugment(),
+            transforms.Resize(224),
+            transforms.RandomCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
     ),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
@@ -71,9 +74,14 @@ train_loader = DataLoader(
     persistent_workers=True,
 )
 test_loader = DataLoader(
-    dataset=Dataset(
-        image_root=config["test_image_root"],
-        mapping_dict=config["test_mapping_dict"],
+    dataset=ImageFolder(
+        root=config["test_image_root"],
+        transform=transforms.Compose([
+            transforms.Resize(224),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
     ),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
@@ -131,7 +139,7 @@ def train(epoch, save_name):
             for key, value in model.state_dict().items():
                 state[key] = value.cpu().to(torch.float32)
             os.makedirs('checkpoint', exist_ok=True)
-            torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_tinyvit.pth')
+            torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
@@ -165,7 +173,7 @@ def test(save_name):
         for key, value in model.state_dict().items():
             state[key] = value.cpu().to(torch.float32)
         os.makedirs('checkpoint', exist_ok=True)
-        torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_vitbase.pth')
+        torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
 
 
 
@@ -176,6 +184,7 @@ if __name__ == '__main__':
     save_name = 0
 
     # main train
+    test(None)
     for epoch in range(0, config["epochs"]):
         epoch += 1
         train(epoch, str(save_name).zfill(4))

@@ -6,5 +6,5 @@ for i in $(seq 1 $num_iterations)
 do
   echo "\n\n"
   echo "Running iteration $i"
-  CUDA_VISIBLE_DEVICES=2 python train.py
+  CUDA_VISIBLE_DEVICES=5 python train.py
 done
