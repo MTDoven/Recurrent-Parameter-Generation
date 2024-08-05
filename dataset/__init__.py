@@ -48,8 +48,8 @@ class BaseDataset(Dataset, ABC):
                 if "num_batches_tracked" in key:
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
-                    pre_mean = value.mean() * 0.925
-                    value = torch.log(value / pre_mean + 0.075)
+                    pre_mean = value.mean() * 0.9
+                    value = torch.log(value / pre_mean + 0.1)
                     structures[i][key] = (value.shape, pre_mean, value.mean(), value.std())
                 else:  # conv & linear
                     structures[i][key] = (value.shape, value.mean(), value.std())
@@ -105,7 +105,7 @@ class BaseDataset(Dataset, ABC):
                 continue
             elif "running_var" in key:
                 shape, pre_mean, mean, std = self.structure[key]
-                value = torch.log(value / pre_mean + 0.075)
+                value = torch.log(value / pre_mean + 0.1)
             else:  # normal
                 shape, mean, std = self.structure[key]
             value = value.flatten()
@@ -134,7 +134,7 @@ class BaseDataset(Dataset, ABC):
             this_param = params[:num_elements].view(*shape)
             this_param = this_param * std + mean
             if "running_var" in key:
-                this_param = torch.clip(torch.exp(this_param) - 0.075, min=0.001) * pre_mean
+                this_param = torch.clip(torch.exp(this_param) - 0.1, min=0.001) * pre_mean
             diction[key] = this_param
             cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
                     else (num_elements // self.dim_per_token + 1) * self.dim_per_token
@@ -172,11 +172,11 @@ class ImageNet_ConvNeXt(BaseDataset):
                    "./dataset/imagenet_convnext_4m/generated/generated_model.pth"
 
 
-class ImageNet_TinyViT(BaseDataset):
-    data_path = "./dataset/imagenet_tinyvit_21m/checkpoint"
-    generated_path = "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_tinyvit_21m/test.py " + \
-                   "./dataset/imagenet_tinyvit_21m/generated/generated_model.pth"
+class ImageNet_ViTTiny(BaseDataset):
+    data_path = "./dataset/imagenet_vittiny_6m/checkpoint"
+    generated_path = "./dataset/imagenet_vittiny_6m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vittiny_6m/test.py " + \
+                   "./dataset/imagenet_vittiny_6m/generated/generated_model.pth"
 
 
 class ImageNet_ViTBase(BaseDataset):

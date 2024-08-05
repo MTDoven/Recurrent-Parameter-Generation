@@ -23,7 +23,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import Cifar10_ResNet18 as Dataset
+from dataset import Cifar10_GoogleNet as Dataset
 from torch.utils.data import DataLoader
 
 
