@@ -34,8 +34,8 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 4,
-    "num_workers": 8,
+    "batch_size": 2,
+    "num_workers": 4,
     "total_steps": 80000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
@@ -57,7 +57,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
+        "diffusion_batch": 1536,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
