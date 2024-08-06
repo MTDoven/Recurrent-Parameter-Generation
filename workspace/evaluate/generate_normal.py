@@ -15,7 +15,7 @@ model = item.model
 
 generate_config = {
     "device": "cuda",
-    "num_generated": 10,
+    "num_generated": 30,
     "checkpoint": f"./checkpoint/{item.__name__.split('.')[-1]}.pth",
     "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_evaluate_model_{}.pth"),
     "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_evaluate_model_{}.pth"),

@@ -31,13 +31,13 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 16384,
+    "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 1,
+    "batch_size": 2,
     "num_workers": 4,
     "total_steps": 80000,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
     "save_every": 80000//25,
     "print_every": 50,
@@ -51,16 +51,16 @@ config = {
     "model_config": {
         # mamba config
         "d_condition": 1,
-        "d_model": 16384,
+        "d_model": 8192,
         "d_state": 128,
         "d_conv": 4,
-        "expand": 1,
+        "expand": 4,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 256,
+        "diffusion_batch": 768,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 16384,
-        "condition_dim": 16384,
+        "model_dim": 8192,
+        "condition_dim": 8192,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
