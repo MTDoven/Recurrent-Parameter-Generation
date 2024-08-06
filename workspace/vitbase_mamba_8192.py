@@ -34,14 +34,14 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 2,
+    "batch_size": 1,
     "num_workers": 4,
     "total_steps": 80000,
-    "learning_rate": 0.00003,
+    "learning_rate": 0.00001,
     "weight_decay": 0.0,
     "save_every": 80000//25,
     "print_every": 50,
-    "autocast": lambda i: 10000 < i < 60000,
+    "autocast": lambda i: 5000 < i < 70000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -62,7 +62,7 @@ config = {
         "model_dim": 8192,
         "condition_dim": 8192,
         "kernel_size": 7,
-        "sample_mode": DDPMSampler,
+        "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,

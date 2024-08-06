@@ -95,7 +95,7 @@ class BaseDataset(Dataset, ABC):
         return param
 
     def save_params(self, params, save_path):
-        diction = self.postprocess(params.cpu())
+        diction = self.postprocess(params.cpu().to(torch.float32))
         torch.save(diction, save_path)
 
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
