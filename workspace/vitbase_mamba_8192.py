@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
@@ -44,6 +44,7 @@ config = {
     "autocast": lambda i: 5000 < i < 70000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
+    "test_device": 6,
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
     "test_command": Dataset.test_command,
@@ -170,7 +171,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     if accelerator.is_main_process:
         train_set.save_params(prediction, save_path=save_path)
     if need_test:
-        os.system(config["test_command"])
+        os.system(f"CUDA_VISIBLE_DEVICES={config['test_device']} " + config["test_command"])
         print("\n")
     model.train()
     return prediction
