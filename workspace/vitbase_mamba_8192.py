@@ -4,6 +4,7 @@ os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
+import dill
 import math
 import random
 import warnings
@@ -104,12 +105,21 @@ optimizer = optim.AdamW(params=model.parameters(),
 scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
+# load checkpoint
+if config["resume"] and os.path.exists("./vitbase_state.pt"):
+    diction = torch.load("./vitbase_state.pt")
+    model.load_state_dict(diction["model"])
+    optimizer.load_state_dict(diction["optimizer"])
+    scheduler.load_state_dict(diction["scheduler"])
+    start_batch_idx = diction["step"] + 1
+else:  # not resume
+    start_batch_idx = 0
+
 # accelerator
 if __name__ == "__main__":
     kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
     accelerator = Accelerator(kwargs_handlers=[kwargs,])
     model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
-
 
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
@@ -120,17 +130,6 @@ if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
         config=config,
         resume=config["resume"],
     )
-
-# load checkpoint
-if config["resume"] and os.path.exists("./vitbase_state.pt"):
-    with open("./vitbase_state.pt", 'rb') as f:
-        diction = dill.load(f)
-    model = diction["model"]
-    optimizer = diction["optimizer"]
-    scheduler = diction["scheduler"]
-    start_batch_idx = diction["step"] + 1
-else:  # not resume
-    start_batch_idx = 0
 
 
 
@@ -171,8 +170,12 @@ def train():
             state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"],
                                            f"{__file__.split('/')[-1].split('.')[0]}.pth"))
-            with open("./vitbase_state.pt", 'wb') as f:
-                dill.dump({"model": model, "optimizer": optimizer, "scheduler": scheduler, "step": batch_idx}, f)
+            torch.save({
+                "model": accelerator.unwrap_model(model).state_dict(),
+                "optimizer": accelerator.unwrap_model(optimizer).state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "step": batch_idx
+            }, "./vitbase_state.pt")
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break
