@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
@@ -34,6 +34,7 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
+    "resume": False,
     "batch_size": 1,
     "num_workers": 4,
     "total_steps": 80000,
@@ -44,7 +45,7 @@ config = {
     "autocast": lambda i: 5000 < i < 70000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
-    "test_device": 6,
+    "test_device": 7,
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
     "test_command": Dataset.test_command,
@@ -113,8 +114,22 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
+    wandb.init(
+        project="AR-Param-Generation",
+        name=__file__.split("/")[-1][:-3],
+        config=config,
+        resume=config["resume"],
+    )
 
+# load checkpoint
+if config["resume"] and os.path.exists("./vitbase_state.pt"):
+    diction = torch.load("./vitbase_state.pt")
+    model = diction["model"]
+    optimizer = diction["optimizer"]
+    scheduler = diction["scheduler"]
+    start_batch_idx = diction["step"] + 1
+else:  # not resume
+    start_batch_idx = 0
 
 
 
@@ -127,6 +142,7 @@ def train():
     print("==> start training..")
     model.train()
     for batch_idx, param in enumerate(train_loader):
+        batch_idx += start_batch_idx
         optimizer.zero_grad()
         # train
         # noinspection PyArgumentList
@@ -153,6 +169,8 @@ def train():
             state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"],
                                            f"{__file__.split('/')[-1].split('.')[0]}.pth"))
+            torch.save({"model": model, "optimizer": optimizer, "scheduler": scheduler, "step": batch_idx},
+                       "./vitbase_state.pt")
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break
