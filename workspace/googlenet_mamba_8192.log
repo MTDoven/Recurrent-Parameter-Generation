@@ -1,0 +1,315 @@
+==> Defining training..
+==> start training..
+
+==> Generating..
+Generated_norm: 176.1007843017578
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: nan | Acc: 10.000% (1000/10000)
+
+
+==> Generating..
+Generated_norm: 4.167512893676758
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.700 | Acc: 84.200% (8420/10000)
+
+
+==> Generating..
+Generated_norm: 4.40372896194458
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.390 | Acc: 91.750% (9175/10000)
+
+
+==> Generating..
+Generated_norm: 4.253876209259033
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.477 | Acc: 91.220% (9122/10000)
+
+
+==> Generating..
+Generated_norm: 4.379152297973633
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.398 | Acc: 91.750% (9175/10000)
+
+
+==> Generating..
+Generated_norm: 4.31041955947876
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.489 | Acc: 92.160% (9216/10000)
+
+
+==> Generating..
+Generated_norm: 4.2940449714660645
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.412 | Acc: 92.540% (9254/10000)
+
+
+==> Generating..
+Generated_norm: 4.672266006469727
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.409 | Acc: 92.920% (9292/10000)
+
+
+==> Generating..
+Generated_norm: 4.652602195739746
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.345 | Acc: 93.110% (9311/10000)
+
+
+==> Generating..
+Generated_norm: 4.642452239990234
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.370 | Acc: 93.190% (9319/10000)
+
+
+==> Generating..
+Generated_norm: 4.944839954376221
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.370 | Acc: 92.900% (9290/10000)
+
+
+==> Generating..
+Generated_norm: 4.833238124847412
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.380 | Acc: 93.290% (9329/10000)
+
+
+==> Generating..
+Generated_norm: 5.0756306648254395
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.377 | Acc: 93.500% (9350/10000)
+
+
+==> Generating..
+Generated_norm: 5.04038143157959
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.391 | Acc: 93.200% (9320/10000)
+
+
+==> Generating..
+Generated_norm: 5.14424991607666
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.342 | Acc: 93.990% (9399/10000)
+
+
+==> Generating..
+Generated_norm: 5.413476943969727
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.351 | Acc: 93.850% (9385/10000)
+
+
+==> Generating..
+Generated_norm: 5.60400915145874
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.348 | Acc: 94.160% (9416/10000)
+
+
+==> Generating..
+Generated_norm: 5.649343490600586
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.376 | Acc: 93.900% (9390/10000)
+
+
+==> Generating..
+Generated_norm: 5.869002819061279
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.343 | Acc: 94.030% (9403/10000)
+
+
+==> Generating..
+Generated_norm: 6.171264171600342
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.348 | Acc: 94.180% (9418/10000)
+
+
+==> Generating..
+Generated_norm: 6.359096050262451
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.365 | Acc: 93.850% (9385/10000)
+
+
+==> Generating..
+Generated_norm: 6.441957950592041
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.355 | Acc: 93.840% (9384/10000)
+
+
+==> Generating..
+Generated_norm: 6.599856853485107
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.359 | Acc: 93.760% (9376/10000)
+
+
+==> Generating..
+Generated_norm: 6.529815673828125
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.337 | Acc: 94.120% (9412/10000)
+
+
+==> Generating..
+Generated_norm: 6.671881675720215
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.347 | Acc: 93.900% (9390/10000)
+
+
+==> Generating..
+Generated_norm: 6.531537055969238
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+ 9 10 Loss: 0.344 | Acc: 94.030% (9403/10000)
+
+Finished Training!

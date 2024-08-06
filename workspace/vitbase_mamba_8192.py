@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
-os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
+os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
@@ -37,7 +37,7 @@ config = {
     "batch_size": 1,
     "num_workers": 4,
     "total_steps": 80000,
-    "learning_rate": 0.000005,
+    "learning_rate": 0.00001,
     "weight_decay": 0.0,
     "save_every": 80000//25,
     "print_every": 50,
@@ -57,12 +57,12 @@ config = {
         "expand": 1,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
-        "layer_channels": [1, 64, 96, 64, 1],
+        "diffusion_batch": 256,
+        "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
         "kernel_size": 7,
-        "sample_mode": DDIMSampler,
+        "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
