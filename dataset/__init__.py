@@ -126,7 +126,7 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, item in self.structure.items():
-            if "num_batches_tracked" in key or item.numel() == 1:
+            if ("num_batches_tracked" in key) or (item[-1] is None):
                 shape, mean, std = item
                 diction[key] = mean
                 continue
