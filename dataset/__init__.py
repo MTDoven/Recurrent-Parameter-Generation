@@ -49,7 +49,7 @@ class BaseDataset(Dataset, ABC):
         for i, checkpoint in enumerate(checkpoint_list):
             diction = torch.load(checkpoint, map_location="cpu")
             for key, value in diction.items():
-                if "num_batches_tracked" in key:
+                if "num_batches_tracked" in key or value.numel() == 1:
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
                     pre_mean = value.mean() * 0.9
@@ -60,7 +60,7 @@ class BaseDataset(Dataset, ABC):
         final_structure = {}
         structure_diction = torch.load(checkpoint_list[0], map_location="cpu")
         for key, param in structure_diction.items():
-            if "num_batches_tracked" in key:
+            if "num_batches_tracked" in key or value.numel() == 1:
                 final_structure[key] = (param.shape, param, None)
             elif "running_var" in key:
                 value = [param.shape, 0., 0., 0.]
@@ -105,7 +105,7 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            if "num_batches_tracked" in key:
+            if "num_batches_tracked" in key or value.numel() == 1:
                 continue
             elif "running_var" in key:
                 shape, pre_mean, mean, std = self.structure[key]
@@ -126,7 +126,7 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, item in self.structure.items():
-            if "num_batches_tracked" in key:
+            if "num_batches_tracked" in key or value.numel() == 1:
                 shape, mean, std = item
                 diction[key] = mean
                 continue
@@ -217,9 +217,10 @@ class Cifar10_TinyViT_OneClass(ConditionalDataset):
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
         super().__init__(checkpoint_path=checkpoint_path, dim_per_token=dim_per_token, **kwargs)
-        # Cifar10 dataset
+        # load dataset_config
         with open(self.dataset_config, "r") as f:
             dataset_config = json.load(f)
+        # train dataset
         self.dataset = CIFAR10(root=dataset_config["dataset_root"], train=True, transform=None)
         self.indices = [[] for _ in range(10)]
         for index, (_, label) in enumerate(self.dataset):
@@ -232,7 +233,7 @@ class Cifar10_TinyViT_OneClass(ConditionalDataset):
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
         ])
-        # test datset
+        # test dataset
         self.test_dataset = CIFAR10(root=dataset_config["dataset_root"], train=False, transform=None)
         self.test_indices = [[] for _ in range(10)]
         for index, (_, label) in enumerate(self.test_dataset):
