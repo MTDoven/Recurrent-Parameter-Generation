@@ -49,7 +49,7 @@ class BaseDataset(Dataset, ABC):
         for i, checkpoint in enumerate(checkpoint_list):
             diction = torch.load(checkpoint, map_location="cpu")
             for key, value in diction.items():
-                if "num_batches_tracked" in key or value.numel() == 1:
+                if ("num_batches_tracked" in key) or (value.numel() == 1):
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
                     pre_mean = value.mean() * 0.9
@@ -60,7 +60,7 @@ class BaseDataset(Dataset, ABC):
         final_structure = {}
         structure_diction = torch.load(checkpoint_list[0], map_location="cpu")
         for key, param in structure_diction.items():
-            if "num_batches_tracked" in key or value.numel() == 1:
+            if ("num_batches_tracked" in key) or (param.numel() == 1):
                 final_structure[key] = (param.shape, param, None)
             elif "running_var" in key:
                 value = [param.shape, 0., 0., 0.]
@@ -105,7 +105,7 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            if "num_batches_tracked" in key or value.numel() == 1:
+            if ("num_batches_tracked" in key) or (value.numel() == 1):
                 continue
             elif "running_var" in key:
                 shape, pre_mean, mean, std = self.structure[key]
@@ -126,7 +126,7 @@ class BaseDataset(Dataset, ABC):
         diction = {}
         params = params.flatten()
         for key, item in self.structure.items():
-            if "num_batches_tracked" in key or value.numel() == 1:
+            if "num_batches_tracked" in key or item.numel() == 1:
                 shape, mean, std = item
                 diction[key] = mean
                 continue
