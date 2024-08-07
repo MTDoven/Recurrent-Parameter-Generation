@@ -27,6 +27,7 @@ from tqdm.auto import tqdm
 import json
 import sys
 import os
+import re
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Cifar10")
@@ -37,7 +38,7 @@ with open(os.path.join(config_root, "config.json"), "r") as f:
 config = {
     # dataset setting
     "dataset_root": "from_additional_config",
-    "optim_class": int(sys.argv[1]),
+    "optim_class": int(re.search(r'class(\d+)', sys.argv[1]).group(1)),
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 250,

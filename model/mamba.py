@@ -30,6 +30,6 @@ class MambaModel(nn.Module):
         return pe
 
     def forward(self, output_shape, condition=torch.tensor([0.])):
-        condition = self.to_condition(condition.view(-1, 1, 1).to(self.pe.device))
+        condition = self.to_condition(condition.view(-1, 1, self.config["d_condition"]).to(self.pe.device))
         x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x

@@ -16,7 +16,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import MambaDiffusion as Model
+from model import ConditionalMambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -74,7 +74,7 @@ config = {
 
 # Data
 print('==> Preparing data..')
-train_set = config["dataset"](dim_per_token=config["dim_per_token"], train=True)
+train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 if config["sequence_length"] == "auto":
@@ -141,7 +141,7 @@ def train():
             wandb.log({"train_loss": loss.item()})
         elif USE_WANDB:
             pass  # don't print
-        else:  # not use wandb
+        elif accelerator.is_main_process:  # not use wandb
             train_loss += loss.item()
             this_steps += 1
             if this_steps % config["print_every"] == 0:
@@ -162,7 +162,7 @@ def train():
 def generate(save_path=config["generated_path"], need_test=True, class_index=None):
     print("\n==> Generating..")
     model.eval()
-    condition = train_set.get_image_by_class_index(class_index=class_index)
+    condition = train_set.get_image_by_class_index(class_index=class_index)[None]
     with torch.no_grad():
         prediction = model(sample=True, condition=condition)
         generated_norm = prediction.abs().mean()
@@ -170,9 +170,9 @@ def generate(save_path=config["generated_path"], need_test=True, class_index=Non
     if USE_WANDB and accelerator.is_main_process:
         wandb.log({"generated_norm": generated_norm.item()})
     if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path)
+        train_set.save_params(prediction, save_path=save_path.format(class_index))
     if need_test:
-        os.system(config["test_command"])
+        os.system(config["test_command"].format(class_index)+f" {class_index}")
         print("\n")
     model.train()
     return prediction

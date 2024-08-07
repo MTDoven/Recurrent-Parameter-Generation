@@ -85,7 +85,7 @@ class BaseDataset(Dataset, ABC):
 
     def set_infinite_dataset(self, max_num=None):
         if max_num is None:
-            max_num = self.length * 10000000
+            max_num = self.length * 1000000
         self.length = max_num
         return self
 
@@ -220,7 +220,7 @@ class Cifar10_TinyViT_OneClass(ConditionalDataset):
         # Cifar10 dataset
         with open(self.dataset_config, "r") as f:
             dataset_config = json.load(f)
-        self.dataset = CIFAR10(root=dataset_config["dataset_root"], train=train, transform=None)
+        self.dataset = CIFAR10(root=dataset_config["dataset_root"], train=True, transform=None)
         self.indices = [[] for _ in range(10)]
         for index, (_, label) in enumerate(self.dataset):
             self.indices[label].append(index)
@@ -232,6 +232,11 @@ class Cifar10_TinyViT_OneClass(ConditionalDataset):
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
         ])
+        # test datset
+        self.test_dataset = CIFAR10(root=dataset_config["dataset_root"], train=False, transform=None)
+        self.test_indices = [[] for _ in range(10)]
+        for index, (_, label) in enumerate(self.test_dataset):
+            self.test_indices[label].append(index)
         self.test_transform = transforms.Compose([
             transforms.Resize(64),
             transforms.ToTensor(),
@@ -241,11 +246,11 @@ class Cifar10_TinyViT_OneClass(ConditionalDataset):
     def _extract_condition(self, index: int):
         optim_class = int(super()._extract_condition(index)[1][5:])
         img_index = random.choice(self.indices[optim_class])
-        img = self.transform(self.dataset[img_index])
+        img = self.transform(self.dataset[img_index][0])
         return img
 
     def get_image_by_class_index(self, class_index):
-        img_index = random.choice(self.indices[class_index])
-        img = self.test_transform(self.dataset[img_index])
+        img_index = random.choice(self.test_indices[class_index])
+        img = self.test_transform(self.test_dataset[img_index][0])
         return img
 
