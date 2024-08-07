@@ -1,7 +1,9 @@
 import torch
+import timm
 from torch import nn
 from .mamba import MambaModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
+from .extractor import ResNet18
 
 
 class MambaDiffusion(nn.Module):
@@ -33,3 +35,16 @@ class MambaDiffusion(nn.Module):
             x = torch.randn((1, self.sequence_length, self.config["model_dim"]), device=z.device)
         x = self.criteria.sample(x, z)
         return x
+
+
+class ConditionalMambaDiffusion(MambaDiffusion):
+    config = {}
+
+    def __init__(self, sequence_length):
+        super().__init__(sequence_length)
+        self.condition_extractor = ResNet18(output_dim=self.config["d_condition"])
+        self.register_buffer("device_sign_buffer", torch.zeros(1))
+
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
+        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)

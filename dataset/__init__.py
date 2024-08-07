@@ -1,8 +1,12 @@
 import torch
 import einops
 from torch.utils.data import Dataset
+from torchvision.datasets import CIFAR10
+from torchvision import transforms
 import os
 import math
+import random
+import json
 from abc import ABC
 
 
@@ -204,12 +208,44 @@ class ConditionalDataset(BaseDataset):
 
 
 
-# class Cifar10_ResNet18_MultiSeed(ConditionalDataset):
-#     data_path = "./dataset/cifar10_resnet18_11m/checkpoint-92-94"
-#     generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
-#     test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
-#                    "./dataset/cifar10_resnet18_11m/generated/generated_model_seed{}.pth"
-#
-#     def _extract_condition(self, index: int):
-#         float_number = float(super()._extract_condition(index)[2][4:])
-#         return (torch.tensor(float_number, dtype=torch.float32) - 15.) / 5.
+class Cifar10_TinyViT_OneClass(ConditionalDataset):
+    dataset_config = "./dataset/Cifar10/config.json"
+    data_path = "./dataset/cifar10_vittiny_condition/checkpoint"
+    generated_path = "./dataset/cifar10_vittiny_condition/generated/generated_model_class{}.pth"
+    test_command = "python ./dataset/cifar10_vittiny_condition/test.py " + \
+                   "./dataset/cifar10_vittiny_condition/generated/generated_model_class{}.pth"
+
+    def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
+        super().__init__(checkpoint_path=checkpoint_path, dim_per_token=dim_per_token, **kwargs)
+        # Cifar10 dataset
+        with open(self.dataset_config, "r") as f:
+            dataset_config = json.load(f)
+        self.dataset = CIFAR10(root=dataset_config["dataset_root"], train=train, transform=None)
+        self.indices = [[] for _ in range(10)]
+        for index, (_, label) in enumerate(self.dataset):
+            self.indices[label].append(index)
+        self.transform = transforms.Compose([
+            transforms.Resize(64),
+            transforms.RandomCrop(64, padding=4),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandAugment(),
+            transforms.ToTensor(),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
+        ])
+        self.test_transform = transforms.Compose([
+            transforms.Resize(64),
+            transforms.ToTensor(),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
+        ])
+
+    def _extract_condition(self, index: int):
+        optim_class = int(super()._extract_condition(index)[1][5:])
+        img_index = random.choice(self.indices[optim_class])
+        img = self.transform(self.dataset[img_index])
+        return img
+
+    def get_image_by_class_index(self, class_index):
+        img_index = random.choice(self.indices[class_index])
+        img = self.test_transform(self.dataset[img_index])
+        return img
+
