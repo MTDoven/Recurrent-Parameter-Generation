@@ -27,7 +27,7 @@ class GaussianDiffusionTrainer(nn.Module):
         self.register_buffer("signal_rate", torch.sqrt(alpha_t_bar))
         self.register_buffer("noise_rate", torch.sqrt(1.0 - alpha_t_bar))
 
-    def forward(self, x_0, z):
+    def forward(self, x_0, z, **kwargs):
         # preprocess nan to zero
         mask = torch.isnan(x_0)
         x_0 = torch.nan_to_num(x_0, 0.)
@@ -168,7 +168,9 @@ class DiffusionLoss(nn.Module):
             T=self.config["T"]
         )
 
-    def forward(self, x, c):
+    def forward(self, x, c, **kwargs):
+        if kwargs.get("parameter_weight_decay"):
+            x = x * (1.0 - kwargs["parameter_weight_decay"])
         # Given condition z and ground truth token x, compute loss
         x = x.view(-1, x.size(-1))
         c = c.view(-1, c.size(-1))
@@ -182,12 +184,12 @@ class DiffusionLoss(nn.Module):
             loss = 0.
             num_loops = x.size(0) // batch if x.size(0) % batch != 0 else x.size(0) // batch - 1
             for _ in range(num_loops):
-                loss += self.diffusion_trainer(x[:batch], c[:batch]) * batch
+                loss += self.diffusion_trainer(x[:batch], c[:batch], **kwargs) * batch
                 x, c = x[batch:], c[batch:]
-            loss += self.diffusion_trainer(x, c) * x.size(0)
+            loss += self.diffusion_trainer(x, c, **kwargs) * x.size(0)
             loss = loss / real_batch
         else:  # all as a batch
-            loss = self.diffusion_trainer(x, c)
+            loss = self.diffusion_trainer(x, c, **kwargs)
         return loss
 
     @torch.no_grad()

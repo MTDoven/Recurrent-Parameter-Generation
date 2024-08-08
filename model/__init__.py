@@ -25,7 +25,7 @@ class MambaDiffusion(nn.Module):
             return self.sample(x=None, condition=condition)
         c = self.model(output_shape, condition)
         # Given condition c and ground truth token x, compute loss
-        loss = self.criteria(x=x_0, c=c)
+        loss = self.criteria(x=x_0, c=c, **kwargs)
         if kwargs.get("parameter_weight_decay"):
             loss += torch.square(c).mean() * kwargs["parameter_weight_decay"]
         return loss

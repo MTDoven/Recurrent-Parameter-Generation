@@ -39,6 +39,7 @@ config = {
     "total_steps": 20000,
     "learning_rate": 1e-6,
     "weight_decay": 0.0,
+    "parameter_weight_decay": 1e-4,
     "momentum": 0.5,
     "save_every": 20000//25,
     "print_every": 50,
@@ -134,7 +135,7 @@ def train():
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(output_shape=param.shape, x_0=param)
+            loss = model(output_shape=param.shape, x_0=param, parameter_weight_decay=config["parameter_weight_decay"])
         accelerator.backward(loss)
         optimizer.step()
         if accelerator.is_main_process:
