@@ -16,14 +16,14 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import MambaDiffusion as Model
+from model import ConditionalMambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ConvNeXt as Dataset
+from dataset import Cifar10_TinyViT_OneClass as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -31,19 +31,17 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 4096,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 4,
+    "batch_size": 8,
     "num_workers": 8,
-    "total_steps": 20000,
-    "learning_rate": 1e-6,
+    "total_steps": 80000,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "parameter_weight_decay": 0.01,
-    "save_every": 20000//25,
+    "save_every": 80000//25,
     "print_every": 50,
-    "autocast": lambda i: False,
-    "checkpoint_load_path": "./checkpoint/convnext_mamba_8192_finetune.pth",
+    "autocast": lambda i: 5000 < i < 70000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -52,17 +50,17 @@ config = {
     # to log
     "model_config": {
         # mamba config
-        "d_condition": 1,
-        "d_model": 8192,
+        "d_condition": 512,
+        "d_model": 4096,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
+        "diffusion_batch": 2048,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 8192,
-        "condition_dim": 8192,
+        "model_dim": 4096,
+        "condition_dim": 4096,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
@@ -78,7 +76,7 @@ config = {
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
-print("input shape:", train_set[0].shape)
+print("input shape:", train_set[0][0].shape)
 if config["sequence_length"] == "auto":
     config["sequence_length"] = train_set.sequence_length
     print(f"sequence length: {config['sequence_length']}")
@@ -91,11 +89,11 @@ train_loader = DataLoader(dataset=train_set,
                           drop_last=True,
                           shuffle=True,)
 
+
 # Model
 print('==> Building model..')
 Model.config = config["model_config"]
 model = Model(sequence_length=config["sequence_length"])  # model setting is in model
-model.load_state_dict(torch.load(config["checkpoint_load_path"], map_location="cpu"))
 
 # Optimizer
 print('==> Building optimizer..')
@@ -128,12 +126,12 @@ def train():
         this_steps = 0
     print("==> start training..")
     model.train()
-    for batch_idx, param in enumerate(train_loader):
+    for batch_idx, (param, condition) in enumerate(train_loader):
         optimizer.zero_grad()
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(output_shape=param.shape, x_0=param, parameter_weight_decay=config["parameter_weight_decay"])
+            loss = model(output_shape=param.shape, x_0=param, condition=condition)
         accelerator.backward(loss)
         optimizer.step()
         if accelerator.is_main_process:
@@ -143,7 +141,7 @@ def train():
             wandb.log({"train_loss": loss.item()})
         elif USE_WANDB:
             pass  # don't print
-        else:  # not use wandb
+        elif accelerator.is_main_process:  # not use wandb
             train_loss += loss.item()
             this_steps += 1
             if this_steps % config["print_every"] == 0:
@@ -155,25 +153,26 @@ def train():
             state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"],
                                            f"{__file__.split('/')[-1].split('.')[0]}.pth"))
-            generate(save_path=config["generated_path"], need_test=True)
+            class_index = random.randint(0, len(train_set.indices)-1)
+            generate(save_path=config["generated_path"], need_test=True, class_index=class_index)
         if batch_idx >= config["total_steps"]:
             break
 
 
-def generate(save_path=config["generated_path"], need_test=True):
+def generate(save_path=config["generated_path"], need_test=True, class_index=None):
     print("\n==> Generating..")
     model.eval()
-    # _, condition = train_set[0]
+    condition = train_set.get_image_by_class_index(class_index=class_index)[None]
     with torch.no_grad():
-        prediction = model(sample=True)
+        prediction = model(sample=True, condition=condition)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB and accelerator.is_main_process:
         wandb.log({"generated_norm": generated_norm.item()})
     if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path)
+        train_set.save_params(prediction, save_path=save_path.format(class_index))
     if need_test:
-        os.system(config["test_command"])
+        os.system(config["test_command"].format(class_index)+f" {class_index}")
         print("\n")
     model.train()
     return prediction

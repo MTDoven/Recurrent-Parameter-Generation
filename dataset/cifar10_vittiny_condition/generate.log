@@ -1,0 +1,185 @@
+(arpgen) wangkai@5a21df081e09:~/arpgen/AR-Param-Generation/workspace/evaluate$ CUDA_VISIBLE_DEVICES=7 python generate_condition.py
+==> Preparing data..
+Dataset length: 400
+input shape: torch.Size([784, 8192])
+sequence length: 784
+==> Building model..
+==> Building optimizer..
+==> Defining training..
+==> Building model..
+==> Defining generate..
+
+==> Generating..
+Generated_norm: 4.668550491333008
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.43it/s]
+ 39 40 Loss: 0.0367 | Acc: 98.6900% (9869/10000)
+AUC: 0.9983318888888888
+F1: 0.9363150218765192
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.671448230743408
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.24it/s]
+ 39 40 Loss: 0.0361 | Acc: 99.0000% (9900/10000)
+AUC: 0.9988258888888888
+F1: 0.9514563106796117
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.66883659362793
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.27it/s]
+ 39 40 Loss: 0.0465 | Acc: 98.5100% (9851/10000)
+AUC: 0.9957568888888888
+F1: 0.9242501270971022
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.671211242675781
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.05it/s]
+ 39 40 Loss: 0.0871 | Acc: 96.6100% (9661/10000)
+AUC: 0.9859546666666668
+F1: 0.8121883656509695
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.670523643493652
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0407 | Acc: 98.5800% (9858/10000)
+AUC: 0.9971201111111112
+F1: 0.9292828685258964
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.6708879470825195
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.37it/s]
+ 39 40 Loss: 0.0874 | Acc: 97.0500% (9705/10000)
+AUC: 0.9889992222222223
+F1: 0.8625989753143922
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.651505947113037
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.90it/s]
+ 39 40 Loss: 0.0596 | Acc: 98.0700% (9807/10000)
+AUC: 0.9983695555555555
+F1: 0.911427260211106
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.670626640319824
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.57it/s]
+ 39 40 Loss: 0.0403 | Acc: 98.7400% (9874/10000)
+AUC: 0.9975403333333333
+F1: 0.9351184346035015
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.626841068267822
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.11it/s]
+ 39 40 Loss: 0.0412 | Acc: 98.7500% (9875/10000)
+AUC: 0.9978538888888889
+F1: 0.9400479616306955
+
+
+
+
+
+
+==> Generating..
+Generated_norm: 4.662682056427002
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.43it/s]
+ 39 40 Loss: 0.0454 | Acc: 98.5800% (9858/10000)
+AUC: 0.9954635555555555
+F1: 0.9255765199161425
