@@ -2,6 +2,8 @@ try:  # relative import
     from .train import *
 except:  # absolute import
     from train import *
+from sklearn.metrics import roc_auc_score, f1_score
+import numpy as np
 import sys
 
 
@@ -16,4 +18,7 @@ if __name__ == '__main__':
     model.load_state_dict(diction)
     model = model.to(config["device"])
 
-    test(save_name=None)
+    total_target, total_predict = test(save_name=None)
+    auc = roc_auc_score(total_target, total_predict)
+    f1 = f1_score(total_target, (total_predict >= 0.5).astype(int))
+    print("\nAUC:", auc, "\nF1:", f1)

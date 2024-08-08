@@ -162,6 +162,8 @@ def test(save_name):
     print("\n==> Testing..")
     global best_acc
     model.eval()
+    total_target = []
+    total_predict = []
     test_loss = 0
     correct = 0
     total = 0
@@ -175,6 +177,8 @@ def test(save_name):
             predicted = torch.where(outputs > 0., 1, 0)
             correct += predicted.eq(targets).sum().item()
             total += len(outputs)
+            total_target.extend(targets.flatten().tolist())
+            total_predict.extend(torch.sigmoid(outputs).flatten().tolist())
         print('\r', batch_idx, len(test_loader), 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
               (test_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
     # Save checkpoint.
@@ -185,7 +189,8 @@ def test(save_name):
             state[key] = value.cpu().to(torch.float32)
         os.makedirs('checkpoint', exist_ok=True)
         torch.save(state, f"checkpoint/{save_name}_class{config['optim_class']}_acc{correct/total:.4f}_{config['tag']}.pth")
-
+    # return
+    return np.array(total_target), np.array(total_predict)
 
 
 

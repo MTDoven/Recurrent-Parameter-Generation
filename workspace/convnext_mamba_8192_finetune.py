@@ -34,14 +34,16 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 2,
-    "num_workers": 4,
-    "total_steps": 80000,
-    "learning_rate": 0.00003,
+    "batch_size": 4,
+    "num_workers": 8,
+    "total_steps": 20000,
+    "learning_rate": 1e-6,
     "weight_decay": 0.0,
-    "save_every": 80000//25,
+    "momentum": 0.5,
+    "save_every": 20000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 70000,
+    "autocast": lambda i: False,
+    "checkpoint_load_path": "./checkpoint/convnext_mamba_8192_finetune.pth",
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -93,12 +95,14 @@ train_loader = DataLoader(dataset=train_set,
 print('==> Building model..')
 Model.config = config["model_config"]
 model = Model(sequence_length=config["sequence_length"])  # model setting is in model
+model.load_state_dict(torch.load(config["checkpoint_load_path"], map_location="cpu"))
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(params=model.parameters(),
-                        lr=config["learning_rate"],
-                        weight_decay=config["weight_decay"])
+optimizer = optim.SGD(params=model.parameters(),
+                      lr=config["learning_rate"],
+                      weight_decay=config["weight_decay"],
+                      momentum=config["momentum"])
 scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
