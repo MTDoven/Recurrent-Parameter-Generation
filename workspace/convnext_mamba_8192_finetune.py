@@ -39,8 +39,7 @@ config = {
     "total_steps": 20000,
     "learning_rate": 1e-6,
     "weight_decay": 0.0,
-    "parameter_weight_decay": 1e-4,
-    "momentum": 0.5,
+    "parameter_weight_decay": 0.01,
     "save_every": 20000//25,
     "print_every": 50,
     "autocast": lambda i: False,
@@ -100,10 +99,9 @@ model.load_state_dict(torch.load(config["checkpoint_load_path"], map_location="c
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.SGD(params=model.parameters(),
-                      lr=config["learning_rate"],
-                      weight_decay=config["weight_decay"],
-                      momentum=config["momentum"])
+optimizer = optim.AdamW(params=model.parameters(),
+                        lr=config["learning_rate"],
+                        weight_decay=config["weight_decay"])
 scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
