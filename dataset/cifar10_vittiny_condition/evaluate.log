@@ -1,0 +1,6398 @@
+/home/wangkai/anaconda3/envs/arpgen/bin/python /home/wangkai/arpgen/AR-Param-Generation/dataset/cifar10_vittiny_condition/evaluate.py
+start testing: ./checkpoint/0036_class4_acc0.9949_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.94it/s]
+ 39 40 Loss: 0.0137 | Acc: 99.4900% (9949/10000)
+AUC: 0.999635111111111
+F1: 0.9742813918305597
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class0_acc0.9962_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.99it/s]
+ 39 40 Loss: 0.0110 | Acc: 99.6200% (9962/10000)
+AUC: 0.9996896666666667
+F1: 0.9810379241516967
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.96it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8200% (9982/10000)
+AUC: 0.999809111111111
+F1: 0.9909729187562688
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.42it/s]
+ 39 40 Loss: 0.0083 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998702222222222
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class4_acc0.9945_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.84it/s]
+ 39 40 Loss: 0.0147 | Acc: 99.4500% (9945/10000)
+AUC: 0.9995713333333334
+F1: 0.9722921914357683
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class3_acc0.9889_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.81it/s]
+ 39 40 Loss: 0.0320 | Acc: 98.8900% (9889/10000)
+AUC: 0.9978223333333334
+F1: 0.943683409436834
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class0_acc0.9965_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.67it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6500% (9965/10000)
+AUC: 0.999707888888889
+F1: 0.9825087456271864
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class5_acc0.9877_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.75it/s]
+ 39 40 Loss: 0.0343 | Acc: 98.7700% (9877/10000)
+AUC: 0.9979581111111111
+F1: 0.9394387001477105
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class2_acc0.9951_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.39it/s]
+ 39 40 Loss: 0.0157 | Acc: 99.5100% (9951/10000)
+AUC: 0.9990582222222222
+F1: 0.9753397081026673
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class1_acc0.9964_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.84it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997393333333333
+F1: 0.9820538384845464
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class5_acc0.9877_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.76it/s]
+ 39 40 Loss: 0.0329 | Acc: 98.7700% (9877/10000)
+AUC: 0.9979103333333333
+F1: 0.9387144992526159
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class4_acc0.9952_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5200% (9952/10000)
+AUC: 0.9996602222222222
+F1: 0.975975975975976
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class4_acc0.9945_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.81it/s]
+ 39 40 Loss: 0.0154 | Acc: 99.4500% (9945/10000)
+AUC: 0.9994927777777779
+F1: 0.9722921914357683
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class1_acc0.9966_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.92it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.6600% (9966/10000)
+AUC: 0.999724888888889
+F1: 0.983016983016983
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class7_acc0.9944_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.42it/s]
+ 39 40 Loss: 0.0154 | Acc: 99.4400% (9944/10000)
+AUC: 0.9996884444444445
+F1: 0.9715736040609138
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class2_acc0.9954_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.35it/s]
+ 39 40 Loss: 0.0149 | Acc: 99.5400% (9954/10000)
+AUC: 0.9988624444444445
+F1: 0.9768145161290323
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class8_acc0.9977_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.37it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7700% (9977/10000)
+AUC: 0.9998705555555555
+F1: 0.9885401096163428
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class2_acc0.9960_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.39it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.6000% (9960/10000)
+AUC: 0.9988325555555555
+F1: 0.9797365754812564
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class2_acc0.9959_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.29it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5900% (9959/10000)
+AUC: 0.9988984444444444
+F1: 0.9792615073343449
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.30it/s]
+ 39 40 Loss: 0.0069 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998126666666667
+F1: 0.9904666332162569
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class0_acc0.9966_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.62it/s]
+ 39 40 Loss: 0.0110 | Acc: 99.6600% (9966/10000)
+AUC: 0.999714
+F1: 0.983
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.57it/s]
+ 39 40 Loss: 0.0084 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998655555555556
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class9_acc0.9950_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.23it/s]
+ 39 40 Loss: 0.0160 | Acc: 99.5000% (9950/10000)
+AUC: 0.9994318888888888
+F1: 0.974974974974975
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class3_acc0.9890_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.72it/s]
+ 39 40 Loss: 0.0320 | Acc: 98.9000% (9890/10000)
+AUC: 0.9977636666666666
+F1: 0.9445005045408678
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class7_acc0.9959_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.79it/s]
+ 39 40 Loss: 0.0122 | Acc: 99.5900% (9959/10000)
+AUC: 0.9997937777777777
+F1: 0.9793242561775088
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class9_acc0.9943_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0168 | Acc: 99.4300% (9943/10000)
+AUC: 0.9993554444444444
+F1: 0.971457185778668
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class9_acc0.9956_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.08it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5600% (9956/10000)
+AUC: 0.9995442222222222
+F1: 0.978
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.32it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8200% (9982/10000)
+AUC: 0.9998096666666666
+F1: 0.9909819639278558
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.02it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988355555555555
+F1: 0.978744939271255
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class9_acc0.9948_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.85it/s]
+ 39 40 Loss: 0.0153 | Acc: 99.4800% (9948/10000)
+AUC: 0.9994848888888889
+F1: 0.9738430583501007
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class8_acc0.9975_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0088 | Acc: 99.7500% (9975/10000)
+AUC: 0.9998604444444444
+F1: 0.9875435974090683
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class4_acc0.9945_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.4500% (9945/10000)
+AUC: 0.9996022222222223
+F1: 0.9722921914357683
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class2_acc0.9952_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.78it/s]
+ 39 40 Loss: 0.0151 | Acc: 99.5200% (9952/10000)
+AUC: 0.9989241111111111
+F1: 0.9758551307847082
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class4_acc0.9950_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.95it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.5000% (9950/10000)
+AUC: 0.9996532222222222
+F1: 0.9749247743229689
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996614444444445
+F1: 0.9754139488208731
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class5_acc0.9882_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.41it/s]
+ 39 40 Loss: 0.0335 | Acc: 98.8200% (9882/10000)
+AUC: 0.998038
+F1: 0.9418145956607495
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class7_acc0.9964_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.15it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6400% (9964/10000)
+AUC: 0.9998206666666667
+F1: 0.9819458375125376
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.6500% (9965/10000)
+AUC: 0.9996716666666667
+F1: 0.9824561403508771
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class8_acc0.9970_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.62it/s]
+ 39 40 Loss: 0.0101 | Acc: 99.7000% (9970/10000)
+AUC: 0.9998203333333333
+F1: 0.9851190476190477
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class5_acc0.9897_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.96it/s]
+ 39 40 Loss: 0.0305 | Acc: 98.9700% (9897/10000)
+AUC: 0.9983497777777778
+F1: 0.9484226339509264
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class4_acc0.9943_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  8.00it/s]
+ 39 40 Loss: 0.0140 | Acc: 99.4300% (9943/10000)
+AUC: 0.9996075555555556
+F1: 0.971342383107089
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class7_acc0.9958_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.68it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.5800% (9958/10000)
+AUC: 0.9998146666666667
+F1: 0.9788092835519677
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.52it/s]
+ 39 40 Loss: 0.0137 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997311111111111
+F1: 0.9825783972125436
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class9_acc0.9953_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.74it/s]
+ 39 40 Loss: 0.0149 | Acc: 99.5300% (9953/10000)
+AUC: 0.9995273333333332
+F1: 0.9765586034912718
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class4_acc0.9949_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.61it/s]
+ 39 40 Loss: 0.0131 | Acc: 99.4900% (9949/10000)
+AUC: 0.9996592222222221
+F1: 0.9743073047858942
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.58it/s]
+ 39 40 Loss: 0.0067 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998155
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class8_acc0.9977_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.60it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7700% (9977/10000)
+AUC: 0.9998673333333334
+F1: 0.9885401096163428
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class3_acc0.9890_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.65it/s]
+ 39 40 Loss: 0.0316 | Acc: 98.9000% (9890/10000)
+AUC: 0.9978501666666667
+F1: 0.944331983805668
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class8_acc0.9977_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.71it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7700% (9977/10000)
+AUC: 0.9998471111111111
+F1: 0.9885172241637543
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class7_acc0.9965_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.86it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6500% (9965/10000)
+AUC: 0.9998054444444444
+F1: 0.9824561403508771
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class7_acc0.9952_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.02it/s]
+ 39 40 Loss: 0.0127 | Acc: 99.5200% (9952/10000)
+AUC: 0.9997283333333333
+F1: 0.9758551307847082
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class5_acc0.9903_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.47it/s]
+ 39 40 Loss: 0.0296 | Acc: 99.0300% (9903/10000)
+AUC: 0.9984026666666665
+F1: 0.9513784461152882
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class2_acc0.9960_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.85it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.6000% (9960/10000)
+AUC: 0.9988648888888889
+F1: 0.9797775530839231
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class1_acc0.9963_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.6300% (9963/10000)
+AUC: 0.999738111111111
+F1: 0.9815645241654211
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.11it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998186666666666
+F1: 0.9798590130916415
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class1_acc0.9967_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.76it/s]
+ 39 40 Loss: 0.0133 | Acc: 99.6700% (9967/10000)
+AUC: 0.9997265555555556
+F1: 0.9835247129306041
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class0_acc0.9966_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.26it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997044444444445
+F1: 0.983016983016983
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class7_acc0.9958_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.18it/s]
+ 39 40 Loss: 0.0116 | Acc: 99.5800% (9958/10000)
+AUC: 0.9997734444444444
+F1: 0.978894472361809
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.21it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998676666666667
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class1_acc0.9957_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5700% (9957/10000)
+AUC: 0.9997472222222222
+F1: 0.9787234042553191
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class9_acc0.9959_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.90it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5900% (9959/10000)
+AUC: 0.999533
+F1: 0.9795102448775612
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class0_acc0.9961_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.16it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997036666666667
+F1: 0.9803921568627451
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class0_acc0.9963_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6300% (9963/10000)
+AUC: 0.999707
+F1: 0.9815461346633416
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class3_acc0.9881_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.08it/s]
+ 39 40 Loss: 0.0338 | Acc: 98.8100% (9881/10000)
+AUC: 0.9976715555555555
+F1: 0.9390681003584229
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class5_acc0.9901_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0314 | Acc: 99.0100% (9901/10000)
+AUC: 0.9984036666666667
+F1: 0.950965824665676
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class0_acc0.9959_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.78it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.5900% (9959/10000)
+AUC: 0.9996588888888889
+F1: 0.9795511221945137
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class1_acc0.9963_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.40it/s]
+ 39 40 Loss: 0.0122 | Acc: 99.6300% (9963/10000)
+AUC: 0.9997228888888889
+F1: 0.981453634085213
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.84it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998184444444445
+F1: 0.9798590130916415
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class7_acc0.9965_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.05it/s]
+ 39 40 Loss: 0.0107 | Acc: 99.6500% (9965/10000)
+AUC: 0.9998177777777778
+F1: 0.9824032176973353
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class6_acc0.9980_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.15it/s]
+ 39 40 Loss: 0.0073 | Acc: 99.8000% (9980/10000)
+AUC: 0.9997771111111111
+F1: 0.9899699097291875
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class5_acc0.9876_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.22it/s]
+ 39 40 Loss: 0.0345 | Acc: 98.7600% (9876/10000)
+AUC: 0.9978689999999999
+F1: 0.9390363815142576
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class1_acc0.9955_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.64it/s]
+ 39 40 Loss: 0.0138 | Acc: 99.5500% (9955/10000)
+AUC: 0.9997265555555556
+F1: 0.977645305514158
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class6_acc0.9979_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.43it/s]
+ 39 40 Loss: 0.0070 | Acc: 99.7900% (9979/10000)
+AUC: 0.9997895555555555
+F1: 0.9894947473736868
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class9_acc0.9951_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.85it/s]
+ 39 40 Loss: 0.0152 | Acc: 99.5100% (9951/10000)
+AUC: 0.9995052222222222
+F1: 0.975512243878061
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class2_acc0.9955_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5500% (9955/10000)
+AUC: 0.998887
+F1: 0.9772151898734177
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class4_acc0.9947_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.01it/s]
+ 39 40 Loss: 0.0138 | Acc: 99.4700% (9947/10000)
+AUC: 0.9996257222222222
+F1: 0.9736187157789945
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9300% (9893/10000)
+AUC: 0.9978418888888889
+F1: 0.9456576942610462
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class1_acc0.9958_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.49it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5800% (9958/10000)
+AUC: 0.9997419444444444
+F1: 0.979187314172448
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class1_acc0.9957_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.66it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5700% (9957/10000)
+AUC: 0.9997391111111111
+F1: 0.9787234042553191
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class1_acc0.9964_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.00it/s]
+ 39 40 Loss: 0.0133 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997484444444444
+F1: 0.982089552238806
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class1_acc0.9966_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.31it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997306666666667
+F1: 0.9830677290836654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class1_acc0.9962_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.81it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997246666666667
+F1: 0.981018981018981
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class8_acc0.9971_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.79it/s]
+ 39 40 Loss: 0.0098 | Acc: 99.7100% (9971/10000)
+AUC: 0.9997868888888889
+F1: 0.9856079404466501
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class3_acc0.9884_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.24it/s]
+ 39 40 Loss: 0.0342 | Acc: 98.8400% (9884/10000)
+AUC: 0.9975431111111112
+F1: 0.9410569105691057
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class8_acc0.9969_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.33it/s]
+ 39 40 Loss: 0.0091 | Acc: 99.6900% (9969/10000)
+AUC: 0.999838
+F1: 0.9845847836897066
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class2_acc0.9956_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.34it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.5600% (9956/10000)
+AUC: 0.9988937777777778
+F1: 0.9778672032193159
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0318 | Acc: 98.9300% (9893/10000)
+AUC: 0.9978134444444444
+F1: 0.9458227848101266
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class1_acc0.9960_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.00it/s]
+ 39 40 Loss: 0.0133 | Acc: 99.6000% (9960/10000)
+AUC: 0.9997253333333334
+F1: 0.9800995024875622
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class7_acc0.9957_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.26it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.5700% (9957/10000)
+AUC: 0.999796888888889
+F1: 0.978315683308119
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class2_acc0.9952_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.23it/s]
+ 39 40 Loss: 0.0156 | Acc: 99.5200% (9952/10000)
+AUC: 0.9989464444444445
+F1: 0.9755849440488301
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class0_acc0.9964_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.60it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997078888888888
+F1: 0.982
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class7_acc0.9949_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0131 | Acc: 99.4900% (9949/10000)
+AUC: 0.9996993333333334
+F1: 0.9742813918305597
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class4_acc0.9945_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.80it/s]
+ 39 40 Loss: 0.0159 | Acc: 99.4500% (9945/10000)
+AUC: 0.9994954444444445
+F1: 0.9722081859525012
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class3_acc0.9873_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.18it/s]
+ 39 40 Loss: 0.0360 | Acc: 98.7300% (9873/10000)
+AUC: 0.9971661666666667
+F1: 0.9359556227937469
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class2_acc0.9959_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.20it/s]
+ 39 40 Loss: 0.0141 | Acc: 99.5900% (9959/10000)
+AUC: 0.9988523333333332
+F1: 0.9792615073343449
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.89it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996735555555556
+F1: 0.9754139488208731
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5500% (9955/10000)
+AUC: 0.999519
+F1: 0.9773982923154194
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class3_acc0.9888_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.64it/s]
+ 39 40 Loss: 0.0333 | Acc: 98.8800% (9888/10000)
+AUC: 0.9976128888888888
+F1: 0.943031536113937
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.33it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9200% (9892/10000)
+AUC: 0.9978262222222223
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class5_acc0.9900_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.50it/s]
+ 39 40 Loss: 0.0312 | Acc: 99.0000% (9900/10000)
+AUC: 0.9984287777777778
+F1: 0.9504950495049505
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class1_acc0.9962_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.77it/s]
+ 39 40 Loss: 0.0144 | Acc: 99.6200% (9962/10000)
+AUC: 0.99973
+F1: 0.9811320754716981
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class8_acc0.9976_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.21it/s]
+ 39 40 Loss: 0.0086 | Acc: 99.7600% (9976/10000)
+AUC: 0.9998651111111111
+F1: 0.9880358923230309
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.36it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998101111111111
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class3_acc0.9885_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.39it/s]
+ 39 40 Loss: 0.0347 | Acc: 98.8500% (9885/10000)
+AUC: 0.9975160000000001
+F1: 0.9414161996943454
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class9_acc0.9957_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.48it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5700% (9957/10000)
+AUC: 0.9995243333333333
+F1: 0.9784461152882206
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class3_acc0.9881_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.59it/s]
+ 39 40 Loss: 0.0339 | Acc: 98.8100% (9881/10000)
+AUC: 0.9976214444444444
+F1: 0.93900563813429
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class0_acc0.9964_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.03it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6400% (9964/10000)
+AUC: 0.9996874444444445
+F1: 0.9819819819819819
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class6_acc0.9979_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.36it/s]
+ 39 40 Loss: 0.0075 | Acc: 99.7900% (9979/10000)
+AUC: 0.9997971111111111
+F1: 0.9894525364138623
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class9_acc0.9956_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.86it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5600% (9956/10000)
+AUC: 0.9995501111111111
+F1: 0.977977977977978
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class0_acc0.9965_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.36it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997082222222222
+F1: 0.9825087456271864
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class9_acc0.9950_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.90it/s]
+ 39 40 Loss: 0.0150 | Acc: 99.5000% (9950/10000)
+AUC: 0.9995627777777778
+F1: 0.975
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.40it/s]
+ 39 40 Loss: 0.0320 | Acc: 98.9300% (9893/10000)
+AUC: 0.9977855555555555
+F1: 0.945712836123795
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class0_acc0.9958_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.5800% (9958/10000)
+AUC: 0.9996473333333333
+F1: 0.978894472361809
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class0_acc0.9962_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.47it/s]
+ 39 40 Loss: 0.0113 | Acc: 99.6200% (9962/10000)
+AUC: 0.9996936666666666
+F1: 0.981
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.66it/s]
+ 39 40 Loss: 0.0144 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988233333333333
+F1: 0.978744939271255
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.47it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996615555555556
+F1: 0.9753892516323456
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.64it/s]
+ 39 40 Loss: 0.0319 | Acc: 98.9200% (9892/10000)
+AUC: 0.997821
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class9_acc0.9956_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.65it/s]
+ 39 40 Loss: 0.0147 | Acc: 99.5600% (9956/10000)
+AUC: 0.9995121111111112
+F1: 0.9779559118236473
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class5_acc0.9901_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.38it/s]
+ 39 40 Loss: 0.0303 | Acc: 99.0100% (9901/10000)
+AUC: 0.9984072222222222
+F1: 0.9505247376311844
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class5_acc0.9900_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.29it/s]
+ 39 40 Loss: 0.0306 | Acc: 99.0000% (9900/10000)
+AUC: 0.9984246666666666
+F1: 0.9502487562189055
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class8_acc0.9973_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0091 | Acc: 99.7300% (9973/10000)
+AUC: 0.9998427777777777
+F1: 0.9865470852017937
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class5_acc0.9898_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.52it/s]
+ 39 40 Loss: 0.0303 | Acc: 98.9800% (9898/10000)
+AUC: 0.9983987777777777
+F1: 0.9492537313432836
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class8_acc0.9966_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.12it/s]
+ 39 40 Loss: 0.0101 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997963333333333
+F1: 0.9831013916500994
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0141 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996344444444445
+F1: 0.9752149721800708
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class8_acc0.9976_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.67it/s]
+ 39 40 Loss: 0.0088 | Acc: 99.7600% (9976/10000)
+AUC: 0.999873888888889
+F1: 0.9880478087649402
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class2_acc0.9953_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.97it/s]
+ 39 40 Loss: 0.0153 | Acc: 99.5300% (9953/10000)
+AUC: 0.9987737777777778
+F1: 0.9762506316321374
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class0_acc0.9961_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.93it/s]
+ 39 40 Loss: 0.0110 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997073333333334
+F1: 0.9805292061907139
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class6_acc0.9979_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.28it/s]
+ 39 40 Loss: 0.0079 | Acc: 99.7900% (9979/10000)
+AUC: 0.9997628888888889
+F1: 0.9894206549118388
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class4_acc0.9953_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.41it/s]
+ 39 40 Loss: 0.0127 | Acc: 99.5300% (9953/10000)
+AUC: 0.9996619999999999
+F1: 0.9763700351935646
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class9_acc0.9958_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.58it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5800% (9958/10000)
+AUC: 0.9995318888888889
+F1: 0.979
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class7_acc0.9962_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  5.81it/s]
+ 39 40 Loss: 0.0112 | Acc: 99.6200% (9962/10000)
+AUC: 0.9998183333333334
+F1: 0.9809045226130654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class7_acc0.9964_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.43it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997811111111111
+F1: 0.9819277108433735
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class2_acc0.9948_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0162 | Acc: 99.4800% (9948/10000)
+AUC: 0.9988064444444443
+F1: 0.9734693877551021
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class0_acc0.9960_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.54it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.6000% (9960/10000)
+AUC: 0.999659888888889
+F1: 0.9801390268123138
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class6_acc0.9983_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.34it/s]
+ 39 40 Loss: 0.0069 | Acc: 99.8300% (9983/10000)
+AUC: 0.9998282777777778
+F1: 0.9914872308462694
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.07it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8100% (9981/10000)
+AUC: 0.99981
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.44it/s]
+ 39 40 Loss: 0.0073 | Acc: 99.8100% (9981/10000)
+AUC: 0.999775611111111
+F1: 0.9905047476261869
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.26it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998092222222222
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class7_acc0.9959_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.42it/s]
+ 39 40 Loss: 0.0117 | Acc: 99.5900% (9959/10000)
+AUC: 0.9998085555555556
+F1: 0.979345088161209
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class6_acc0.9983_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.66it/s]
+ 39 40 Loss: 0.0070 | Acc: 99.8300% (9983/10000)
+AUC: 0.9997973888888889
+F1: 0.9914701455092825
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class9_acc0.9953_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.40it/s]
+ 39 40 Loss: 0.0149 | Acc: 99.5300% (9953/10000)
+AUC: 0.9995125555555555
+F1: 0.9765117441279361
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.72it/s]
+ 39 40 Loss: 0.0086 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998652222222222
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class4_acc0.9943_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.49it/s]
+ 39 40 Loss: 0.0155 | Acc: 99.4300% (9943/10000)
+AUC: 0.9995479999999999
+F1: 0.9710806697108066
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.08it/s]
+ 39 40 Loss: 0.0137 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997324444444444
+F1: 0.9825783972125436
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class1_acc0.9964_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.84it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6400% (9964/10000)
+AUC: 0.999728
+F1: 0.9820717131474104
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class9_acc0.9944_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.16it/s]
+ 39 40 Loss: 0.0156 | Acc: 99.4400% (9944/10000)
+AUC: 0.9994675555555557
+F1: 0.9719719719719719
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.47it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998101111111112
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class8_acc0.9977_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.32it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7700% (9977/10000)
+AUC: 0.9998465555555556
+F1: 0.9885401096163428
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class5_acc0.9892_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.40it/s]
+ 39 40 Loss: 0.0303 | Acc: 98.9200% (9892/10000)
+AUC: 0.9984057777777778
+F1: 0.9461077844311377
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class0_acc0.9959_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.76it/s]
+ 39 40 Loss: 0.0112 | Acc: 99.5900% (9959/10000)
+AUC: 0.9997115555555556
+F1: 0.979571499750872
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class8_acc0.9976_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.96it/s]
+ 39 40 Loss: 0.0084 | Acc: 99.7600% (9976/10000)
+AUC: 0.9998642222222223
+F1: 0.9880239520958084
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.26it/s]
+ 39 40 Loss: 0.0157 | Acc: 99.5500% (9955/10000)
+AUC: 0.9994312222222222
+F1: 0.9775112443778111
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class9_acc0.9956_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.68it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5600% (9956/10000)
+AUC: 0.9995446666666666
+F1: 0.978
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class2_acc0.9945_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.20it/s]
+ 39 40 Loss: 0.0155 | Acc: 99.4500% (9945/10000)
+AUC: 0.9990585555555556
+F1: 0.9720953830542871
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.90it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.6000% (9960/10000)
+AUC: 0.9997735555555556
+F1: 0.9799398194583752
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class7_acc0.9953_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.30it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5300% (9953/10000)
+AUC: 0.9997135555555556
+F1: 0.9762985375693394
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.17it/s]
+ 39 40 Loss: 0.0321 | Acc: 98.9300% (9893/10000)
+AUC: 0.9977455555555556
+F1: 0.9457678661936137
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class0_acc0.9962_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.38it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997428888888888
+F1: 0.9810756972111554
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class0_acc0.9961_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.46it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997025555555555
+F1: 0.9805680119581465
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.76it/s]
+ 39 40 Loss: 0.0073 | Acc: 99.8100% (9981/10000)
+AUC: 0.9997898888888889
+F1: 0.9904378459989934
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class8_acc0.9961_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.68it/s]
+ 39 40 Loss: 0.0115 | Acc: 99.6100% (9961/10000)
+AUC: 0.999759111111111
+F1: 0.9806643529995042
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.15it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998187777777778
+F1: 0.9798590130916415
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0113 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998175555555555
+F1: 0.9798590130916415
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class3_acc0.9889_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0321 | Acc: 98.8900% (9889/10000)
+AUC: 0.9978097777777777
+F1: 0.9436262061960387
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.46it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998672222222222
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class5_acc0.9898_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.31it/s]
+ 39 40 Loss: 0.0303 | Acc: 98.9800% (9898/10000)
+AUC: 0.9983564444444445
+F1: 0.948948948948949
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class6_acc0.9984_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.63it/s]
+ 39 40 Loss: 0.0075 | Acc: 99.8400% (9984/10000)
+AUC: 0.9997672777777777
+F1: 0.991991991991992
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class6_acc0.9980_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.37it/s]
+ 39 40 Loss: 0.0072 | Acc: 99.8000% (9980/10000)
+AUC: 0.9998106666666666
+F1: 0.9900299102691924
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class5_acc0.9898_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.47it/s]
+ 39 40 Loss: 0.0305 | Acc: 98.9800% (9898/10000)
+AUC: 0.9984143333333334
+F1: 0.9492537313432836
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.92it/s]
+ 39 40 Loss: 0.0136 | Acc: 99.6500% (9965/10000)
+AUC: 0.999731
+F1: 0.9825783972125436
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class9_acc0.9947_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.64it/s]
+ 39 40 Loss: 0.0162 | Acc: 99.4700% (9947/10000)
+AUC: 0.9995425555555556
+F1: 0.9737233515121467
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class4_acc0.9952_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0133 | Acc: 99.5200% (9952/10000)
+AUC: 0.9996343333333333
+F1: 0.975975975975976
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class9_acc0.9959_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.55it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5900% (9959/10000)
+AUC: 0.9995355555555556
+F1: 0.9795102448775612
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class0_acc0.9965_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.74it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997004444444444
+F1: 0.9824561403508771
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class0_acc0.9963_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.73it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6300% (9963/10000)
+AUC: 0.9996966666666667
+F1: 0.9815277084373439
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class1_acc0.9958_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.61it/s]
+ 39 40 Loss: 0.0132 | Acc: 99.5800% (9958/10000)
+AUC: 0.9997446666666667
+F1: 0.9791044776119403
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class4_acc0.9945_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.30it/s]
+ 39 40 Loss: 0.0161 | Acc: 99.4500% (9945/10000)
+AUC: 0.9994706666666667
+F1: 0.9723756906077348
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class0_acc0.9965_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.73it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997073333333334
+F1: 0.9825087456271864
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.09it/s]
+ 39 40 Loss: 0.0121 | Acc: 99.6000% (9960/10000)
+AUC: 0.999709111111111
+F1: 0.9798792756539235
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class2_acc0.9957_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.35it/s]
+ 39 40 Loss: 0.0144 | Acc: 99.5700% (9957/10000)
+AUC: 0.9987886666666667
+F1: 0.9782057780030411
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class1_acc0.9961_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0132 | Acc: 99.6100% (9961/10000)
+AUC: 0.9996907777777777
+F1: 0.9804902451225613
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.64it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.5500% (9955/10000)
+AUC: 0.9995622222222222
+F1: 0.9774887443721861
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class9_acc0.9957_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.53it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5700% (9957/10000)
+AUC: 0.9995371111111112
+F1: 0.9785322016974538
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class6_acc0.9987_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.93it/s]
+ 39 40 Loss: 0.0069 | Acc: 99.8700% (9987/10000)
+AUC: 0.9998124444444445
+F1: 0.993503248375812
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.54it/s]
+ 39 40 Loss: 0.0149 | Acc: 99.5500% (9955/10000)
+AUC: 0.9994937777777777
+F1: 0.9773527931555108
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class9_acc0.9945_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.27it/s]
+ 39 40 Loss: 0.0151 | Acc: 99.4500% (9945/10000)
+AUC: 0.999554
+F1: 0.9725959142999502
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class3_acc0.9894_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.20it/s]
+ 39 40 Loss: 0.0323 | Acc: 98.9400% (9894/10000)
+AUC: 0.9977608888888889
+F1: 0.9462474645030426
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.46it/s]
+ 39 40 Loss: 0.0067 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998176666666667
+F1: 0.9904761904761905
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class5_acc0.9881_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.49it/s]
+ 39 40 Loss: 0.0326 | Acc: 98.8100% (9881/10000)
+AUC: 0.9982857777777778
+F1: 0.94146581406788
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.06it/s]
+ 39 40 Loss: 0.0324 | Acc: 98.9300% (9893/10000)
+AUC: 0.9977622222222222
+F1: 0.9456576942610462
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class8_acc0.9962_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.76it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997554444444444
+F1: 0.9811133200795229
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class9_acc0.9952_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5200% (9952/10000)
+AUC: 0.9994632222222223
+F1: 0.9759519038076152
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class5_acc0.9898_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.08it/s]
+ 39 40 Loss: 0.0313 | Acc: 98.9800% (9898/10000)
+AUC: 0.9983272222222223
+F1: 0.9492537313432836
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class0_acc0.9963_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.76it/s]
+ 39 40 Loss: 0.0115 | Acc: 99.6300% (9963/10000)
+AUC: 0.9996776666666668
+F1: 0.9815092453773113
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class1_acc0.9956_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.27it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5600% (9956/10000)
+AUC: 0.99974
+F1: 0.9782393669634025
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class4_acc0.9947_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.55it/s]
+ 39 40 Loss: 0.0138 | Acc: 99.4700% (9947/10000)
+AUC: 0.9996151111111111
+F1: 0.9735132433783108
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.58it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998676666666667
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class6_acc0.9967_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.29it/s]
+ 39 40 Loss: 0.0093 | Acc: 99.6700% (9967/10000)
+AUC: 0.9998028888888889
+F1: 0.9836390679226574
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class8_acc0.9973_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.50it/s]
+ 39 40 Loss: 0.0091 | Acc: 99.7300% (9973/10000)
+AUC: 0.9998226666666666
+F1: 0.9865067466266867
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.94it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996615555555556
+F1: 0.9754139488208731
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.03it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998674444444444
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class5_acc0.9887_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.36it/s]
+ 39 40 Loss: 0.0332 | Acc: 98.8700% (9887/10000)
+AUC: 0.9980347777777777
+F1: 0.9442525900345338
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class4_acc0.9940_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.50it/s]
+ 39 40 Loss: 0.0150 | Acc: 99.4000% (9940/10000)
+AUC: 0.9995676666666667
+F1: 0.9696356275303644
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class9_acc0.9957_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.29it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5700% (9957/10000)
+AUC: 0.9995503333333333
+F1: 0.9784028126569563
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.75it/s]
+ 39 40 Loss: 0.0071 | Acc: 99.8100% (9981/10000)
+AUC: 0.9998200555555555
+F1: 0.9904761904761905
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class8_acc0.9979_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.33it/s]
+ 39 40 Loss: 0.0084 | Acc: 99.7900% (9979/10000)
+AUC: 0.9998668888888889
+F1: 0.9895261845386534
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class4_acc0.9948_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.32it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.4800% (9948/10000)
+AUC: 0.9996624444444444
+F1: 0.974025974025974
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.99it/s]
+ 39 40 Loss: 0.0082 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998752222222221
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class0_acc0.9953_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0136 | Acc: 99.5300% (9953/10000)
+AUC: 0.999621111111111
+F1: 0.9765819631290483
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class9_acc0.9954_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.84it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5400% (9954/10000)
+AUC: 0.9994954444444445
+F1: 0.9769307923771314
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class8_acc0.9957_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.31it/s]
+ 39 40 Loss: 0.0132 | Acc: 99.5700% (9957/10000)
+AUC: 0.9997485555555556
+F1: 0.9787444389520514
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class7_acc0.9962_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0117 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997893333333333
+F1: 0.9808853118712274
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class5_acc0.9897_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.95it/s]
+ 39 40 Loss: 0.0313 | Acc: 98.9700% (9897/10000)
+AUC: 0.9983896666666667
+F1: 0.9488833746898263
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class9_acc0.9953_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.33it/s]
+ 39 40 Loss: 0.0152 | Acc: 99.5300% (9953/10000)
+AUC: 0.999466
+F1: 0.9765117441279361
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class5_acc0.9878_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.51it/s]
+ 39 40 Loss: 0.0342 | Acc: 98.7800% (9878/10000)
+AUC: 0.998103
+F1: 0.9400196656833825
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.44it/s]
+ 39 40 Loss: 0.0067 | Acc: 99.8100% (9981/10000)
+AUC: 0.999817
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0046_class4_acc0.9950_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.5000% (9950/10000)
+AUC: 0.9996631111111111
+F1: 0.9748995983935743
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class5_acc0.9899_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.05it/s]
+ 39 40 Loss: 0.0304 | Acc: 98.9900% (9899/10000)
+AUC: 0.9983292222222222
+F1: 0.9494241362043064
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class5_acc0.9899_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.15it/s]
+ 39 40 Loss: 0.0308 | Acc: 98.9900% (9899/10000)
+AUC: 0.9982213333333333
+F1: 0.9495756365451822
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class3_acc0.9868_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.31it/s]
+ 39 40 Loss: 0.0352 | Acc: 98.6800% (9868/10000)
+AUC: 0.997401
+F1: 0.9328585961342828
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class6_acc0.9972_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.41it/s]
+ 39 40 Loss: 0.0082 | Acc: 99.7200% (9972/10000)
+AUC: 0.9998169444444445
+F1: 0.9860973187686196
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class5_acc0.9900_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.72it/s]
+ 39 40 Loss: 0.0308 | Acc: 99.0000% (9900/10000)
+AUC: 0.9984178888888888
+F1: 0.9502982107355865
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class4_acc0.9946_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.04it/s]
+ 39 40 Loss: 0.0134 | Acc: 99.4600% (9946/10000)
+AUC: 0.9996442222222223
+F1: 0.9728915662650602
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.09it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9200% (9892/10000)
+AUC: 0.9978265555555554
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class7_acc0.9961_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.13it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997952222222222
+F1: 0.980431510286001
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class5_acc0.9878_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.89it/s]
+ 39 40 Loss: 0.0329 | Acc: 98.7800% (9878/10000)
+AUC: 0.9979537777777778
+F1: 0.9399014778325123
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class8_acc0.9977_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.60it/s]
+ 39 40 Loss: 0.0082 | Acc: 99.7700% (9977/10000)
+AUC: 0.9998548888888888
+F1: 0.9885172241637543
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class1_acc0.9964_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.50it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997253888888888
+F1: 0.9820538384845464
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class4_acc0.9947_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.80it/s]
+ 39 40 Loss: 0.0136 | Acc: 99.4700% (9947/10000)
+AUC: 0.9996135555555556
+F1: 0.9732728189611699
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class4_acc0.9950_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.63it/s]
+ 39 40 Loss: 0.0133 | Acc: 99.5000% (9950/10000)
+AUC: 0.9996386666666666
+F1: 0.9747729566094854
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.02it/s]
+ 39 40 Loss: 0.0319 | Acc: 98.9300% (9893/10000)
+AUC: 0.9977856666666667
+F1: 0.9458227848101266
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class2_acc0.9943_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.61it/s]
+ 39 40 Loss: 0.0167 | Acc: 99.4300% (9943/10000)
+AUC: 0.9987769999999999
+F1: 0.9713135379969804
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class1_acc0.9959_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.62it/s]
+ 39 40 Loss: 0.0140 | Acc: 99.5900% (9959/10000)
+AUC: 0.9997410555555556
+F1: 0.9796121332670313
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class7_acc0.9957_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.51it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.5700% (9957/10000)
+AUC: 0.9997996666666666
+F1: 0.978315683308119
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class0_acc0.9960_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.50it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6000% (9960/10000)
+AUC: 0.9996822222222222
+F1: 0.9798994974874372
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.43it/s]
+ 39 40 Loss: 0.0084 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998692222222222
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.57it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997442222222221
+F1: 0.9824561403508771
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class8_acc0.9974_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.58it/s]
+ 39 40 Loss: 0.0087 | Acc: 99.7400% (9974/10000)
+AUC: 0.9998739999999999
+F1: 0.9870775347912525
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class8_acc0.9966_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.53it/s]
+ 39 40 Loss: 0.0106 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997816666666666
+F1: 0.9831181727904668
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class1_acc0.9954_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.40it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5400% (9954/10000)
+AUC: 0.9997381111111112
+F1: 0.9772502472799208
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class0_acc0.9963_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.90it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6300% (9963/10000)
+AUC: 0.999691
+F1: 0.9815277084373439
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class8_acc0.9971_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.94it/s]
+ 39 40 Loss: 0.0092 | Acc: 99.7100% (9971/10000)
+AUC: 0.9998755555555556
+F1: 0.9855936413313463
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.97it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988348888888889
+F1: 0.9787018255578094
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class1_acc0.9963_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.26it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6300% (9963/10000)
+AUC: 0.9997281666666666
+F1: 0.9815645241654211
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class3_acc0.9887_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.27it/s]
+ 39 40 Loss: 0.0316 | Acc: 98.8700% (9887/10000)
+AUC: 0.9978131111111112
+F1: 0.9426686960933536
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class3_acc0.9884_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.59it/s]
+ 39 40 Loss: 0.0329 | Acc: 98.8400% (9884/10000)
+AUC: 0.9975642222222221
+F1: 0.9415911379657603
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class4_acc0.9947_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0141 | Acc: 99.4700% (9947/10000)
+AUC: 0.9995982222222222
+F1: 0.9733802109492717
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class9_acc0.9956_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.43it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5600% (9956/10000)
+AUC: 0.9995478888888889
+F1: 0.9780439121756487
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class8_acc0.9976_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.33it/s]
+ 39 40 Loss: 0.0087 | Acc: 99.7600% (9976/10000)
+AUC: 0.999868
+F1: 0.9880478087649402
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.52it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996615555555556
+F1: 0.9753892516323456
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class3_acc0.9886_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.80it/s]
+ 39 40 Loss: 0.0320 | Acc: 98.8600% (9886/10000)
+AUC: 0.997792
+F1: 0.9420731707317073
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.40it/s]
+ 39 40 Loss: 0.0068 | Acc: 99.8100% (9981/10000)
+AUC: 0.999815888888889
+F1: 0.9904857285928893
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class0_acc0.9961_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.11it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.6100% (9961/10000)
+AUC: 0.9996524444444445
+F1: 0.9805486284289276
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.39it/s]
+ 39 40 Loss: 0.0320 | Acc: 98.9200% (9892/10000)
+AUC: 0.9978097777777778
+F1: 0.9452332657200812
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class0_acc0.9963_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0115 | Acc: 99.6300% (9963/10000)
+AUC: 0.999659111111111
+F1: 0.9815277084373439
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class3_acc0.9889_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.99it/s]
+ 39 40 Loss: 0.0324 | Acc: 98.8900% (9889/10000)
+AUC: 0.9977083333333333
+F1: 0.9441368897835933
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class5_acc0.9900_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.32it/s]
+ 39 40 Loss: 0.0307 | Acc: 99.0000% (9900/10000)
+AUC: 0.9984237777777778
+F1: 0.9502982107355865
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.37it/s]
+ 39 40 Loss: 0.0070 | Acc: 99.8200% (9982/10000)
+AUC: 0.9997993333333333
+F1: 0.9909638554216867
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class2_acc0.9952_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.44it/s]
+ 39 40 Loss: 0.0150 | Acc: 99.5200% (9952/10000)
+AUC: 0.9989058888888889
+F1: 0.975609756097561
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class7_acc0.9964_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.58it/s]
+ 39 40 Loss: 0.0117 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997929999999999
+F1: 0.9819095477386934
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class3_acc0.9893_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.20it/s]
+ 39 40 Loss: 0.0321 | Acc: 98.9300% (9893/10000)
+AUC: 0.9977519999999999
+F1: 0.9458227848101266
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class0_acc0.9957_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.04it/s]
+ 39 40 Loss: 0.0126 | Acc: 99.5700% (9957/10000)
+AUC: 0.9996977777777778
+F1: 0.9786812097174021
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class7_acc0.9962_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.52it/s]
+ 39 40 Loss: 0.0116 | Acc: 99.6200% (9962/10000)
+AUC: 0.9998158888888888
+F1: 0.9808660624370594
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class8_acc0.9965_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.30it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997775555555556
+F1: 0.9825957235206365
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class1_acc0.9966_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.77it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997311111111111
+F1: 0.9830677290836654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.17it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988535555555556
+F1: 0.9787018255578094
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class5_acc0.9901_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.03it/s]
+ 39 40 Loss: 0.0308 | Acc: 99.0100% (9901/10000)
+AUC: 0.9984122222222223
+F1: 0.9508684863523573
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class5_acc0.9899_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.02it/s]
+ 39 40 Loss: 0.0298 | Acc: 98.9900% (9899/10000)
+AUC: 0.99839
+F1: 0.9493734335839599
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class3_acc0.9883_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.95it/s]
+ 39 40 Loss: 0.0322 | Acc: 98.8300% (9883/10000)
+AUC: 0.9977747777777779
+F1: 0.9405789740985272
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class2_acc0.9951_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.75it/s]
+ 39 40 Loss: 0.0159 | Acc: 99.5100% (9951/10000)
+AUC: 0.9988537777777777
+F1: 0.9752650176678446
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class7_acc0.9956_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.88it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.5600% (9956/10000)
+AUC: 0.9998132222222222
+F1: 0.9777777777777777
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class1_acc0.9964_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.69it/s]
+ 39 40 Loss: 0.0118 | Acc: 99.6400% (9964/10000)
+AUC: 0.9997464444444445
+F1: 0.9819819819819819
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class2_acc0.9961_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.90it/s]
+ 39 40 Loss: 0.0138 | Acc: 99.6100% (9961/10000)
+AUC: 0.9990201111111111
+F1: 0.980352644836272
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class4_acc0.9949_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.55it/s]
+ 39 40 Loss: 0.0137 | Acc: 99.4900% (9949/10000)
+AUC: 0.9996497777777777
+F1: 0.9742554265522464
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.78it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9200% (9892/10000)
+AUC: 0.997826
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.12it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996638888888889
+F1: 0.9753892516323456
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class2_acc0.9946_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.10it/s]
+ 39 40 Loss: 0.0175 | Acc: 99.4600% (9946/10000)
+AUC: 0.998756
+F1: 0.9725330620549338
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class1_acc0.9963_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.50it/s]
+ 39 40 Loss: 0.0126 | Acc: 99.6300% (9963/10000)
+AUC: 0.9997514444444445
+F1: 0.9815277084373439
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class0_acc0.9959_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.75it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.5900% (9959/10000)
+AUC: 0.9996386666666667
+F1: 0.9795511221945137
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class2_acc0.9959_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.61it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5900% (9959/10000)
+AUC: 0.9988343333333333
+F1: 0.979240506329114
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0030_class6_acc0.9984_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.00it/s]
+ 39 40 Loss: 0.0069 | Acc: 99.8400% (9984/10000)
+AUC: 0.9998206111111111
+F1: 0.9920079920079921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class1_acc0.9965_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.93it/s]
+ 39 40 Loss: 0.0136 | Acc: 99.6500% (9965/10000)
+AUC: 0.999728888888889
+F1: 0.9825783972125436
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.01it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988331111111112
+F1: 0.978744939271255
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class4_acc0.9946_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.18it/s]
+ 39 40 Loss: 0.0152 | Acc: 99.4600% (9946/10000)
+AUC: 0.9995264444444445
+F1: 0.972809667673716
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class4_acc0.9952_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.80it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5200% (9952/10000)
+AUC: 0.9996297777777778
+F1: 0.9756592292089249
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class1_acc0.9961_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.19it/s]
+ 39 40 Loss: 0.0125 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997108888888888
+F1: 0.9804511278195489
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class2_acc0.9953_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.52it/s]
+ 39 40 Loss: 0.0152 | Acc: 99.5300% (9953/10000)
+AUC: 0.9988771111111111
+F1: 0.9763937719738824
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class6_acc0.9975_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  5.78it/s]
+ 39 40 Loss: 0.0083 | Acc: 99.7500% (9975/10000)
+AUC: 0.9997547777777778
+F1: 0.987430869783811
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class2_acc0.9945_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  5.85it/s]
+ 39 40 Loss: 0.0164 | Acc: 99.4500% (9945/10000)
+AUC: 0.9989073333333333
+F1: 0.9721236695387735
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.91it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988394444444444
+F1: 0.9787018255578094
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class2_acc0.9959_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.03it/s]
+ 39 40 Loss: 0.0147 | Acc: 99.5900% (9959/10000)
+AUC: 0.9987486666666667
+F1: 0.9791983764586504
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class8_acc0.9973_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:07,  5.68it/s]
+ 39 40 Loss: 0.0090 | Acc: 99.7300% (9973/10000)
+AUC: 0.9998563333333333
+F1: 0.9865738438587768
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class7_acc0.9956_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:07,  5.46it/s]
+ 39 40 Loss: 0.0125 | Acc: 99.5600% (9956/10000)
+AUC: 0.9997635555555555
+F1: 0.9778225806451613
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0029_class0_acc0.9961_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.53it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6100% (9961/10000)
+AUC: 0.9996877777777778
+F1: 0.9804511278195489
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class1_acc0.9966_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:07,  5.43it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6600% (9966/10000)
+AUC: 0.9997304444444445
+F1: 0.9830677290836654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class4_acc0.9943_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.53it/s]
+ 39 40 Loss: 0.0149 | Acc: 99.4300% (9943/10000)
+AUC: 0.9995842222222222
+F1: 0.9711684370257967
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class6_acc0.9983_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.36it/s]
+ 39 40 Loss: 0.0070 | Acc: 99.8300% (9983/10000)
+AUC: 0.9997912222222223
+F1: 0.9914701455092825
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class8_acc0.9968_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.79it/s]
+ 39 40 Loss: 0.0106 | Acc: 99.6800% (9968/10000)
+AUC: 0.9997814444444444
+F1: 0.9841112214498511
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class5_acc0.9889_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0322 | Acc: 98.8900% (9889/10000)
+AUC: 0.9983915555555556
+F1: 0.9455081001472754
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class9_acc0.9952_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.13it/s]
+ 39 40 Loss: 0.0154 | Acc: 99.5200% (9952/10000)
+AUC: 0.9995206666666667
+F1: 0.9757820383451059
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class0_acc0.9957_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.36it/s]
+ 39 40 Loss: 0.0116 | Acc: 99.5700% (9957/10000)
+AUC: 0.9996844444444444
+F1: 0.9785107446276862
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class6_acc0.9983_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.54it/s]
+ 39 40 Loss: 0.0072 | Acc: 99.8300% (9983/10000)
+AUC: 0.9998121111111111
+F1: 0.9914786967418546
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0052_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.44it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996615555555556
+F1: 0.9754139488208731
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class4_acc0.9954_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.86it/s]
+ 39 40 Loss: 0.0132 | Acc: 99.5400% (9954/10000)
+AUC: 0.9996396666666667
+F1: 0.9769769769769769
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.61it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9200% (9892/10000)
+AUC: 0.9978262222222223
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class8_acc0.9969_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.49it/s]
+ 39 40 Loss: 0.0103 | Acc: 99.6900% (9969/10000)
+AUC: 0.9997654444444444
+F1: 0.9845386533665835
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class0_acc0.9962_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.00it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6200% (9962/10000)
+AUC: 0.9996742222222221
+F1: 0.9809045226130654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.36it/s]
+ 39 40 Loss: 0.0070 | Acc: 99.8200% (9982/10000)
+AUC: 0.999782
+F1: 0.9909729187562688
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.29it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998172222222222
+F1: 0.9798387096774194
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class0_acc0.9967_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.15it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6700% (9967/10000)
+AUC: 0.9996756666666666
+F1: 0.9834752128192289
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class7_acc0.9967_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.60it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6700% (9967/10000)
+AUC: 0.9997989999999999
+F1: 0.9834586466165414
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.33it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.5500% (9955/10000)
+AUC: 0.9995267777777778
+F1: 0.9775112443778111
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class7_acc0.9955_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.83it/s]
+ 39 40 Loss: 0.0120 | Acc: 99.5500% (9955/10000)
+AUC: 0.9997586666666666
+F1: 0.9773299748110831
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class2_acc0.9960_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:07,  5.67it/s]
+ 39 40 Loss: 0.0144 | Acc: 99.6000% (9960/10000)
+AUC: 0.998839888888889
+F1: 0.979757085020243
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class0_acc0.9957_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.04it/s]
+ 39 40 Loss: 0.0123 | Acc: 99.5700% (9957/10000)
+AUC: 0.9996532222222222
+F1: 0.9785963165754107
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class2_acc0.9957_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.27it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5700% (9957/10000)
+AUC: 0.9988800000000001
+F1: 0.9782498735457764
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class1_acc0.9960_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.73it/s]
+ 39 40 Loss: 0.0139 | Acc: 99.6000% (9960/10000)
+AUC: 0.9997228888888888
+F1: 0.9801390268123138
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class5_acc0.9900_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.97it/s]
+ 39 40 Loss: 0.0306 | Acc: 99.0000% (9900/10000)
+AUC: 0.9984239999999999
+F1: 0.9502487562189055
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class2_acc0.9961_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.62it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.6100% (9961/10000)
+AUC: 0.9988976666666667
+F1: 0.980253164556962
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class2_acc0.9948_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.54it/s]
+ 39 40 Loss: 0.0167 | Acc: 99.4800% (9948/10000)
+AUC: 0.9989311111111111
+F1: 0.9736575481256332
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class5_acc0.9885_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.00it/s]
+ 39 40 Loss: 0.0337 | Acc: 98.8500% (9885/10000)
+AUC: 0.9978822222222222
+F1: 0.9428713363139593
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class8_acc0.9967_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.21it/s]
+ 39 40 Loss: 0.0105 | Acc: 99.6700% (9967/10000)
+AUC: 0.9997983333333333
+F1: 0.9836065573770492
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class1_acc0.9958_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.63it/s]
+ 39 40 Loss: 0.0154 | Acc: 99.5800% (9958/10000)
+AUC: 0.9997224444444445
+F1: 0.9792079207920792
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class3_acc0.9891_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  5.86it/s]
+ 39 40 Loss: 0.0319 | Acc: 98.9100% (9891/10000)
+AUC: 0.997798111111111
+F1: 0.9446981227803145
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.48it/s]
+ 39 40 Loss: 0.0321 | Acc: 98.9200% (9892/10000)
+AUC: 0.9977854444444445
+F1: 0.9462686567164179
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class4_acc0.9951_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.41it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.5100% (9951/10000)
+AUC: 0.9996626666666667
+F1: 0.9753892516323456
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class7_acc0.9956_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.51it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.5600% (9956/10000)
+AUC: 0.9997372222222222
+F1: 0.9778225806451613
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0045_class0_acc0.9964_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  5.77it/s]
+ 39 40 Loss: 0.0109 | Acc: 99.6400% (9964/10000)
+AUC: 0.9996943333333334
+F1: 0.982
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class2_acc0.9956_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:07,  5.47it/s]
+ 39 40 Loss: 0.0147 | Acc: 99.5600% (9956/10000)
+AUC: 0.998833
+F1: 0.977710233029382
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0043_class5_acc0.9897_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:06,  6.37it/s]
+ 39 40 Loss: 0.0311 | Acc: 98.9700% (9897/10000)
+AUC: 0.998390111111111
+F1: 0.9488833746898263
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class3_acc0.9875_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.25it/s]
+ 39 40 Loss: 0.0356 | Acc: 98.7500% (9875/10000)
+AUC: 0.9973046666666666
+F1: 0.936451448906965
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class2_acc0.9957_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.40it/s]
+ 39 40 Loss: 0.0148 | Acc: 99.5700% (9957/10000)
+AUC: 0.998941111111111
+F1: 0.9782057780030411
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0047_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.42it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988596666666667
+F1: 0.978744939271255
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class5_acc0.9892_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.68it/s]
+ 39 40 Loss: 0.0323 | Acc: 98.9200% (9892/10000)
+AUC: 0.9982704444444445
+F1: 0.9466403162055336
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class1_acc0.9963_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.89it/s]
+ 39 40 Loss: 0.0139 | Acc: 99.6300% (9963/10000)
+AUC: 0.9997148888888889
+F1: 0.9815461346633416
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.06it/s]
+ 39 40 Loss: 0.0074 | Acc: 99.8200% (9982/10000)
+AUC: 0.9997654444444445
+F1: 0.990990990990991
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0042_class7_acc0.9964_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.00it/s]
+ 39 40 Loss: 0.0112 | Acc: 99.6400% (9964/10000)
+AUC: 0.9998192222222222
+F1: 0.9819095477386934
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class4_acc0.9953_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.16it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.5300% (9953/10000)
+AUC: 0.9996557777777778
+F1: 0.9765351972041937
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class8_acc0.9974_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.20it/s]
+ 39 40 Loss: 0.0092 | Acc: 99.7400% (9974/10000)
+AUC: 0.9998327777777777
+F1: 0.9870646766169154
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class2_acc0.9959_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.82it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5900% (9959/10000)
+AUC: 0.9988333333333334
+F1: 0.979240506329114
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0033_class6_acc0.9979_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.64it/s]
+ 39 40 Loss: 0.0074 | Acc: 99.7900% (9979/10000)
+AUC: 0.9997985555555555
+F1: 0.9895366218236173
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class3_acc0.9888_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0318 | Acc: 98.8800% (9888/10000)
+AUC: 0.9977522222222223
+F1: 0.9437185929648241
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class9_acc0.9958_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.87it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5800% (9958/10000)
+AUC: 0.999519
+F1: 0.9789368104312939
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class9_acc0.9943_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.28it/s]
+ 39 40 Loss: 0.0151 | Acc: 99.4300% (9943/10000)
+AUC: 0.9995064444444444
+F1: 0.9715994020926756
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class4_acc0.9947_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.62it/s]
+ 39 40 Loss: 0.0141 | Acc: 99.4700% (9947/10000)
+AUC: 0.9995771111111111
+F1: 0.9733534439416792
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class3_acc0.9884_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.70it/s]
+ 39 40 Loss: 0.0335 | Acc: 98.8400% (9884/10000)
+AUC: 0.9975630000000001
+F1: 0.9415911379657603
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class2_acc0.9957_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.81it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.5700% (9957/10000)
+AUC: 0.998771
+F1: 0.9782278481012658
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class8_acc0.9978_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.44it/s]
+ 39 40 Loss: 0.0085 | Acc: 99.7800% (9978/10000)
+AUC: 0.9998674444444444
+F1: 0.9890329012961117
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class6_acc0.9974_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.44it/s]
+ 39 40 Loss: 0.0078 | Acc: 99.7400% (9974/10000)
+AUC: 0.9998054444444444
+F1: 0.9870259481037924
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class3_acc0.9895_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.88it/s]
+ 39 40 Loss: 0.0319 | Acc: 98.9500% (9895/10000)
+AUC: 0.9977406666666666
+F1: 0.9467275494672754
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class9_acc0.9959_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.07it/s]
+ 39 40 Loss: 0.0146 | Acc: 99.5900% (9959/10000)
+AUC: 0.9995335555555556
+F1: 0.9795102448775612
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0054_class0_acc0.9965_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.04it/s]
+ 39 40 Loss: 0.0108 | Acc: 99.6500% (9965/10000)
+AUC: 0.9997082222222222
+F1: 0.9825087456271864
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class9_acc0.9960_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.58it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.6000% (9960/10000)
+AUC: 0.9995425555555556
+F1: 0.9799196787148594
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class7_acc0.9961_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.17it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6100% (9961/10000)
+AUC: 0.9998182222222223
+F1: 0.980352644836272
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class3_acc0.9879_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.85it/s]
+ 39 40 Loss: 0.0338 | Acc: 98.7900% (9879/10000)
+AUC: 0.9976883333333334
+F1: 0.9382967873533912
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class6_acc0.9975_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.33it/s]
+ 39 40 Loss: 0.0086 | Acc: 99.7500% (9975/10000)
+AUC: 0.9997450555555556
+F1: 0.9875187219171243
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class5_acc0.9890_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.38it/s]
+ 39 40 Loss: 0.0318 | Acc: 98.9000% (9890/10000)
+AUC: 0.9983269999999999
+F1: 0.9454365079365079
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0016_class7_acc0.9952_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.28it/s]
+ 39 40 Loss: 0.0130 | Acc: 99.5200% (9952/10000)
+AUC: 0.9997247777777778
+F1: 0.9758064516129032
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class2_acc0.9952_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.31it/s]
+ 39 40 Loss: 0.0147 | Acc: 99.5200% (9952/10000)
+AUC: 0.9990625555555557
+F1: 0.9757575757575757
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class0_acc0.9959_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.73it/s]
+ 39 40 Loss: 0.0118 | Acc: 99.5900% (9959/10000)
+AUC: 0.9997121111111111
+F1: 0.9796121332670313
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0040_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.49it/s]
+ 39 40 Loss: 0.0071 | Acc: 99.8200% (9982/10000)
+AUC: 0.999789
+F1: 0.990990990990991
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class0_acc0.9954_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.56it/s]
+ 39 40 Loss: 0.0139 | Acc: 99.5400% (9954/10000)
+AUC: 0.9996448888888889
+F1: 0.9771371769383698
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0023_class1_acc0.9961_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.93it/s]
+ 39 40 Loss: 0.0124 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997321111111112
+F1: 0.980431510286001
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.26it/s]
+ 39 40 Loss: 0.0071 | Acc: 99.8200% (9982/10000)
+AUC: 0.999798
+F1: 0.9909729187562688
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0050_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.98it/s]
+ 39 40 Loss: 0.0317 | Acc: 98.9200% (9892/10000)
+AUC: 0.9978241111111111
+F1: 0.9452887537993921
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0048_class2_acc0.9958_vittiny.pth
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.32it/s]
+ 39 40 Loss: 0.0143 | Acc: 99.5800% (9958/10000)
+AUC: 0.9988315555555555
+F1: 0.978744939271255
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0049_class5_acc0.9901_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0305 | Acc: 99.0100% (9901/10000)
+AUC: 0.998413
+F1: 0.9507217521154804
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class9_acc0.9951_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.01it/s]
+ 39 40 Loss: 0.0155 | Acc: 99.5100% (9951/10000)
+AUC: 0.9994844444444444
+F1: 0.975512243878061
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0019_class3_acc0.9885_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.47it/s]
+ 39 40 Loss: 0.0328 | Acc: 98.8500% (9885/10000)
+AUC: 0.9976331111111111
+F1: 0.9423558897243107
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0053_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.22it/s]
+ 39 40 Loss: 0.0114 | Acc: 99.6000% (9960/10000)
+AUC: 0.9998185555555555
+F1: 0.9798590130916415
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0032_class1_acc0.9962_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.36it/s]
+ 39 40 Loss: 0.0135 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997240000000001
+F1: 0.9810568295114656
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0044_class4_acc0.9948_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.29it/s]
+ 39 40 Loss: 0.0128 | Acc: 99.4800% (9948/10000)
+AUC: 0.9996646666666666
+F1: 0.9739478957915831
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0027_class5_acc0.9896_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.80it/s]
+ 39 40 Loss: 0.0313 | Acc: 98.9600% (9896/10000)
+AUC: 0.9983105555555555
+F1: 0.9482587064676616
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0051_class5_acc0.9899_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.39it/s]
+ 39 40 Loss: 0.0308 | Acc: 98.9900% (9899/10000)
+AUC: 0.9984214444444446
+F1: 0.9498759305210918
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0028_class5_acc0.9893_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.07it/s]
+ 39 40 Loss: 0.0306 | Acc: 98.9300% (9893/10000)
+AUC: 0.9983842222222222
+F1: 0.9467926404773744
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class6_acc0.9982_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.24it/s]
+ 39 40 Loss: 0.0071 | Acc: 99.8200% (9982/10000)
+AUC: 0.9998175555555555
+F1: 0.9910179640718563
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0026_class7_acc0.9960_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.75it/s]
+ 39 40 Loss: 0.0118 | Acc: 99.6000% (9960/10000)
+AUC: 0.9997810555555556
+F1: 0.9799599198396793
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0025_class5_acc0.9882_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.23it/s]
+ 39 40 Loss: 0.0346 | Acc: 98.8200% (9882/10000)
+AUC: 0.9982124444444443
+F1: 0.9421000981354269
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0036_class3_acc0.9892_vittiny.pth
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.90it/s]
+ 39 40 Loss: 0.0323 | Acc: 98.9200% (9892/10000)
+AUC: 0.9977854444444444
+F1: 0.9451219512195121
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class4_acc0.9950_vittiny.pth
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.73it/s]
+ 39 40 Loss: 0.0129 | Acc: 99.5000% (9950/10000)
+AUC: 0.9996493333333334
+F1: 0.9748995983935743
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class1_acc0.9961_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  6.96it/s]
+ 39 40 Loss: 0.0123 | Acc: 99.6100% (9961/10000)
+AUC: 0.9997494444444445
+F1: 0.9806066633515664
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class5_acc0.9898_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.61it/s]
+ 39 40 Loss: 0.0307 | Acc: 98.9800% (9898/10000)
+AUC: 0.9984018888888888
+F1: 0.9493041749502982
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0035_class1_acc0.9957_vittiny.pth
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.60it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5700% (9957/10000)
+AUC: 0.9997363333333333
+F1: 0.9787023278850916
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class0_acc0.9955_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.55it/s]
+ 39 40 Loss: 0.0142 | Acc: 99.5500% (9955/10000)
+AUC: 0.999553
+F1: 0.9774661992989484
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class9_acc0.9948_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.08it/s]
+ 39 40 Loss: 0.0168 | Acc: 99.4800% (9948/10000)
+AUC: 0.9995074444444444
+F1: 0.974180734856008
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0022_class5_acc0.9887_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.74it/s]
+ 39 40 Loss: 0.0337 | Acc: 98.8700% (9887/10000)
+AUC: 0.998097888888889
+F1: 0.9443623830625307
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0039_class7_acc0.9959_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.28it/s]
+ 39 40 Loss: 0.0115 | Acc: 99.5900% (9959/10000)
+AUC: 0.9998096666666667
+F1: 0.979345088161209
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0038_class7_acc0.9962_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.18it/s]
+ 39 40 Loss: 0.0112 | Acc: 99.6200% (9962/10000)
+AUC: 0.9998164444444444
+F1: 0.9809045226130654
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0037_class9_acc0.9955_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.14it/s]
+ 39 40 Loss: 0.0145 | Acc: 99.5500% (9955/10000)
+AUC: 0.9995104444444445
+F1: 0.9774661992989484
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class7_acc0.9965_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.71it/s]
+ 39 40 Loss: 0.0112 | Acc: 99.6500% (9965/10000)
+AUC: 0.9998152222222222
+F1: 0.982420894023104
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class0_acc0.9962_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.90it/s]
+ 39 40 Loss: 0.0111 | Acc: 99.6200% (9962/10000)
+AUC: 0.9997024444444444
+F1: 0.981
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0020_class5_acc0.9890_vittiny.pth
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.51it/s]
+ 39 40 Loss: 0.0324 | Acc: 98.9000% (9890/10000)
+AUC: 0.9980502222222222
+F1: 0.9452191235059761
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0021_class9_acc0.9952_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.40it/s]
+ 39 40 Loss: 0.0160 | Acc: 99.5200% (9952/10000)
+AUC: 0.999458
+F1: 0.976
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0041_class9_acc0.9953_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.76it/s]
+ 39 40 Loss: 0.0144 | Acc: 99.5300% (9953/10000)
+AUC: 0.9995313333333333
+F1: 0.9764174611138986
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0031_class9_acc0.9949_vittiny.pth
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.11it/s]
+ 39 40 Loss: 0.0154 | Acc: 99.4900% (9949/10000)
+AUC: 0.9994866666666666
+F1: 0.9743073047858942
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0015_class0_acc0.9954_vittiny.pth
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.16it/s]
+ 39 40 Loss: 0.0127 | Acc: 99.5400% (9954/10000)
+AUC: 0.9996546666666666
+F1: 0.9768611670020121
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0034_class6_acc0.9981_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.05it/s]
+ 39 40 Loss: 0.0071 | Acc: 99.8100% (9981/10000)
+AUC: 0.999813
+F1: 0.9905142286570144
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0024_class7_acc0.9959_vittiny.pth
+start training optim_class:7
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.61it/s]
+ 39 40 Loss: 0.0119 | Acc: 99.5900% (9959/10000)
+AUC: 0.9997781111111111
+F1: 0.9793658782083543
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0018_class8_acc0.9969_vittiny.pth
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.92it/s]
+ 39 40 Loss: 0.0100 | Acc: 99.6900% (9969/10000)
+AUC: 0.9997556666666667
+F1: 0.9845386533665835
+
+============================================================================
+
+
+
+start testing: ./checkpoint/0017_class6_acc0.9979_vittiny.pth
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.95it/s]
+ 39 40 Loss: 0.0077 | Acc: 99.7900% (9979/10000)
+AUC: 0.9997581111111111
+F1: 0.9894842263395093
+
+============================================================================
