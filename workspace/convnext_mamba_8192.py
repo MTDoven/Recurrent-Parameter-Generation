@@ -130,7 +130,7 @@ def train():
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(output_shape=param.shape, x_0=param, parameter_weight_decay=1e-4)
+            loss = model(output_shape=param.shape, x_0=param, parameter_weight_decay=5e-4)
         accelerator.backward(loss)
         optimizer.step()
         if accelerator.is_main_process:
