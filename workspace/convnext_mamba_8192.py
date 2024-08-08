@@ -57,7 +57,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1536,
+        "diffusion_batch": 768,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
@@ -130,7 +130,7 @@ def train():
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(output_shape=param.shape, x_0=param)
+            loss = model(output_shape=param.shape, x_0=param, parameter_weight_decay=1e-4)
         accelerator.backward(loss)
         optimizer.step()
         if accelerator.is_main_process:

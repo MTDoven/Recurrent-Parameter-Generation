@@ -26,6 +26,8 @@ class MambaDiffusion(nn.Module):
         c = self.model(output_shape, condition)
         # Given condition c and ground truth token x, compute loss
         loss = self.criteria(x=x_0, c=c)
+        if kwargs.get("parameter_weight_decay"):
+            loss += torch.square(c).mean() * kwargs["parameter_weight_decay"]
         return loss
 
     @torch.no_grad()
@@ -42,7 +44,8 @@ class ConditionalMambaDiffusion(MambaDiffusion):
 
     def __init__(self, sequence_length):
         super().__init__(sequence_length)
-        self.condition_extractor = ResNet18(output_dim=self.config["d_condition"])
+        self.condition_extractor, output_dim = ResNet18()
+        assert self.config["d_condition"] == output_dim
         self.register_buffer("device_sign_buffer", torch.zeros(1))
 
     def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
