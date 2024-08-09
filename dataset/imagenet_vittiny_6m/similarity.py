@@ -49,14 +49,14 @@ for i, item in enumerate(total_items):
     total_result_list.append(result)
 
 # compute iou_metrix
-iou_metrix = np.zeros(shape=[len(total_result_list), len(total_result_list)])
+iou_matrix = np.zeros(shape=[len(total_result_list), len(total_result_list)])
 for i in range(len(total_result_list)):
     for j in range(len(total_result_list)):
         iou = compute_wrong_iou(total_result_list[i], total_result_list[j])
-        iou_metrix[i, j] = iou
+        iou_matrix[i, j] = iou
 
 # save and draw
-np.savetxt("iou_metrix.txt", iou_metrix, delimiter=', ', fmt='%.5f')
-heat_map = sns.heatmap(iou_metrix, annot=True)
+np.savetxt("iou_matrix.txt", iou_matrix, delimiter=', ', fmt='%.5f')
+heat_map = sns.heatmap(iou_matrix)
 plt.xlabel(f"checkpoint:{len(checkpoint_items)} / generated:{len(generated_items)}")
-plt.savefig("./iou_metrix.png", dpi=300, bbox_inches='tight')
+plt.savefig("./iou_matrix.png", dpi=300, bbox_inches='tight')

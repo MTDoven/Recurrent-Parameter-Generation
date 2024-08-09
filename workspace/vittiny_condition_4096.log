@@ -1,0 +1,395 @@
+==> start training..
+==> Defining training..
+==> start training..
+
+==> Generating..
+Generated_norm: 177.50607299804688
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  8.00it/s]
+ 39 40 Loss: 3462.7005 | Acc: 90.0000% (9000/10000)
+AUC: 0.5
+F1: 0.0
+
+
+
+==> Generating..
+Generated_norm: 3.869419813156128
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.12it/s]
+ 39 40 Loss: 0.9164 | Acc: 38.9500% (3895/10000)
+AUC: 0.27772433333333335
+F1: 0.07960199004975124
+
+
+
+==> Generating..
+Generated_norm: 3.6836485862731934
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.23it/s]
+ 39 40 Loss: 0.4654 | Acc: 89.8800% (8988/10000)
+AUC: 0.24688305555555556
+F1: 0.0
+
+
+
+==> Generating..
+Generated_norm: 3.5441482067108154
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.23it/s]
+ 39 40 Loss: 0.4628 | Acc: 90.0000% (9000/10000)
+AUC: 0.4845235555555556
+F1: 0.0
+
+
+
+==> Generating..
+Generated_norm: 3.3549821376800537
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.52it/s]
+ 39 40 Loss: 0.4971 | Acc: 89.9900% (8999/10000)
+AUC: 0.314697
+F1: 0.0
+
+
+
+==> Generating..
+Generated_norm: 3.373661994934082
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.68it/s]
+ 39 40 Loss: 0.6902 | Acc: 81.0400% (8104/10000)
+AUC: 0.4319452777777778
+F1: 0.004201680672268907
+
+
+
+==> Generating..
+Generated_norm: 3.344353199005127
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.14it/s]
+ 39 40 Loss: 0.4470 | Acc: 80.7900% (8079/10000)
+AUC: 0.9978368888888888
+F1: 0.5095736533061016
+
+
+
+==> Generating..
+Generated_norm: 3.442716121673584
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.06it/s]
+ 39 40 Loss: 0.0652 | Acc: 97.9000% (9790/10000)
+AUC: 0.9972485
+F1: 0.9025974025974026
+
+
+
+==> Generating..
+Generated_norm: 3.3524398803710938
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.31it/s]
+ 39 40 Loss: 0.7298 | Acc: 80.7100% (8071/10000)
+AUC: 0.5513277777777779
+F1: 0.01228878648233487
+
+
+
+==> Generating..
+Generated_norm: 3.3928189277648926
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.95it/s]
+ 39 40 Loss: 0.9165 | Acc: 80.7800% (8078/10000)
+AUC: 0.4311528333333334
+F1: 0.016376663254861822
+
+
+
+==> Generating..
+Generated_norm: 3.4113519191741943
+start training optim_class:5
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  9.44it/s]
+ 39 40 Loss: 0.1584 | Acc: 91.9800% (9198/10000)
+AUC: 0.9618787777777779
+F1: 0.4415041782729805
+
+
+
+==> Generating..
+Generated_norm: 3.374115467071533
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.29it/s]
+ 39 40 Loss: 0.0551 | Acc: 98.1600% (9816/10000)
+AUC: 0.9930776666666666
+F1: 0.9027484143763214
+
+
+
+==> Generating..
+Generated_norm: 3.2856178283691406
+start training optim_class:4
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.41it/s]
+ 39 40 Loss: 0.0541 | Acc: 98.1300% (9813/10000)
+AUC: 0.9962876666666666
+F1: 0.9099662975445354
+
+
+
+==> Generating..
+Generated_norm: 3.277982473373413
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.75it/s]
+ 39 40 Loss: 0.0506 | Acc: 98.4700% (9847/10000)
+AUC: 0.9982834444444444
+F1: 0.9281352747768905
+
+
+
+==> Generating..
+Generated_norm: 3.247429847717285
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.24it/s]
+ 39 40 Loss: 0.1975 | Acc: 89.6300% (8963/10000)
+AUC: 0.9329455
+F1: 0.44456347080878417
+
+
+
+==> Generating..
+Generated_norm: 3.270265579223633
+start training optim_class:3
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.58it/s]
+ 39 40 Loss: 0.1148 | Acc: 95.7000% (9570/10000)
+AUC: 0.986130111111111
+F1: 0.7288776796973518
+
+
+
+==> Generating..
+Generated_norm: 3.223334312438965
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.60it/s]
+ 39 40 Loss: 0.0446 | Acc: 98.5200% (9852/10000)
+AUC: 0.9981405000000001
+F1: 0.9293893129770993
+
+
+
+==> Generating..
+Generated_norm: 3.1300249099731445
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.74it/s]
+ 39 40 Loss: 0.0388 | Acc: 98.8400% (9884/10000)
+AUC: 0.9970899999999999
+F1: 0.9414141414141414
+
+
+
+==> Generating..
+Generated_norm: 3.1344285011291504
+start training optim_class:0
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.14it/s]
+ 39 40 Loss: 0.0365 | Acc: 98.8100% (9881/10000)
+AUC: 0.998256111111111
+F1: 0.9411764705882353
+
+
+
+==> Generating..
+Generated_norm: 3.098141670227051
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0665 | Acc: 97.8600% (9786/10000)
+AUC: 0.9980418888888889
+F1: 0.902638762511374
+
+
+
+==> Generating..
+Generated_norm: 3.151731252670288
+start training optim_class:2
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.53it/s]
+ 39 40 Loss: 0.0475 | Acc: 98.4400% (9844/10000)
+AUC: 0.9955713333333333
+F1: 0.9183246073298429
+
+
+
+==> Generating..
+Generated_norm: 3.0990488529205322
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.15it/s]
+ 39 40 Loss: 0.0439 | Acc: 98.5700% (9857/10000)
+AUC: 0.9956703333333334
+F1: 0.9261744966442953
+
+
+
+==> Generating..
+Generated_norm: 3.0963351726531982
+start training optim_class:8
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.45it/s]
+ 39 40 Loss: 0.0813 | Acc: 97.2900% (9729/10000)
+AUC: 0.9978993333333334
+F1: 0.8797159343098091
+
+
+
+==> Generating..
+Generated_norm: 3.0743486881256104
+start training optim_class:9
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:04,  8.44it/s]
+ 39 40 Loss: 0.0433 | Acc: 98.6200% (9862/10000)
+AUC: 0.9956929999999999
+F1: 0.9283489096573209
+
+
+
+==> Generating..
+Generated_norm: 3.0815746784210205
+start training optim_class:6
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.80it/s]
+ 39 40 Loss: 0.0368 | Acc: 99.0400% (9904/10000)
+AUC: 0.998456
+F1: 0.9537126325940212
+
+
+Finished Training!
+
+==> Generating..
+Generated_norm: 3.0954580307006836
+start training optim_class:1
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+40it [00:05,  7.97it/s]
+ 39 40 Loss: 0.0287 | Acc: 99.1800% (9918/10000)
+AUC: 0.9989132222222222
+F1: 0.95968534906588
+
+
+Finished Training!
