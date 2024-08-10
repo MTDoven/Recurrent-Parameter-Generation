@@ -16,7 +16,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import ClassifierMambaDiffusion as Model
+from model import PerformanceMambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -162,9 +162,8 @@ def train():
 def generate(save_path=config["generated_path"], need_test=True, condition=None):
     print("\n==> Generating..")
     model.eval()
-    condition = torch.tensor(condition, dtype=torch.float32).view(1, 1)
     with torch.no_grad():
-        prediction = model(sample=True, condition=condition)
+        prediction = model(sample=True, condition=torch.tensor(condition, dtype=torch.float32).view(1, 1))
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB and accelerator.is_main_process:
@@ -172,7 +171,7 @@ def generate(save_path=config["generated_path"], need_test=True, condition=None)
     if accelerator.is_main_process:
         train_set.save_params(prediction, save_path=save_path.format(condition))
     if need_test:
-        os.system(config["test_command"].format(condition) + f" {condition}")
+        os.system(config["test_command"].format(condition))
         print("\n")
     model.train()
     return prediction

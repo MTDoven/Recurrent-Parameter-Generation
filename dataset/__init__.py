@@ -216,7 +216,7 @@ class Cifar10_ViTTiny_Performance(ConditionalDataset):
                    "./dataset/cifar10_vittiny_performance/generated/generated_model_acc{}.pth"
 
     def _extract_condition(self, index: int):
-        acc = int(super()._extract_condition(index)[1][3:])
+        acc = float(super()._extract_condition(index)[1][3:])
         return torch.tensor(acc, dtype=torch.float32)
 
 

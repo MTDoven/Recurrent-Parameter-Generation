@@ -62,6 +62,6 @@ class PerformanceMambaDiffusion(MambaDiffusion):
         self.register_buffer("device_sign_buffer", torch.zeros(1))
 
     def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
-        condition = condition[:, :, None]
+        condition = condition[:, None]
         condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
         return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
