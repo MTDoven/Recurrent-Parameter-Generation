@@ -23,7 +23,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import Cifar10_ViTTiny_OneClass as Dataset
+from dataset import Cifar10_ViTTiny_Performance as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -36,12 +36,12 @@ config = {
     # train setting
     "batch_size": 4,
     "num_workers": 8,
-    "total_steps": 80000,
+    "total_steps": 100000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 80000//25,
+    "save_every": 100000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 70000,
+    "autocast": lambda i: 5000 < i < 90000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -50,7 +50,7 @@ config = {
     # to log
     "model_config": {
         # mamba config
-        "d_condition": 512,
+        "d_condition": 1,
         "d_model": 8192,
         "d_state": 128,
         "d_conv": 4,
@@ -67,6 +67,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
+    "tag": "condition_performance",
 }
 
 
@@ -151,18 +152,17 @@ def train():
         if batch_idx % config["save_every"] == 0 and accelerator.is_main_process:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = accelerator.unwrap_model(model).state_dict()
-            torch.save(state, os.path.join(config["checkpoint_save_path"],
-                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
-            class_index = random.randint(0, len(train_set.indices)-1)
-            generate(save_path=config["generated_path"], need_test=True, class_index=class_index)
+            torch.save(state, os.path.join(config["checkpoint_save_path"], config["tag"]+".pth"))
+            condition = random.randrange(40, 95) * 0.01
+            generate(save_path=config["generated_path"], need_test=True, condition=condition)
         if batch_idx >= config["total_steps"]:
             break
 
 
-def generate(save_path=config["generated_path"], need_test=True, class_index=None):
+def generate(save_path=config["generated_path"], need_test=True, condition=None):
     print("\n==> Generating..")
     model.eval()
-    condition = train_set.get_image_by_class_index(class_index=class_index)[None]
+    condition = torch.tensor(condition, dtype=torch.float32).view(1, 1)
     with torch.no_grad():
         prediction = model(sample=True, condition=condition)
         generated_norm = prediction.abs().mean()
@@ -170,9 +170,9 @@ def generate(save_path=config["generated_path"], need_test=True, class_index=Non
     if USE_WANDB and accelerator.is_main_process:
         wandb.log({"generated_norm": generated_norm.item()})
     if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path.format(class_index))
+        train_set.save_params(prediction, save_path=save_path.format(condition))
     if need_test:
-        os.system(config["test_command"].format(class_index)+f" {class_index}")
+        os.system(config["test_command"].format(condition) + f" {condition}")
         print("\n")
     model.train()
     return prediction

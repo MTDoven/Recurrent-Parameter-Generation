@@ -177,3 +177,17 @@ def ResNet18(**kwargs):
     for param in model.parameters():
         param.requires_grad = False
     return model, output_dim
+
+
+class MLP(nn.Module):
+    def __init__(self, condition_dim, output_dim):
+        super().__init__()
+        self.linear1 = nn.Linear(condition_dim, output_dim)
+        self.activate1 = nn.SiLU()
+        self.linear2 = nn.Linear(output_dim, output_dim)
+        self.activate2 = nn.SiLU()
+
+    def forward(self, x):
+        x = self.activate1(self.linear1(x))
+        x = self.activate2(self.linear2(x))
+        return x

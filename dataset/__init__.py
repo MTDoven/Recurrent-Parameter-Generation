@@ -208,7 +208,19 @@ class ConditionalDataset(BaseDataset):
 
 
 
-class Cifar10_TinyViT_OneClass(ConditionalDataset):
+class Cifar10_ViTTiny_Performance(ConditionalDataset):
+    dataset_config = "./dataset/Cifar10/config.json"
+    data_path = "./dataset/cifar10_vittiny_performance/checkpoint"
+    generated_path = "./dataset/cifar10_vittiny_performance/generated/generated_model_acc{}.pth"
+    test_command = "python ./dataset/cifar10_vittiny_performance/test.py " + \
+                   "./dataset/cifar10_vittiny_performance/generated/generated_model_acc{}.pth"
+
+    def _extract_condition(self, index: int):
+        acc = int(super()._extract_condition(index)[1][3:])
+        return torch.tensor(acc, dtype=torch.float32)
+
+
+class Cifar10_ViTTiny_OneClass(ConditionalDataset):
     dataset_config = "./dataset/Cifar10/config.json"
     data_path = "./dataset/cifar10_vittiny_condition/checkpoint"
     generated_path = "./dataset/cifar10_vittiny_condition/generated/generated_model_class{}.pth"

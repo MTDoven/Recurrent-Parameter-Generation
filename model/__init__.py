@@ -3,7 +3,7 @@ import timm
 from torch import nn
 from .mamba import MambaModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
-from .extractor import ResNet18
+from .extractor import ResNet18, MLP
 
 
 class MambaDiffusion(nn.Module):
@@ -39,7 +39,7 @@ class MambaDiffusion(nn.Module):
         return x
 
 
-class ConditionalMambaDiffusion(MambaDiffusion):
+class ClassifierMambaDiffusion(MambaDiffusion):
     config = {}
 
     def __init__(self, sequence_length):
@@ -49,5 +49,19 @@ class ConditionalMambaDiffusion(MambaDiffusion):
         self.register_buffer("device_sign_buffer", torch.zeros(1))
 
     def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
+        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
+
+
+class PerformanceMambaDiffusion(MambaDiffusion):
+    config = {}
+
+    def __init__(self, sequence_length):
+        super().__init__(sequence_length)
+        self.condition_extractor = MLP(condition_dim=1, output_dim=self.config["d_condition"])
+        self.register_buffer("device_sign_buffer", torch.zeros(1))
+
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        condition = condition[:, :, None]
         condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
         return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
