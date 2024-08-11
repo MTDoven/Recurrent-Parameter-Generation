@@ -1,0 +1,372 @@
+==> Preparing data..
+==> Preparing data..
+==> Preparing data..
+==> Preparing data..
+Dataset length: 189
+Dataset length: 189
+input shape: torch.Size([1444, 4096])
+sequence length: 1444
+==> Building model..
+input shape: torch.Size([1444, 4096])
+sequence length: 1444
+==> Building model..
+Dataset length: 189
+input shape: torch.Size([1444, 4096])
+sequence length: 1444
+==> Building model..
+Dataset length: 189
+input shape: torch.Size([1444, 4096])
+sequence length: 1444
+==> Building model..
+==> Building optimizer..
+==> Building optimizer..
+==> Building optimizer..
+==> Building optimizer..
+==> Defining training..
+==> start training..
+==> Defining training..
+==> start training..
+==> Defining training..
+==> start training..
+==> Defining training..
+==> start training..
+
+==> Generating..
+Generated_norm: 175.43894958496094
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:03,  5.40it/s]
+ 19 20 Loss: 2908.9406 | Acc: 9.9900% (999/10000)
+
+
+==> Generating..
+Generated_norm: 0.7614904046058655
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:05,  3.94it/s]
+ 19 20 Loss: 1.8254 | Acc: 62.3300% (6233/10000)
+
+
+==> Generating..
+Generated_norm: 0.7563836574554443
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.06it/s]
+ 19 20 Loss: 1.8712 | Acc: 58.9900% (5899/10000)
+
+
+==> Generating..
+Generated_norm: 0.7486910223960876
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.71it/s]
+ 19 20 Loss: 1.8360 | Acc: 66.1800% (6618/10000)
+
+
+==> Generating..
+Generated_norm: 0.7503039836883545
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.46it/s]
+ 19 20 Loss: 1.8230 | Acc: 63.6700% (6367/10000)
+
+
+==> Generating..
+Generated_norm: 0.7492597699165344
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.52it/s]
+ 19 20 Loss: 1.6737 | Acc: 68.3900% (6839/10000)
+
+
+==> Generating..
+Generated_norm: 0.7482240200042725
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.75it/s]
+ 19 20 Loss: 2.0167 | Acc: 67.6600% (6766/10000)
+
+
+==> Generating..
+Generated_norm: 0.7488573789596558
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.52it/s]
+ 19 20 Loss: 2.1761 | Acc: 60.9200% (6092/10000)
+
+
+==> Generating..
+Generated_norm: 0.7498074173927307
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.55it/s]
+ 19 20 Loss: 2.1794 | Acc: 59.5900% (5959/10000)
+
+
+==> Generating..
+Generated_norm: 0.743656575679779
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:03,  5.08it/s]
+ 19 20 Loss: 1.4694 | Acc: 73.8900% (7389/10000)
+
+
+==> Generating..
+Generated_norm: 0.7431305646896362
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.75it/s]
+ 19 20 Loss: 1.4945 | Acc: 69.9400% (6994/10000)
+
+
+==> Generating..
+Generated_norm: 0.7437806725502014
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.34it/s]
+ 19 20 Loss: 1.4870 | Acc: 70.6500% (7065/10000)
+
+
+==> Generating..
+Generated_norm: 0.7412132620811462
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.81it/s]
+ 19 20 Loss: 1.4705 | Acc: 72.3700% (7237/10000)
+
+
+==> Generating..
+Generated_norm: 0.7432413101196289
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.49it/s]
+ 19 20 Loss: 1.6389 | Acc: 69.8500% (6985/10000)
+
+
+==> Generating..
+Generated_norm: 0.7440220713615417
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:03,  5.14it/s]
+ 19 20 Loss: 2.0547 | Acc: 64.6200% (6462/10000)
+
+
+==> Generating..
+Generated_norm: 0.7424284815788269
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.60it/s]
+ 19 20 Loss: 1.6386 | Acc: 67.0500% (6705/10000)
+
+
+==> Generating..
+Generated_norm: 0.7441884279251099
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:03,  5.21it/s]
+ 19 20 Loss: 2.1234 | Acc: 62.6400% (6264/10000)
+
+
+==> Generating..
+Generated_norm: 0.7410547137260437
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:05,  3.69it/s]
+ 19 20 Loss: 1.4352 | Acc: 73.6900% (7369/10000)
+
+
+==> Generating..
+Generated_norm: 0.7456708550453186
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.02it/s]
+ 19 20 Loss: 2.2020 | Acc: 57.5100% (5751/10000)
+
+
+==> Generating..
+Generated_norm: 0.7441641092300415
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:03,  5.19it/s]
+ 19 20 Loss: 2.1700 | Acc: 61.4700% (6147/10000)
+
+
+==> Generating..
+Generated_norm: 0.7446004152297974
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.78it/s]
+ 19 20 Loss: 2.1987 | Acc: 62.7300% (6273/10000)
+
+
+==> Generating..
+Generated_norm: 0.7460010647773743
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:06,  3.23it/s]
+ 19 20 Loss: 2.1927 | Acc: 60.5300% (6053/10000)
+
+
+==> Generating..
+Generated_norm: 0.7412827610969543
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:05,  3.41it/s]
+ 19 20 Loss: 1.4622 | Acc: 70.7200% (7072/10000)
+
+
+==> Generating..
+Generated_norm: 0.7422595024108887
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:06,  3.01it/s]
+ 19 20 Loss: 1.7602 | Acc: 66.7800% (6678/10000)
+
+
+==> Generating..
+Generated_norm: 0.7430040836334229
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:04,  4.07it/s]
+ 19 20 Loss: 1.8806 | Acc: 66.0100% (6601/10000)
+
+Finished Training!
+Finished Training!
+Finished Training!
+
+==> Generating..
+Generated_norm: 0.7447479963302612
+==> Preparing data..
+Files already downloaded and verified
+Files already downloaded and verified
+==> Building model..
+==> Defining training..
+
+==> Testing..
+20it [00:06,  2.96it/s]
+ 19 20 Loss: 2.2023 | Acc: 61.3400% (6134/10000)

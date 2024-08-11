@@ -190,6 +190,13 @@ class ImageNet_ViTBase(BaseDataset):
                    "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
 
 
+class ImageNet_ResNet50(BaseDataset):
+    data_path = "./dataset/imagenet_resnet50_26m/checkpoint"
+    generated_path = "./dataset/imagenet_resnet50_26m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_resnet50_26m/test.py " + \
+                   "./dataset/imagenet_resnet50_26m/generated/generated_model.pth"
+
+
 
 
 class ConditionalDataset(BaseDataset):

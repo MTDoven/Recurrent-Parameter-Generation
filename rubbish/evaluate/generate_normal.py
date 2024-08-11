@@ -5,7 +5,7 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 # torch
 import torch
 # father
-from workspace import convnext_mamba_4096 as item
+from workspace.ablation.sequence import vittiny_4096 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -15,10 +15,10 @@ model = item.model
 
 generate_config = {
     "device": "cuda",
-    "num_generated": 30,
-    "checkpoint": f"./checkpoint/{item.__name__.split('.')[-1]}.pth",
-    "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_evaluate_model_{}.pth"),
-    "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_evaluate_model_{}.pth"),
+    "num_generated": 10,
+    "checkpoint": f"./checkpoint/{config['tag']}.pth",
+    "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
+    "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "need_test": True,
 }
 config.update(generate_config)
@@ -50,8 +50,8 @@ if __name__ == "__main__":
     for i in range(config["num_generated"]):
         index = str(i+1).zfill(3)
         generate(
-            save_path=config["generated_path"].format(index),
-            test_command=config["test_command"].format(index),
+            save_path=config["generated_path"].format(config["tag"], index),
+            test_command=config["test_command"].format(config["tag"], index),
             need_test=config["need_test"],
         )
         print("\n\n")
