@@ -26,6 +26,7 @@ class BaseDataset(Dataset, ABC):
     data_path = None
     generated_path = None
     test_command = None
+    config = {}
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
         checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
@@ -40,7 +41,7 @@ class BaseDataset(Dataset, ABC):
         self.set_infinite_dataset()
         self.get_structure()
         # other kwargs
-        self.kwargs = kwargs
+        self.config.update(kwargs)
 
     def get_structure(self):
         # get structure
@@ -114,7 +115,10 @@ class BaseDataset(Dataset, ABC):
                 shape, mean, std = self.structure[key]
             value = value.flatten()
             value = (value - mean) / std
-            value = pad_to_length(value, self.dim_per_token)
+            if self.config.get("mix_layers"):
+                pass  # value = value
+            else:  # padding according to layers
+                value = pad_to_length(value, self.dim_per_token)
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
         param = pad_to_length(param, self.dim_per_token)
@@ -140,8 +144,11 @@ class BaseDataset(Dataset, ABC):
             if "running_var" in key:
                 this_param = torch.clip(torch.exp(this_param) - 0.1, min=0.001) * pre_mean
             diction[key] = this_param
-            cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
-                    else (num_elements // self.dim_per_token + 1) * self.dim_per_token
+            if self.config.get("mix_layers"):
+                cutting_length = num_elements
+            else:  # padding according to layers
+                cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
+                        else (num_elements // self.dim_per_token + 1) * self.dim_per_token
             params = params[cutting_length:]
         return diction
 
@@ -222,12 +229,12 @@ class ConditionalDataset(BaseDataset):
 
 
 
-class Cifar10_ViTTiny_OneClass(ConditionalDataset):
+class Cifar10_ViTTiny_Classifier(ConditionalDataset):
     dataset_config = "./dataset/Cifar10/config.json"
-    data_path = "./dataset/cifar10_vittiny_condition/checkpoint"
-    generated_path = "./dataset/cifar10_vittiny_condition/generated/generated_model_class{}.pth"
-    test_command = "python ./dataset/cifar10_vittiny_condition/test.py " + \
-                   "./dataset/cifar10_vittiny_condition/generated/generated_model_class{}.pth"
+    data_path = "./dataset/cifar10_vittiny_classifier/checkpoint"
+    generated_path = "./dataset/cifar10_vittiny_classifier/generated/generated_model_class{}.pth"
+    test_command = "python ./dataset/cifar10_vittiny_classifier/test.py " + \
+                   "./dataset/cifar10_vittiny_classifier/generated/generated_model_class{}.pth"
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
         super().__init__(checkpoint_path=checkpoint_path, dim_per_token=dim_per_token, **kwargs)
