@@ -32,7 +32,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
     "resume": False,
@@ -54,22 +54,23 @@ config = {
     "model_config": {
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 16384,
         "d_state": 128,
         "d_conv": 4,
-        "expand": 4,
+        "expand": 2,
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 8192,
-        "condition_dim": 8192,
+        "model_dim": 16384,
+        "condition_dim": 16384,
         "kernel_size": 7,
         "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
+    "tag": 'superlarge_vitbase_16384',
 }
 
 
@@ -126,7 +127,7 @@ if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
     wandb.init(
         project="AR-Param-Generation",
-        name=__file__.split("/")[-1][:-3],
+        name=config["tag"],
         config=config,
         resume=config["resume"],
     )

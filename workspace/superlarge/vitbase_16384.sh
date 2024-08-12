@@ -6,4 +6,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  vitbase_mamba_8192.py \
+  vitbase_16384.py \
