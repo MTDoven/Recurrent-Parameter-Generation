@@ -19,7 +19,7 @@ class MambaModel(nn.Module):
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         if self.config.get("trainable_pe"):
-            self.register_parameter("pe", pe)
+            self.pe = nn.Parameter(pe)
         else:  # fixed positional embedding
             self.register_buffer("pe", pe)
 
