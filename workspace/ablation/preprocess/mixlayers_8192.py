@@ -67,7 +67,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_preprocess_mixlayers",
+    "tag": "ablation_preprocess_mixlayers_8192",
 }
 
 
