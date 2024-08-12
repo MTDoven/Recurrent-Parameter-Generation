@@ -18,7 +18,10 @@ class MambaModel(nn.Module):
         self.mamba_forward = nn.Sequential(*[Mamba(**mamba_config) for _ in range(self.config["num_layers"])])
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
-        self.register_buffer("pe", pe)
+        if self.config.get("trainable_pe"):
+            self.register_parameter("pe", pe)
+        else:  # fixed positional embedding
+            self.register_buffer("pe", pe)
 
     @staticmethod
     def get_sinusoid(max_len, d_model):
