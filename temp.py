@@ -1,7 +1,7 @@
 import torch
 
-diction1 = torch.load("/home/wangkai/arpgen/AR-Param-Generation/dataset/cifar10_vittiny_condition/generated/generated_model_class0.pth")
-diction2 = torch.load("/home/wangkai/arpgen/AR-Param-Generation/dataset/cifar10_vittiny_condition/checkpoint/0016_class0_acc0.9953_vittiny.pth")
+diction1 = torch.load("/dataset/cifar10_vittiny_classifier/generated/generated_model_class0.pth")
+diction2 = torch.load("/dataset/cifar10_vittiny_classifier/checkpoint/0016_class0_acc0.9953_vittiny.pth")
 
 def norm(x):
     if len(x.shape) == 0:

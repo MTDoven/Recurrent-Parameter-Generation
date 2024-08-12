@@ -14,7 +14,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
-from torchvision.datasets import CIFAR10
+from torchvision.datasets import ImageFolder
 from torch.cuda.amp import autocast
 try:  # relative import
     from .model import imagenet_classify as Model
@@ -27,7 +27,7 @@ import sys
 import os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
-config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Cifar10")
+config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ImageNet1k")
 with open(os.path.join(config_root, "config.json"), "r") as f:
     additional_config = json.load(f)
 
@@ -38,14 +38,15 @@ config = {
     "test_image_root": "from_additional_config",
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 500,
-    "num_workers": 20,
-    "learning_rate": 0.000002,
-    "epochs": 600,
+    "batch_size": 64,
+    "num_workers": 16,
+    "learning_rate": 0.000005,
+    "epochs": 3,
     "start_save_ratio": 0.0,
+    "save_every": 300,
     "weight_decay": 0.1,
     "autocast": True,
-    "debug_iteration": 30,
+    "debug_iteration": sys.maxsize,
     "tag": os.path.dirname(__file__).split("_")[-2],
 }
 config.update(additional_config)
@@ -55,18 +56,16 @@ config.update(additional_config)
 print('==> Preparing data..')
 
 train_loader = DataLoader(
-    dataset=CIFAR10(
-        root=config["dataset_root"],
-        train=True,
-        download=True,
+    dataset=ImageFolder(
+        root=config["train_image_root"],
         transform=transforms.Compose([
+            transforms.AutoAugment(),
             transforms.Resize(224),
-            transforms.RandomCrop(224, padding=32),
-            transforms.RandomHorizontalFlip(),
-            transforms.AutoAugment(policy=transforms.AutoAugmentPolicy("cifar10")),
+            transforms.RandomCrop(224),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-        ])),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ])
+    ),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
     shuffle=True,
@@ -75,16 +74,15 @@ train_loader = DataLoader(
     persistent_workers=True,
 )
 test_loader = DataLoader(
-    dataset=CIFAR10(
-        root=config["dataset_root"],
-        train=False,
-        download=True,
+    dataset=ImageFolder(
+        root=config["test_image_root"],
         transform=transforms.Compose([
             transforms.Resize(224),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-        ])),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ])
+    ),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
     shuffle=False,
@@ -98,11 +96,10 @@ model = Model()
 model = model.to(config["device"])
 criterion = nn.CrossEntropyLoss()
 
-optimizer = optim.SGD(
+optimizer = optim.AdamW(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
-    momentum=0.8,
 )
 scheduler = optim.lr_scheduler.CosineAnnealingLR(
     optimizer,
@@ -134,6 +131,15 @@ def train(epoch, save_name):
         _, predicted = outputs.max(1)
         total += targets.size(0)
         correct += predicted.eq(targets).sum().item()
+        if batch_idx % config["save_every"] == 0 \
+                and save_name is not None \
+                and epoch >= config["epochs"] * config["start_save_ratio"]:
+            print('\tSaving..')
+            state = {}
+            for key, value in model.state_dict().items():
+                state[key] = value.cpu().to(torch.float32)
+            os.makedirs('checkpoint', exist_ok=True)
+            torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %

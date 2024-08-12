@@ -23,7 +23,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ResNet50 as Dataset
+from dataset import ImageNet_ViTSmall as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -31,7 +31,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 1024,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
@@ -51,7 +51,7 @@ config = {
     "model_config": {
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 1024,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
@@ -59,15 +59,15 @@ config = {
         # diffusion config
         "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 8192,
-        "condition_dim": 8192,
+        "model_dim": 1024,
+        "condition_dim": 1024,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_sequence_resnet50_8192",
+    "tag": "ablation_sequence_vitsmall_1024",
 }
 
 
@@ -113,7 +113,7 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
 
 
 

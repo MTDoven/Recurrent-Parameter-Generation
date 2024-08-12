@@ -183,6 +183,13 @@ class ImageNet_ViTTiny(BaseDataset):
                    "./dataset/imagenet_vittiny_6m/generated/generated_model.pth"
 
 
+class ImageNet_ViTSmall(BaseDataset):
+    data_path = "./dataset/imagenet_vitsmall_22m/checkpoint"
+    generated_path = "./dataset/imagenet_vitsmall_22m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vitsmall_22m/test.py " + \
+                   "./dataset/imagenet_vitsmall_22m/generated/generated_model.pth"
+
+
 class ImageNet_ViTBase(BaseDataset):
     data_path = "./dataset/imagenet_vitbase_86m/checkpoint"
     generated_path = "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
@@ -213,18 +220,6 @@ class ConditionalDataset(BaseDataset):
         return param, condition
 
 
-
-
-class Cifar10_ViTTiny_Performance(ConditionalDataset):
-    dataset_config = "./dataset/Cifar10/config.json"
-    data_path = "./dataset/cifar10_vittiny_performance/checkpoint"
-    generated_path = "./dataset/cifar10_vittiny_performance/generated/generated_model_acc{}.pth"
-    test_command = "python ./dataset/cifar10_vittiny_performance/test.py " + \
-                   "./dataset/cifar10_vittiny_performance/generated/generated_model_acc{}.pth"
-
-    def _extract_condition(self, index: int):
-        acc = float(super()._extract_condition(index)[1][3:])
-        return torch.tensor(acc, dtype=torch.float32)
 
 
 class Cifar10_ViTTiny_OneClass(ConditionalDataset):
