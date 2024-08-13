@@ -23,7 +23,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTTiny as Dataset
+from dataset import ImageNet_ViTSmall as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -53,8 +53,8 @@ config = {
         "d_condition": 1,
         "d_model": 4096,
         "nhead": 16,
-        "dim_feedforward": 4096,
-        "dim_head": 256,
+        "dim_feedforward": 8192,
+        "dim_head": 512,
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 1024,
