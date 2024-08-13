@@ -16,7 +16,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import MambaDiffusion as Model
+from model import TransformerDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -51,11 +51,11 @@ config = {
     "model_config": {
         # transformer config
         "d_condition": 1,
-        "d_model": 1024,
-        "nhead": 12,
-        "dim_feedforward": 2048,
-        "dim_head": 64,
-        "num_layers": 6,
+        "d_model": 4096,
+        "nhead": 16,
+        "dim_feedforward": 4096,
+        "dim_head": 256,
+        "num_layers": 2,
         # diffusion config
         "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
