@@ -29,6 +29,7 @@ class BaseDataset(Dataset, ABC):
     config = {}
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
+        self.config.update(kwargs)
         checkpoint_path = self.data_path if checkpoint_path is None else checkpoint_path
         assert os.path.exists(checkpoint_path)
         self.dim_per_token = dim_per_token
@@ -41,7 +42,6 @@ class BaseDataset(Dataset, ABC):
         self.set_infinite_dataset()
         self.get_structure()
         # other kwargs
-        self.config.update(kwargs)
 
     def get_structure(self):
         # get structure
@@ -150,6 +150,7 @@ class BaseDataset(Dataset, ABC):
                 cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
                         else (num_elements // self.dim_per_token + 1) * self.dim_per_token
             params = params[cutting_length:]
+        print("last_padding", params.numel())
         return diction
 
 
