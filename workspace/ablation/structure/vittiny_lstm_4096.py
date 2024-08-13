@@ -16,7 +16,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import TransformerDiffusion as Model
+from model import LstmDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -31,7 +31,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 4096,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
@@ -51,23 +51,23 @@ config = {
     "model_config": {
         # transformer config
         "d_condition": 1,
-        "d_model": 8192,
-        "nhead": 16,
-        "dim_feedforward": 8192,
-        "dim_head": 512,
+        "input_size": 4096,
+        "hidden_size": 4096,
+        "output_size": 4096,
         "num_layers": 2,
+        "dropout": 0.,
         # diffusion config
         "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 8192,
-        "condition_dim": 8192,
+        "model_dim": 4096,
+        "condition_dim": 4096,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_structure_transformer_8192",
+    "tag": "ablation_structure_vittiny_lstm_4096",
 }
 
 
