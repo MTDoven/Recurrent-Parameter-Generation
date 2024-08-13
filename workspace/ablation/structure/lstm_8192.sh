@@ -5,4 +5,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  vittiny_lstm_8192.py \
+  lstm_8192.py \

@@ -67,7 +67,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_structure_vittiny_lstm_8192",
+    "tag": "ablation_structure_lstm_8192",
 }
 
 
