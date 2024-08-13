@@ -150,7 +150,6 @@ class BaseDataset(Dataset, ABC):
                 cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
                         else (num_elements // self.dim_per_token + 1) * self.dim_per_token
             params = params[cutting_length:]
-        print("last_padding", params.numel())
         return diction
 
 

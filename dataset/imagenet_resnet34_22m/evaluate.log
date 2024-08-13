@@ -1,0 +1,1222 @@
+/home/wangkai/anaconda3/envs/arpgen/bin/python /home/wangkai/arpgen/AR-Param-Generation/dataset/imagenet_resnet34_22m/evaluate.py
+start testing: ./checkpoint/0001_acc0.7948_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.83it/s]
+ 781 782 Loss: 0.9856 | Acc: 76.2940% (38147/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7946_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.44it/s]
+ 781 782 Loss: 0.9759 | Acc: 76.3900% (38195/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7801_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:39, 19.64it/s]
+ 781 782 Loss: 0.9934 | Acc: 76.2340% (38117/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7762_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.49it/s]
+ 781 782 Loss: 1.0060 | Acc: 76.0980% (38049/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7749_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.68it/s]
+ 781 782 Loss: 1.0090 | Acc: 76.1220% (38061/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7648_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.67it/s]
+ 781 782 Loss: 1.0620 | Acc: 75.7820% (37891/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7968_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.32it/s]
+ 781 782 Loss: 0.9737 | Acc: 76.3900% (38195/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7545_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.14it/s]
+ 781 782 Loss: 1.0859 | Acc: 75.1420% (37571/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7979_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.32it/s]
+ 781 782 Loss: 0.9729 | Acc: 76.3280% (38164/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7961_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.66it/s]
+ 781 782 Loss: 0.9754 | Acc: 76.3460% (38173/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7620_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.96it/s]
+ 781 782 Loss: 0.9949 | Acc: 76.2040% (38102/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7797_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.24it/s]
+ 781 782 Loss: 0.9957 | Acc: 76.2500% (38125/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7807_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.69it/s]
+ 781 782 Loss: 0.9897 | Acc: 76.2580% (38129/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7696_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.15it/s]
+ 781 782 Loss: 1.0446 | Acc: 75.8060% (37903/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7693_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.37it/s]
+ 781 782 Loss: 1.0440 | Acc: 75.9480% (37974/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7974_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.32it/s]
+ 781 782 Loss: 0.9693 | Acc: 76.3940% (38197/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7344_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.92it/s]
+ 781 782 Loss: 1.0588 | Acc: 75.0500% (37525/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7976_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:40, 19.43it/s]
+ 781 782 Loss: 0.9720 | Acc: 76.4820% (38241/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7639_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.64it/s]
+ 781 782 Loss: 0.9770 | Acc: 76.3920% (38196/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7949_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.41it/s]
+ 781 782 Loss: 0.9844 | Acc: 76.2540% (38127/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7760_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.18it/s]
+ 781 782 Loss: 1.0086 | Acc: 76.1520% (38076/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7525_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.72it/s]
+ 781 782 Loss: 1.0899 | Acc: 75.0820% (37541/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7640_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.76it/s]
+ 781 782 Loss: 1.0645 | Acc: 75.7380% (37869/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7708_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.94it/s]
+ 781 782 Loss: 1.0325 | Acc: 75.9440% (37972/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7804_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.22it/s]
+ 781 782 Loss: 0.9964 | Acc: 76.1300% (38065/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7928_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.48it/s]
+ 781 782 Loss: 0.9860 | Acc: 76.3300% (38165/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7973_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.97it/s]
+ 781 782 Loss: 0.9760 | Acc: 76.4300% (38215/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7717_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.58it/s]
+ 781 782 Loss: 1.0262 | Acc: 76.0160% (38008/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7448_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 21.07it/s]
+ 781 782 Loss: 1.0896 | Acc: 74.9820% (37491/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7803_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.94it/s]
+ 781 782 Loss: 0.9941 | Acc: 76.1900% (38095/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7947_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.26it/s]
+ 781 782 Loss: 0.9750 | Acc: 76.3300% (38165/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7781_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.73it/s]
+ 781 782 Loss: 1.0001 | Acc: 76.0820% (38041/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7507_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.62it/s]
+ 781 782 Loss: 1.0880 | Acc: 75.0260% (37513/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7933_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.84it/s]
+ 781 782 Loss: 0.9873 | Acc: 76.2500% (38125/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7810_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.70it/s]
+ 781 782 Loss: 0.9900 | Acc: 76.2860% (38143/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7742_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:41, 18.87it/s]
+ 781 782 Loss: 1.0229 | Acc: 75.9960% (37998/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7934_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.90it/s]
+ 781 782 Loss: 0.9906 | Acc: 76.2900% (38145/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7967_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.99it/s]
+ 781 782 Loss: 0.9725 | Acc: 76.4020% (38201/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7790_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:34, 22.86it/s]
+ 781 782 Loss: 0.9976 | Acc: 76.2460% (38123/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7682_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.45it/s]
+ 781 782 Loss: 1.0467 | Acc: 75.9400% (37970/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7344_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.01it/s]
+ 781 782 Loss: 0.9769 | Acc: 76.4140% (38207/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7944_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.43it/s]
+ 781 782 Loss: 0.9810 | Acc: 76.3420% (38171/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7600_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:39, 19.85it/s]
+ 781 782 Loss: 1.0763 | Acc: 75.4560% (37728/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7631_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.33it/s]
+ 781 782 Loss: 1.0702 | Acc: 75.6560% (37828/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7950_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.50it/s]
+ 781 782 Loss: 0.9838 | Acc: 76.3040% (38152/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7971_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.43it/s]
+ 781 782 Loss: 0.9736 | Acc: 76.4100% (38205/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7768_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.80it/s]
+ 781 782 Loss: 1.0021 | Acc: 76.2240% (38112/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7642_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.68it/s]
+ 781 782 Loss: 0.9717 | Acc: 76.4180% (38209/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7795_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.38it/s]
+ 781 782 Loss: 0.9969 | Acc: 76.1820% (38091/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7722_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.77it/s]
+ 781 782 Loss: 1.0221 | Acc: 76.0060% (38003/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7806_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.32it/s]
+ 781 782 Loss: 0.9879 | Acc: 76.4080% (38204/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7664_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.15it/s]
+ 781 782 Loss: 1.0589 | Acc: 75.7700% (37885/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7712_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.95it/s]
+ 781 782 Loss: 1.0355 | Acc: 75.9700% (37985/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7700_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.68it/s]
+ 781 782 Loss: 1.0393 | Acc: 76.0080% (38004/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7744_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.44it/s]
+ 781 782 Loss: 1.0179 | Acc: 76.1360% (38068/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7589_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.26it/s]
+ 781 782 Loss: 1.0772 | Acc: 75.1880% (37594/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7776_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.76it/s]
+ 781 782 Loss: 1.0040 | Acc: 76.1480% (38074/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7941_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.61it/s]
+ 781 782 Loss: 0.9805 | Acc: 76.2760% (38138/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7793_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.13it/s]
+ 781 782 Loss: 0.9964 | Acc: 76.2500% (38125/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7978_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.71it/s]
+ 781 782 Loss: 0.9736 | Acc: 76.3840% (38192/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7980_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.71it/s]
+ 781 782 Loss: 0.9725 | Acc: 76.4000% (38200/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7450_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.09it/s]
+ 781 782 Loss: 1.1127 | Acc: 74.6540% (37327/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7685_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 21.01it/s]
+ 781 782 Loss: 1.0451 | Acc: 75.8000% (37900/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7758_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.91it/s]
+ 781 782 Loss: 1.0103 | Acc: 76.1780% (38089/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.8281_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.54it/s]
+ 781 782 Loss: 0.9951 | Acc: 76.1660% (38083/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7779_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.83it/s]
+ 781 782 Loss: 1.0005 | Acc: 76.1740% (38087/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7765_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.28it/s]
+ 781 782 Loss: 1.0054 | Acc: 76.0720% (38036/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7939_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.22it/s]
+ 781 782 Loss: 0.9885 | Acc: 76.3700% (38185/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7945_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.28it/s]
+ 781 782 Loss: 0.9768 | Acc: 76.3020% (38151/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7785_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.81it/s]
+ 781 782 Loss: 0.9998 | Acc: 76.0720% (38036/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7943_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.77it/s]
+ 781 782 Loss: 0.9781 | Acc: 76.3400% (38170/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7739_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 21.04it/s]
+ 781 782 Loss: 1.0218 | Acc: 75.9560% (37978/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7811_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.35it/s]
+ 781 782 Loss: 0.9912 | Acc: 76.2680% (38134/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7942_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.84it/s]
+ 781 782 Loss: 0.9786 | Acc: 76.3220% (38161/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7990_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.15it/s]
+ 781 782 Loss: 0.9725 | Acc: 76.3720% (38186/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7951_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.73it/s]
+ 781 782 Loss: 0.9873 | Acc: 76.2880% (38144/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7783_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.44it/s]
+ 781 782 Loss: 1.0030 | Acc: 76.2080% (38104/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7550_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.23it/s]
+ 781 782 Loss: 1.0871 | Acc: 75.0840% (37542/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7564_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.47it/s]
+ 781 782 Loss: 1.0773 | Acc: 75.2880% (37644/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7800_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.50it/s]
+ 781 782 Loss: 0.9963 | Acc: 76.2280% (38114/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7752_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.57it/s]
+ 781 782 Loss: 1.0107 | Acc: 76.1320% (38066/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7747_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.29it/s]
+ 781 782 Loss: 1.0123 | Acc: 76.1420% (38071/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7657_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.04it/s]
+ 781 782 Loss: 1.0600 | Acc: 75.7820% (37891/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7482_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.35it/s]
+ 781 782 Loss: 1.0849 | Acc: 75.0980% (37549/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7672_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.69it/s]
+ 781 782 Loss: 1.0591 | Acc: 75.8320% (37916/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7731_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.30it/s]
+ 781 782 Loss: 1.0180 | Acc: 76.1080% (38054/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0001_acc0.7957_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:38, 20.16it/s]
+ 781 782 Loss: 0.9921 | Acc: 76.3040% (38152/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7612_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.54it/s]
+ 781 782 Loss: 1.0683 | Acc: 75.6200% (37810/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7773_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:34, 22.41it/s]
+ 781 782 Loss: 1.0027 | Acc: 76.1780% (38089/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7972_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.83it/s]
+ 781 782 Loss: 0.9752 | Acc: 76.4480% (38224/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7814_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.68it/s]
+ 781 782 Loss: 0.9922 | Acc: 76.3380% (38169/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7770_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 20.90it/s]
+ 781 782 Loss: 1.0019 | Acc: 76.0700% (38035/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7623_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:37, 21.12it/s]
+ 781 782 Loss: 1.0672 | Acc: 75.6140% (37807/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7975_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.17it/s]
+ 781 782 Loss: 0.9749 | Acc: 76.4180% (38209/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7705_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.49it/s]
+ 781 782 Loss: 1.0340 | Acc: 75.9760% (37988/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7726_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.84it/s]
+ 781 782 Loss: 1.0222 | Acc: 75.9460% (37973/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7575_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.77it/s]
+ 781 782 Loss: 1.0711 | Acc: 75.3820% (37691/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7756_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.82it/s]
+ 781 782 Loss: 1.0118 | Acc: 76.0740% (38037/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0002_acc0.7977_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 21.85it/s]
+ 781 782 Loss: 0.9706 | Acc: 76.4620% (38231/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7677_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:35, 22.13it/s]
+ 781 782 Loss: 1.0516 | Acc: 75.8540% (37927/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7736_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:34, 22.56it/s]
+ 781 782 Loss: 1.0226 | Acc: 76.0100% (38005/50000)
+============================================================================
+
+
+
+start testing: ./checkpoint/0000_acc0.7787_seed20_resnet34.pth
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:34, 22.60it/s]
+ 781 782 Loss: 1.0005 | Acc: 76.1800% (38090/50000)
+============================================================================

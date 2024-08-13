@@ -43,11 +43,11 @@ class Attention(nn.Module):
 
     def forward(self, x):
         x = self.norm(x)
-        qkv = self.to_qkv(x)
+        qkv = self.to_qkv(x).chunk(3, dim=-1)
         q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h=self.heads), qkv)
         attn = q @ k.transpose(-1, -2)
         out = self.softmax(attn) @ v
-        rearrange(out, 'b h n d -> b n (h d)')
+        out = rearrange(out, 'b h n d -> b n (h d)')
         out = self.to_out(out)
         return out
 
