@@ -53,8 +53,8 @@ config = {
         "d_condition": 1,
         "d_model": 4096,
         "nhead": 16,
-        "dim_feedforward": 8192,
-        "dim_head": 512,
+        "dim_feedforward": 4096,
+        "dim_head": 256,
         "num_layers": 2,
         # diffusion config
         "diffusion_batch": 1024,

@@ -51,9 +51,7 @@ config = {
     "model_config": {
         # transformer config
         "d_condition": 1,
-        "input_size": 4096,
-        "hidden_size": 4096,
-        "output_size": 4096,
+        "d_model": 4096,
         "num_layers": 2,
         "dropout": 0.,
         # diffusion config
