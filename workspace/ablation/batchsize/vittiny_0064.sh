@@ -1,8 +1,8 @@
 accelerate launch \
-  --main_process_port=29563 \
+  --main_process_port=29561 \
   --num_processes=1 \
-  --gpu_ids='5' \
+  --gpu_ids='1' \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  vittiny_2048.py \
+  vittiny_0064.py \

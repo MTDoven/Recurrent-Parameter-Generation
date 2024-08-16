@@ -31,7 +31,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 4096,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
@@ -51,7 +51,7 @@ config = {
     "model_config": {
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 4096,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
@@ -59,8 +59,8 @@ config = {
         # diffusion config
         "diffusion_batch": 16,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": 8192,
-        "condition_dim": 8192,
+        "model_dim": 4096,
+        "condition_dim": 4096,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
