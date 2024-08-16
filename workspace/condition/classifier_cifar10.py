@@ -67,6 +67,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
+    'tag': "condition_classifier_cifar10"
 }
 
 
@@ -113,7 +114,7 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config,)
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
 
 
 

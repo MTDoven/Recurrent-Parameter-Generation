@@ -1,24 +1,26 @@
 import torch
-import timm
+from abc import ABC
 from torch import nn
 from .mamba import MambaModel
+from .transformer import TransformerModel
+from .lstm import LstmModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
-from .extractor import ResNet18, MLP
+from .extractor import ResNet18
 
 
-class MambaDiffusion(nn.Module):
+
+
+class ModelDiffusion(nn.Module, ABC):
     config = {}
 
     def __init__(self, sequence_length):
         super().__init__()
-        # pass config
-        MambaModel.config = self.config
+
         DiffusionLoss.config = self.config
-        # this module init
-        self.model = MambaModel(sequence_length=sequence_length)
         self.criteria = DiffusionLoss()
         assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
+        # to define model after this function
 
     def forward(self, output_shape=None, x_0=None, condition: torch.Tensor = torch.tensor(0.), **kwargs):
         if kwargs.get("sample"):
@@ -39,6 +41,35 @@ class MambaDiffusion(nn.Module):
         return x
 
 
+class MambaDiffusion(ModelDiffusion):
+    config = {}
+
+    def __init__(self, sequence_length):
+        super().__init__(sequence_length=sequence_length)
+        MambaModel.config = self.config
+        self.model = MambaModel(sequence_length=sequence_length)
+
+
+class TransformerDiffusion(ModelDiffusion):
+    config = {}
+
+    def __init__(self, sequence_length):
+        super().__init__(sequence_length=sequence_length)
+        TransformerModel.config = self.config
+        self.model = TransformerModel(sequence_length=sequence_length)
+
+
+class LstmDiffusion(ModelDiffusion):
+    config = {}
+
+    def __init__(self, sequence_length):
+        super().__init__(sequence_length=sequence_length)
+        LstmModel.config = self.config
+        self.model = LstmModel(sequence_length=sequence_length)
+
+
+
+
 class ClassifierMambaDiffusion(MambaDiffusion):
     config = {}
 
@@ -53,15 +84,3 @@ class ClassifierMambaDiffusion(MambaDiffusion):
         return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
 
 
-class PerformanceMambaDiffusion(MambaDiffusion):
-    config = {}
-
-    def __init__(self, sequence_length):
-        super().__init__(sequence_length)
-        self.condition_extractor = MLP(condition_dim=1, output_dim=self.config["d_condition"])
-        self.register_buffer("device_sign_buffer", torch.zeros(1))
-
-    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
-        condition = condition[:, None]
-        condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
-        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)

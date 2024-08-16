@@ -1,27 +1,31 @@
 import torch
 from torch import nn
-from mamba_ssm import Mamba2 as Mamba
 import math
 
 
-class MambaModel(nn.Module):
+class LstmModel(nn.Module):
     config = {}
 
     def __init__(self, sequence_length):
         super().__init__()
-        mamba_config = {
-            "d_model": self.config["d_model"],
-            "d_state": self.config["d_state"],
-            "d_conv": self.config["d_conv"],
-            "expand": self.config["expand"],
-        }
-        self.mamba_forward = nn.Sequential(*[Mamba(**mamba_config) for _ in range(self.config["num_layers"])])
+        self.lstm_forward = nn.LSTM(
+            input_size=self.config["d_model"],
+            hidden_size=self.config["d_model"],
+            num_layers=self.config["num_layers"],
+            dropout=self.config["dropout"],
+            bias=True,
+            batch_first=True,)
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         if self.config.get("trainable_pe"):
             self.pe = nn.Parameter(pe)
         else:  # fixed positional embedding
             self.register_buffer("pe", pe)
+
+    def forward(self, output_shape, condition=torch.tensor([0.])):
+        condition = self.to_condition(condition.view(-1, 1, self.config["d_condition"]).to(self.pe.device))
+        x, _ = self.lstm_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
+        return x.contiguous()
 
     @staticmethod
     def get_sinusoid(max_len, d_model):
@@ -31,8 +35,3 @@ class MambaModel(nn.Module):
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
         return pe
-
-    def forward(self, output_shape, condition=torch.tensor([0.])):
-        condition = self.to_condition(condition.view(-1, 1, self.config["d_condition"]).to(self.pe.device))
-        x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
-        return x

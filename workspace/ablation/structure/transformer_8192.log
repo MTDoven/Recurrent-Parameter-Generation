@@ -1,0 +1,307 @@
+(arpgen) wangkai@5a21df081e09:~/arpgen/AR-Param-Generation/workspace/ablation/structure$ sh transformer_8192.sh
+==> Preparing data..
+Dataset length: 116
+input shape: torch.Size([808, 8192])
+sequence length: 808
+==> Building model..
+==> Building optimizer..
+==> Defining training..
+==> start training..
+
+==> Generating..
+Generated_norm: 176.020263671875
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:22, 34.85it/s]
+ 781 782 Loss: 114629.5871 | Acc: 0.0940% (47/50000)
+
+
+==> Generating..
+Generated_norm: 0.7721848487854004
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.11it/s]
+ 781 782 Loss: 9.1172 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.7635935544967651
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.90it/s]
+ 781 782 Loss: 8.4046 | Acc: 0.0700% (35/50000)
+
+
+==> Generating..
+Generated_norm: 0.7839323878288269
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.32it/s]
+ 781 782 Loss: 8.7956 | Acc: 0.0960% (48/50000)
+
+
+==> Generating..
+Generated_norm: 0.8017528057098389
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.13it/s]
+ 781 782 Loss: 8.5311 | Acc: 0.1260% (63/50000)
+
+
+==> Generating..
+Generated_norm: 0.8162053227424622
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.41it/s]
+ 781 782 Loss: 9.0984 | Acc: 0.1020% (51/50000)
+
+
+==> Generating..
+Generated_norm: 0.8141263127326965
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.41it/s]
+ 781 782 Loss: 8.3411 | Acc: 0.1060% (53/50000)
+
+
+==> Generating..
+Generated_norm: 0.8150740265846252
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.34it/s]
+ 781 782 Loss: 9.7103 | Acc: 0.1180% (59/50000)
+
+
+==> Generating..
+Generated_norm: 0.817274808883667
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 37.99it/s]
+ 781 782 Loss: 9.1760 | Acc: 0.1080% (54/50000)
+
+wandb: ERROR Error while calling W&B API: context deadline exceeded (<Response [500]>)
+
+==> Generating..
+Generated_norm: 0.8135389685630798
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.24it/s]
+ 781 782 Loss: 8.6335 | Acc: 0.1500% (75/50000)
+
+
+==> Generating..
+Generated_norm: 0.8165851831436157
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:30, 25.60it/s]
+ 781 782 Loss: 9.2352 | Acc: 0.1240% (62/50000)
+
+
+==> Generating..
+Generated_norm: 0.8129661083221436
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:25, 30.71it/s]
+ 781 782 Loss: 9.2543 | Acc: 0.1380% (69/50000)
+
+
+==> Generating..
+Generated_norm: 0.8186925053596497
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:30, 25.96it/s]
+ 781 782 Loss: 9.0458 | Acc: 0.1080% (54/50000)
+
+
+==> Generating..
+Generated_norm: 0.8145168423652649
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:29, 26.07it/s]
+ 781 782 Loss: 9.8219 | Acc: 0.1060% (53/50000)
+
+
+==> Generating..
+Generated_norm: 0.8135530948638916
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:30, 25.28it/s]
+ 781 782 Loss: 8.7130 | Acc: 0.1680% (84/50000)
+
+
+==> Generating..
+Generated_norm: 0.8128758668899536
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:28, 27.36it/s]
+ 781 782 Loss: 8.9328 | Acc: 0.1320% (66/50000)
+
+
+==> Generating..
+Generated_norm: 0.8120218515396118
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:28, 27.72it/s]
+ 781 782 Loss: 8.6944 | Acc: 0.1620% (81/50000)
+
+
+==> Generating..
+Generated_norm: 0.8135042190551758
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:29, 26.33it/s]
+ 781 782 Loss: 8.9447 | Acc: 0.0960% (48/50000)
+
+
+==> Generating..
+Generated_norm: 0.8120332956314087
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:29, 26.77it/s]
+ 781 782 Loss: 9.6496 | Acc: 0.1040% (52/50000)
+
+
+==> Generating..
+Generated_norm: 0.8145678639411926
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.17it/s]
+ 781 782 Loss: 9.0046 | Acc: 0.1580% (79/50000)
+
+
+==> Generating..
+Generated_norm: 0.8112279772758484
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.15it/s]
+ 781 782 Loss: 9.0345 | Acc: 0.1300% (65/50000)
+
+
+==> Generating..
+Generated_norm: 0.8133661150932312
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:30, 25.99it/s]
+ 781 782 Loss: 9.1299 | Acc: 0.0980% (49/50000)
+
+
+==> Generating..
+Generated_norm: 0.811035692691803
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:30, 25.38it/s]
+ 781 782 Loss: 9.3356 | Acc: 0.1560% (78/50000)
+
+
+==> Generating..
+Generated_norm: 0.8118493556976318
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:32, 24.28it/s]
+ 781 782 Loss: 10.8950 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8129205703735352
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:29, 26.27it/s]
+ 781 782 Loss: 9.0379 | Acc: 0.1300% (65/50000)
+
+
+==> Generating..
+Generated_norm: 0.8119872212409973
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:31, 24.55it/s]
+ 781 782 Loss: 8.8087 | Acc: 0.2140% (107/50000)
+
+Finished Training!
+
+
+
+
+
+
+
+
+
+
