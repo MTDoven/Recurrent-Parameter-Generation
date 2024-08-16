@@ -16,7 +16,7 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import TransformerDiffusion as Model
+from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -37,7 +37,7 @@ config = {
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 50000,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
     "save_every": 50000//25,
     "print_every": 50,
@@ -49,15 +49,15 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        # transformer config
+        # mamba config
         "d_condition": 1,
         "d_model": 4096,
-        "nhead": 16,
-        "dim_feedforward": 4096,
-        "dim_head": 256,
-        "num_layers": 3,
+        "d_state": 128,
+        "d_conv": 4,
+        "expand": 2,
+        "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
+        "diffusion_batch": 2048,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 4096,
         "condition_dim": 4096,
@@ -67,7 +67,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_structure_transformer_4096",
+    "tag": "ablation_batchsize_vittiny_2048",
 }
 
 
