@@ -16,6 +16,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
+import bitsandbytes as bnb
 # model
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
@@ -35,18 +36,18 @@ config = {
     "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "resume": False,
+    "resume": True,
     "batch_size": 1,
     "num_workers": 4,
-    "total_steps": 80000,
+    "total_steps": 100000,
     "learning_rate": 0.00001,
-    "weight_decay": 0.0,
-    "save_every": 80000//25,
+    "weight_decay": 1e-5,
+    "save_every": 100000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 70000,
+    "autocast": lambda i: 10000 < i < 90000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
-    "test_device": 7,
+    "test_device": 0,
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
     "test_command": Dataset.test_command,
@@ -60,8 +61,8 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
-        "layer_channels": [1, 32, 64, 128, 64, 32, 1],
+        "diffusion_batch": 512,
+        "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
         "kernel_size": 7,
@@ -100,15 +101,15 @@ model = Model(sequence_length=config["sequence_length"])  # model setting is in 
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(params=model.parameters(),
-                        lr=config["learning_rate"],
-                        weight_decay=config["weight_decay"])
+optimizer = bnb.optim.AdamW8bit(params=model.parameters(),
+                                lr=config["learning_rate"],
+                                weight_decay=config["weight_decay"])
 scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
 # load checkpoint
 if config["resume"] and os.path.exists("./vitbase_state.pt"):
-    diction = torch.load("./vitbase_state.pt")
+    diction = torch.load("./vitbase_state.pt", map_location="cpu")
     model.load_state_dict(diction["model"])
     optimizer.load_state_dict(diction["optimizer"])
     scheduler.load_state_dict(diction["scheduler"])
