@@ -27,7 +27,7 @@ config.update(generate_config)
 
 # Model
 print('==> Building model..')
-model.load_state_dict(torch.load(config["checkpoint"]))
+model.load_state_dict(torch.load(config["checkpoint"], map_location="cpu"))
 model = model.to(config["device"])
 
 
