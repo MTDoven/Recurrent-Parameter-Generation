@@ -4,9 +4,8 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 
 # torch
 import torch
-from torch.cuda.amp import autocast
 # father
-from workspace.superlarge import vitbase_16384 as item
+from workspace.ablation.batchsize import vittiny_0256 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -28,7 +27,7 @@ config.update(generate_config)
 
 # Model
 print('==> Building model..')
-model.load_state_dict(torch.load(config["checkpoint"], map_location="cpu"))
+model.load_state_dict(torch.load(config["checkpoint"]))
 model = model.to(config["device"])
 
 
@@ -37,10 +36,9 @@ print('==> Defining generate..')
 def generate(save_path=config["generated_path"], test_command=config["test_command"], need_test=True):
     print("\n==> Generating..")
     model.eval()
-    with autocast(enabled=True, dtype=torch.bfloat16):
-        with torch.no_grad():
-            prediction = model(sample=True)
-            generated_norm = prediction.abs().mean()
+    with torch.no_grad():
+        prediction = model(sample=True)
+        generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     train_set.save_params(prediction, save_path=save_path)
     if need_test:
