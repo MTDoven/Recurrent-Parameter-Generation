@@ -1,1 +1,300 @@
 train memory: 10703MiB
+
+
+
+
+
+(arpgen) wangkai@5a21df081e09:~/arpgen/AR-Param-Generation/workspace/ablation/batchsize$ sh vittiny_0004.sh
+==> Preparing data..
+Dataset length: 116
+input shape: torch.Size([1490, 4096])
+sequence length: 1490
+==> Building model..
+==> Building optimizer..
+==> Defining training..
+==> start training..
+
+==> Generating..
+Generated_norm: 177.03359985351562
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.80it/s]
+ 781 782 Loss: 100926.0531 | Acc: 0.1100% (55/50000)
+
+
+==> Generating..
+Generated_norm: 0.9818071126937866
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.12it/s]
+ 781 782 Loss: 88.6242 | Acc: 0.1040% (52/50000)
+
+
+==> Generating..
+Generated_norm: 0.8318289518356323
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 35.91it/s]
+ 781 782 Loss: 9.2186 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8153707385063171
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.09it/s]
+ 781 782 Loss: 10.2805 | Acc: 0.1020% (51/50000)
+
+
+==> Generating..
+Generated_norm: 0.8162270188331604
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.14it/s]
+ 781 782 Loss: 9.6092 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.7918251156806946
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.97it/s]
+ 781 782 Loss: 8.8408 | Acc: 0.1180% (59/50000)
+
+
+==> Generating..
+Generated_norm: 0.818856954574585
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.48it/s]
+ 781 782 Loss: 9.0918 | Acc: 0.0600% (30/50000)
+
+
+==> Generating..
+Generated_norm: 0.8145837187767029
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.01it/s]
+ 781 782 Loss: 8.9209 | Acc: 0.0960% (48/50000)
+
+
+==> Generating..
+Generated_norm: 0.8362008333206177
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.11it/s]
+ 781 782 Loss: 9.1788 | Acc: 0.1060% (53/50000)
+
+
+==> Generating..
+Generated_norm: 0.8021904826164246
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.02it/s]
+ 781 782 Loss: 9.0957 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8201988339424133
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.74it/s]
+ 781 782 Loss: 9.3377 | Acc: 0.0460% (23/50000)
+
+
+==> Generating..
+Generated_norm: 0.8020778298377991
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.05it/s]
+ 781 782 Loss: 9.8178 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8089467287063599
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.03it/s]
+ 781 782 Loss: 8.9143 | Acc: 0.0940% (47/50000)
+
+
+==> Generating..
+Generated_norm: 0.813572347164154
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.09it/s]
+ 781 782 Loss: 9.2758 | Acc: 0.0980% (49/50000)
+
+
+==> Generating..
+Generated_norm: 0.8065826296806335
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.35it/s]
+ 781 782 Loss: 9.4693 | Acc: 0.0900% (45/50000)
+
+
+==> Generating..
+Generated_norm: 0.7982766032218933
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.69it/s]
+ 781 782 Loss: 8.9164 | Acc: 0.1140% (57/50000)
+
+
+==> Generating..
+Generated_norm: 0.7856550216674805
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.01it/s]
+ 781 782 Loss: 8.6242 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8042465448379517
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.52it/s]
+ 781 782 Loss: 9.8534 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.802032470703125
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.01it/s]
+ 781 782 Loss: 9.3425 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.8061295747756958
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.10it/s]
+ 781 782 Loss: 9.0217 | Acc: 0.1000% (50/50000)
+
+
+==> Generating..
+Generated_norm: 0.7932058572769165
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.10it/s]
+ 781 782 Loss: 9.2252 | Acc: 0.1080% (54/50000)
+
+
+==> Generating..
+Generated_norm: 0.808268129825592
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.34it/s]
+ 781 782 Loss: 8.9707 | Acc: 0.1500% (75/50000)
+
+
+==> Generating..
+Generated_norm: 0.8154913187026978
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.74it/s]
+ 781 782 Loss: 9.4360 | Acc: 0.1140% (57/50000)
+
+
+==> Generating..
+Generated_norm: 0.7833929061889648
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 36.49it/s]
+ 781 782 Loss: 9.5535 | Acc: 0.1080% (54/50000)
+
+
+==> Generating..
+Generated_norm: 0.811851978302002
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:21, 37.21it/s]
+ 781 782 Loss: 9.5505 | Acc: 0.0840% (42/50000)
+
+
+==> Generating..
+Generated_norm: 0.8133423924446106
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:20, 38.18it/s]
+ 781 782 Loss: 9.8939 | Acc: 0.1000% (50/50000)
