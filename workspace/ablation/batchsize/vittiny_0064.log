@@ -298,3 +298,160 @@ Generated_norm: 0.7594296932220459
 ==> Testing..
 782it [00:40, 19.48it/s]
  781 782 Loss: 0.9575 | Acc: 74.9360% (37468/50000)
+
+
+
+
+
+
+
+
+
+
+
+(arpgen) wangkai@5a21df081e09:~/arpgen/AR-Param-Generation/workspace/ablation/batchsize$ CUDA_VISIBLE_DEVICES=7 python generate.py
+==> Preparing data..
+Dataset length: 116
+input shape: torch.Size([1490, 4096])
+sequence length: 1490
+==> Building model..
+==> Building optimizer..
+==> Defining training..
+==> Building model..
+==> Defining generate..
+
+==> Generating..
+Generated_norm: 0.7595734596252441
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:36, 21.32it/s]
+ 781 782 Loss: 0.9566 | Acc: 75.0300% (37515/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595906853675842
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:50, 15.58it/s]
+ 781 782 Loss: 0.9599 | Acc: 74.9600% (37480/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595726251602173
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:49, 15.82it/s]
+ 781 782 Loss: 0.9574 | Acc: 74.9600% (37480/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595610022544861
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:47, 16.37it/s]
+ 781 782 Loss: 0.9600 | Acc: 74.9440% (37472/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.759576678276062
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:47, 16.59it/s]
+ 781 782 Loss: 0.9553 | Acc: 74.9940% (37497/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595738768577576
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:51, 15.10it/s]
+ 781 782 Loss: 0.9567 | Acc: 75.0420% (37521/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595780491828918
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:48, 16.02it/s]
+ 781 782 Loss: 0.9612 | Acc: 74.8960% (37448/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.759567141532898
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:51, 15.19it/s]
+ 781 782 Loss: 0.9576 | Acc: 74.9780% (37489/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595580816268921
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:48, 16.28it/s]
+ 781 782 Loss: 0.9611 | Acc: 74.8600% (37430/50000)
+
+
+
+
+
+==> Generating..
+Generated_norm: 0.7595651149749756
+==> Preparing data..
+==> Building model..
+==> Defining training..
+
+==> Testing..
+782it [00:49, 15.75it/s]
+ 781 782 Loss: 0.9583 | Acc: 74.9580% (37479/50000)
