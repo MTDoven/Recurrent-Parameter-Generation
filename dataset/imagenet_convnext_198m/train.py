@@ -136,10 +136,12 @@ def train(epoch, save_name):
                 and epoch >= config["epochs"] * config["start_save_ratio"]:
             print('\tSaving..')
             state = {}
+            model.eval()
             for key, value in model.state_dict().items():
-                state[key] = value.cpu().to(torch.float32)
+                state[key] = value.cpu().to(torch.float16)
             os.makedirs('checkpoint', exist_ok=True)
             torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
+            model.train()
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
@@ -171,7 +173,7 @@ def test(save_name):
         print('\tSaving..')
         state = {}
         for key, value in model.state_dict().items():
-            state[key] = value.cpu().to(torch.float32)
+            state[key] = value.cpu().to(torch.float16)
         os.makedirs('checkpoint', exist_ok=True)
         torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
 
