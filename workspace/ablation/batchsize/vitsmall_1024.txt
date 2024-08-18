@@ -1,1 +1,1 @@
-link to ./workspace/ablation/sequence/vitsmall_4096
+link to ./workspace/ablation/sequence/vitsmall_8192
