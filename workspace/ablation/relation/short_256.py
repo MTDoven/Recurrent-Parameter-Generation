@@ -38,7 +38,7 @@ config = {
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 50000,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.000003,
     "weight_decay": 0.0,
     "save_every": 50000//25,
     "print_every": 50,
