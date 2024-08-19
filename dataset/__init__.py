@@ -211,6 +211,12 @@ class ImageNet_ResNet50(BaseDataset):
                    "./dataset/imagenet_resnet50_26m/generated/generated_model.pth"
 
 
+class ImageNet_Convnext(BaseDataset):
+    data_path = "./dataset/imagenet_convnext_198m/checkpoint"
+    generated_path = "./dataset/imagenet_convnext_198m/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_convnext_198m/test.py " + \
+                   "./dataset/imagenet_convnext_198m/generated/generated_model.pth"
+
 
 
 class ConditionalDataset(BaseDataset):
