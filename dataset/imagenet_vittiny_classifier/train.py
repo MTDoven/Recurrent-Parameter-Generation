@@ -51,13 +51,11 @@ config = {
     "batch_size": 64,
     "num_workers": 16,
     "pre_learning_rate": 0.001,
-    "pre_epoch": 1,
     "learning_rate": 0.00001,
-    "epochs": 1,
     "weight_decay": 0.1,
     "autocast": True,
-    "save_every": 1000,
-    "debug_iteration": 10001,
+    "save_every": 4000,
+    "debug_iteration": 5001,
     "tag": os.path.dirname(__file__).split("_")[-2],
 }
 config.update(additional_config)
@@ -136,19 +134,30 @@ print('==> Defining training..')
 
 def pre_train():
     model.train()
-    for e in range(config["pre_epoch"]):
-        for batch_idx, (inputs, targets) in tqdm(
-                enumerate(train_loader),
-                total=len(train_loader.dataset) // config["batch_size"]):
-            inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
-            pre_optimizer.zero_grad()
-            with autocast(enabled=config["autocast"], dtype=torch.bfloat16):
-                outputs = model(inputs)
-                loss = criterion(outputs, targets)
-            loss.backward()
-            pre_optimizer.step()
-            if batch_idx > config["debug_iteration"]:
-                break
+    for batch_idx, (inputs, targets) in tqdm(
+            enumerate(train_loader),
+            total=len(train_loader.dataset) // config["batch_size"]):
+        inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+        pre_optimizer.zero_grad()
+        with autocast(enabled=config["autocast"], dtype=torch.bfloat16):
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+        loss.backward()
+        pre_optimizer.step()
+        if batch_idx > config["debug_iteration"]:
+            break
+    for batch_idx, (inputs, targets) in tqdm(
+            enumerate(train_loader),
+            total=len(train_loader.dataset) // config["batch_size"]):
+        inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+        optimizer.zero_grad()
+        with autocast(enabled=config["autocast"], dtype=torch.bfloat16):
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+        if batch_idx > config["debug_iteration"]:
+            break
 
 def train(epoch, save_name):
     print(f"\nEpoch: {epoch}", end=": ")
@@ -177,9 +186,7 @@ def train(epoch, save_name):
             for key, value in model.state_dict().items():
                 state[key] = value.cpu().to(torch.float16)
             os.makedirs('checkpoint', exist_ok=True)
-            torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
-        if batch_idx > config["debug_iteration"]:
-            break
+            torch.save(state, f"checkpoint/class{config['optim_class']}_seed{SEED}_acc{correct / total:.4f}_{config['tag']}.pth")
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
           (train_loss / (batch_idx + 1), 100. * correct / total, correct, total), end="")
 
@@ -224,12 +231,9 @@ if __name__ == '__main__':
     # main train
     pre_train()
     test(None)
-    for epoch in range(0, config["epochs"]):
-        epoch += 1
-        train(epoch, str(save_name).zfill(4))
-        test(str(save_name).zfill(4))
-        scheduler.step()
-        save_name += 1
+    train(epoch, str(save_name).zfill(4))
+    test(str(save_name).zfill(4))
+    scheduler.step()
 
     # fix some bug caused by num_workers
     del train_loader
