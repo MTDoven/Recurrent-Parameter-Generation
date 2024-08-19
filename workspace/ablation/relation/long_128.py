@@ -16,14 +16,15 @@ import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import MambaDiffusion as Model
+from einops import rearrange
+from model import TransformerDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTSmall as Dataset
+from dataset import ImageNet_ViTTiny as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -32,12 +33,12 @@ config = {
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
-    "sequence_length": 'auto',
+    "sequence_length": 808,
     # train setting
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 50000,
-    "learning_rate": 0.00003,
+    "learning_rate": 0.00001,
     "weight_decay": 0.0,
     "save_every": 50000//25,
     "print_every": 50,
@@ -49,15 +50,15 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        # mamba config
+        # transformer config
         "d_condition": 1,
         "d_model": 8192,
-        "d_state": 128,
-        "d_conv": 4,
-        "expand": 2,
-        "num_layers": 2,
+        "nhead": 16,
+        "dim_feedforward": 8192,
+        "dim_head": 512,
+        "num_layers": 3,
         # diffusion config
-        "diffusion_batch": 256,
+        "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
@@ -67,8 +68,11 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_diffusion_vitsmall_large",
+    "tag": "ablation_relation_long_128",
 }
+
+mask_metrix = torch.ones(size=(config["sequence_length"], config["sequence_length"])).to(torch.long)
+mask_metrix = (1 - torch.triu(1 - torch.triu(mask_metrix, diagonal=128), diagonal=-128)).to(torch.bool)
 
 
 
@@ -93,7 +97,35 @@ train_loader = DataLoader(dataset=train_set,
 # Model
 print('==> Building model..')
 Model.config = config["model_config"]
-model = Model(sequence_length=config["sequence_length"])  # model setting is in model
+model = Model(sequence_length=config["sequence_length"])
+# replace attention layer
+class MaskedAttention(nn.Module):
+    def __init__(self, dim, heads=8, dim_head=64):
+        super().__init__()
+        inner_dim = dim_head * heads
+        self.heads = heads
+        self.scale = dim_head ** -0.5
+        self.norm = nn.LayerNorm(dim)
+        self.to_qkv = nn.Linear(dim, inner_dim * 3, bias=False)
+        self.to_out = nn.Linear(inner_dim, dim, bias=False) if inner_dim != dim else nn.Identity()
+        self.softmax = nn.Softmax(dim=-1)
+        self.register_buffer("mask_metrix", mask_metrix[None][None])
+    def forward(self, x):
+        x = self.norm(x)
+        qkv = self.to_qkv(x).chunk(3, dim=-1)
+        q, k, v = map(lambda t: rearrange(t, 'b n (h d) -> b h n d', h=self.heads), qkv)
+        attn = q @ k.transpose(-1, -2)
+        attn = torch.where(self.mask_metrix, attn, -10000.0)
+        out = self.softmax(attn) @ v
+        out = rearrange(out, 'b h n d -> b n (h d)')
+        out = self.to_out(out)
+        return out
+for i in range(len(model.model.transformer_forward.layers)):
+    model.model.transformer_forward.layers[i][0] = MaskedAttention(
+        dim=config["model_config"]["d_model"],
+        heads=config["model_config"]["nhead"],
+        dim_head=config["model_config"]["dim_head"],
+    )
 
 # Optimizer
 print('==> Building optimizer..')
