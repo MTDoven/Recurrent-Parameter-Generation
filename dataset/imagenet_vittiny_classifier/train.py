@@ -10,6 +10,7 @@ torch.backends.cudnn.benchmark = False
 np.random.seed(seed)
 random.seed(seed)
 
+
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
@@ -24,6 +25,7 @@ except:  # absolute import
     from model import imagenet_classify as Model
     from dataset import OneClassImageNet
 # other
+import bitsandbytes as bnb
 from sklearn.metrics import roc_auc_score, f1_score
 from tqdm.auto import tqdm
 import json
@@ -47,14 +49,15 @@ config = {
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 64,
-    "num_workers": 4,
+    "num_workers": 16,
     "pre_learning_rate": 0.001,
     "pre_epoch": 1,
     "learning_rate": 0.00001,
     "epochs": 1,
     "weight_decay": 0.1,
     "autocast": True,
-    "debug_iteration": 500,
+    "save_every": 1000,
+    "debug_iteration": 10001,
     "tag": os.path.dirname(__file__).split("_")[-2],
 }
 config.update(additional_config)
@@ -109,12 +112,12 @@ class FocalLoss(nn.Module):
         return loss.mean()
 criterion = FocalLoss()
 
-pre_optimizer = optim.AdamW(
+pre_optimizer = bnb.optim.AdamW(
     model.head.parameters(),
     lr=config["pre_learning_rate"],
     weight_decay=config["weight_decay"],
 )
-optimizer = optim.AdamW(
+optimizer = bnb.optim.AdamW(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -168,6 +171,13 @@ def train(epoch, save_name):
         predicted = torch.where(outputs > 0., 1, 0)
         correct += predicted.eq(targets).sum().item()
         total += len(outputs)
+        if batch_idx % config["save_every"] == 0 and save_name is not None:
+            print('\tSaving..')
+            state = {}
+            for key, value in model.state_dict().items():
+                state[key] = value.cpu().to(torch.float16)
+            os.makedirs('checkpoint', exist_ok=True)
+            torch.save(state, f"checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_{config['tag']}.pth")
         if batch_idx > config["debug_iteration"]:
             break
     print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
