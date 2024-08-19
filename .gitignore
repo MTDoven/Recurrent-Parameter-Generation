@@ -1,3 +1,5 @@
 /.idea
+/.vscode
 **/checkpoint/
-*/generated/
+**/__pycache__/
+**/generated/
