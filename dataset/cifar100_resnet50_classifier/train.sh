@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in $(seq 0 33)
+for i in $(seq 67 99)
 do
   echo "\n\n"
   echo "Running iteration $i"

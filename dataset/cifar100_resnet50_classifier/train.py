@@ -48,7 +48,7 @@ config = {
     "pre_learning_rate": 0.001,
     "pre_epoch": 3,
     "learning_rate": 0.00005,
-    "epochs": 47,
+    "epochs": 42,
     "weight_decay": 0.1,
     "autocast": True,
     "start_save": 27,
@@ -195,7 +195,7 @@ def test(save_name):
         print('\tSaving..')
         state = {}
         for key, value in model.state_dict().items():
-            state[key] = value.cpu().to(torch.float32)
+            state[key] = value.cpu().to(torch.float16)
         os.makedirs('checkpoint', exist_ok=True)
         torch.save(state, f"checkpoint/{save_name}_class{config['optim_class']}_auc{auc:.4f}_{config['tag']}.pth")
 
