@@ -38,7 +38,7 @@ config = {
     "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "resume": False,
+    "resume": True,
     "batch_size": 1,
     "num_workers": 4,
     "total_steps": 100000,
