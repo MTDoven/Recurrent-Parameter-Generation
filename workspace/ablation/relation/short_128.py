@@ -17,6 +17,7 @@ from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
 from einops import rearrange
+import bitsandbytes as bnb
 from model import TransformerDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -58,7 +59,7 @@ config = {
         "dim_head": 512,
         "num_layers": 3,
         # diffusion config
-        "diffusion_batch": 1024,
+        "diffusion_batch": 512,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": 8192,
         "condition_dim": 8192,
@@ -129,9 +130,9 @@ for i in range(len(model.model.transformer_forward.layers)):
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(params=model.parameters(),
-                        lr=config["learning_rate"],
-                        weight_decay=config["weight_decay"])
+optimizer = bnb.optim.AdamW8bit(params=model.parameters(),
+                                lr=config["learning_rate"],
+                                weight_decay=config["weight_decay"])
 scheduler = CosineAnnealingLR(optimizer=optimizer,
                               T_max=config["total_steps"])
 
