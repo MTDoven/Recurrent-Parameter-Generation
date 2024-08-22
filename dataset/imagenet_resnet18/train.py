@@ -43,11 +43,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
     "batch_size": 256 if __name__ == "__main__" else 50,
-    "num_workers": 32,
-    "learning_rate": 3e-5,
+    "num_workers": 8,
+    "learning_rate": 1e-4,
     "weight_decay": 0.005,
     "epochs": 1,
-    "save_learning_rate": 3e-5,
+    "save_learning_rate": 1e-4,
     "total_save_number": 100,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
@@ -176,12 +176,13 @@ def save_train(model=model, optimizer=optimizer):
         loss.backward()
         optimizer.step()
         # Save checkpoint
-        _, acc, _, _ = test(model=model)
-        if not os.path.isdir('checkpoint'):
-            os.mkdir('checkpoint')
-        save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
-        torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
-        print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+        if batch_idx % (len(dataset) // config["total_save_number"]) == 0:
+            _, acc, _, _ = test(model=model)
+            if not os.path.isdir('checkpoint'):
+                os.mkdir('checkpoint')
+            save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
+            torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+            print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
         # exit loop
         if batch_idx+1 == config["total_save_number"]:
             break
