@@ -24,7 +24,7 @@ from torch.optim import AdamW
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
-from torchvision.datasets import CIFAR10
+from torchvision.datasets import CIFAR10 as Dataset
 from copy import deepcopy
 import os
 import warnings
@@ -43,11 +43,11 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 500 if __name__ == "__main__" else 50,
+    "batch_size": 1000 if __name__ == "__main__" else 50,
     "num_workers": 25,
-    "learning_rate": 0.0001,
-    "weight_decay": 0.01,
-    "epochs": 50,
+    "learning_rate": 0.05,
+    "weight_decay": 0.001,
+    "epochs": 150,
     "save_learning_rate": 1e-5,
     "total_save_number": 100,
     "tag": os.path.basename(os.path.dirname(__file__)).rsplit("_", 1)[0],
@@ -58,28 +58,28 @@ config.update(additional_config)
 
 
 # Data
-dataset = CIFAR10(
+dataset = Dataset(
     root=config["dataset_root"],
     train=True,
     download=True,
     transform=transforms.Compose([
         transforms.Resize(64),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
     ])
 )
 train_loader = DataLoader(
-    dataset=CIFAR10(
+    dataset=Dataset(
         root=config["dataset_root"],
         train=True,
         download=True,
         transform=transforms.Compose([
             transforms.Resize(64),
-            transforms.RandomCrop(64, padding=4),
+            transforms.RandomCrop(64, padding=8),
             transforms.RandomHorizontalFlip(),
             transforms.RandAugment(),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
         ])),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
@@ -89,14 +89,14 @@ train_loader = DataLoader(
     persistent_workers=True,
 )
 test_loader = DataLoader(
-    dataset=CIFAR10(
+    dataset=Dataset(
         root=config["dataset_root"],
         train=False,
         download=True,
         transform=transforms.Compose([
             transforms.Resize(64),
             transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
         ])),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
@@ -132,7 +132,7 @@ def train(model=model, optimizer=optimizer, scheduler=scheduler):
     for batch_idx, (inputs, targets) in enumerate(train_loader):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
-        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
         loss.backward()
@@ -151,7 +151,7 @@ def test(model=model):
     total = 0
     for batch_idx, (inputs, targets) in enumerate(test_loader):
         inputs, targets = inputs.to(device), targets.to(device)
-        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
         # to logging losses
@@ -186,14 +186,12 @@ def save_train(model=model, optimizer=optimizer):
         loss.backward()
         optimizer.step()
         # Save checkpoint
-        new_state = {key: value.to(torch.float16).to(torch.float32) for key, value in model.state_dict().items()}
-        new_model = deepcopy(model)
-        new_model.load_state_dict(new_state)
-        _, acc, _, _ = test(model=new_model)
+        _, acc, _, _ = test(model=model)
         if not os.path.isdir('checkpoint'):
             os.mkdir('checkpoint')
-        save_state = {key: value.cpu().to(torch.float16) for key, value in model.state_dict().items()}
+        save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
         torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+        print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
         # exit loop
         if batch_idx+1 == config["total_save_number"]:
             break
@@ -203,7 +201,7 @@ def save_train(model=model, optimizer=optimizer):
 
 # main
 if __name__ == '__main__':
-    train(model=model, optimizer=head_optimizer, scheduler=None)
+    # train(model=model, optimizer=head_optimizer, scheduler=None)
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
         test(model=model)
