@@ -11,15 +11,62 @@ from abc import ABC
 
 
 def pad_to_length(x, common_factor):
-    if len(x.flatten()) % common_factor == 0:
+    if x.numel() % common_factor == 0:
         return x.flatten()
+    assert x.numel() < common_factor
     # print(f"padding {x.shape} according to {common_factor}")
-    full_length = (len(x.flatten()) // common_factor + 1) * common_factor
+    full_length = (x.numel() // common_factor + 1) * common_factor
     padding_length = full_length - len(x.flatten())
-    # padding = torch.zeros([padding_length, ], dtype=x.dtype, device=x.device)
     padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=torch.nan)
     x = torch.cat((x.flatten(), padding), dim=0)
     return x
+
+def layer_to_token(x, common_factor):
+    if x.numel() <= common_factor:
+        return pad_to_length(x.flatten(), common_factor)[None]
+    dim2 = x[0].numel()
+    dim1 = x.shape[0]
+    if dim2 <= common_factor:
+        i = int(dim1 / (common_factor / dim2))
+        while True:
+            if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
+                output = x.view(-1, dim2 * (dim1 // i))
+                output = [pad_to_length(item, common_factor) for item in output]
+                return torch.stack(output, dim=0)
+            i += 1
+    else:  # dim2 > common_factor
+        output = [layer_to_token(item, common_factor) for item in x]
+        return torch.cat(output, dim=0)
+
+def token_to_layer(tokens, shape):
+    common_factor = tokens.shape[-1]
+    num_element = math.prod(shape)
+    if num_element <= common_factor:
+        param = tokens[0][:num_element].view(shape)
+        tokens = tokens[1:]
+        return param, tokens
+    dim2 = num_element // shape[0]
+    dim1 = shape[0]
+    if dim2 <= common_factor:
+        i = int(dim1 / (common_factor / dim2))
+        while True:
+            if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
+                item_per_token = dim2 * (dim1 // i)
+                length = num_element // item_per_token
+                output = [item[:item_per_token] for item in tokens[:length]]
+                param = torch.cat(output, dim=0).view(shape)
+                tokens = tokens[length:]
+                return param, tokens
+            i += 1
+    else:  # dim2 > common_factor
+        output = []
+        for i in range(shape[0]):
+            param, tokens = token_to_layer(tokens, shape[1:])
+            output.append(param.flatten())
+        param = torch.cat(output, dim=0).view(shape)
+        return param, tokens
+
+
 
 
 class BaseDataset(Dataset, ABC):
@@ -113,16 +160,10 @@ class BaseDataset(Dataset, ABC):
                 value = torch.log(value / pre_mean + 0.1)
             else:  # normal
                 shape, mean, std = self.structure[key]
-            value = value.flatten()
             value = (value - mean) / std
-            if self.config.get("mix_layers"):
-                pass  # value = value
-            else:  # padding according to layers
-                value = pad_to_length(value, self.dim_per_token)
+            value = layer_to_token(value, self.dim_per_token)
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
-        param = pad_to_length(param, self.dim_per_token)
-        param = param.view(-1, self.dim_per_token)
         # print("Sequence length:", param.size(0))
         return param
 
@@ -138,84 +179,70 @@ class BaseDataset(Dataset, ABC):
                 shape, pre_mean, mean, std = item
             else:  # conv & linear
                 shape, mean, std = item
-            num_elements = math.prod(shape)
-            this_param = params[:num_elements].view(*shape)
+            this_param, params = token_to_layer(params, shape)
             this_param = this_param * std + mean
             if "running_var" in key:
                 this_param = torch.clip(torch.exp(this_param) - 0.1, min=0.001) * pre_mean
             diction[key] = this_param
-            if self.config.get("mix_layers"):
-                cutting_length = num_elements
-            else:  # padding according to layers
-                cutting_length = num_elements if num_elements % self.dim_per_token == 0 \
-                        else (num_elements // self.dim_per_token + 1) * self.dim_per_token
-            params = params[cutting_length:]
         return diction
 
 
 
 
-class Cifar10_MLPTesting(BaseDataset):
-    data_path = "./dataset/cifar10_mlptesting_1m/checkpoint"
-    generated_path = "./dataset/cifar10_mlptesting_1m/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_mlptesting_1m/test.py " + \
-                   "./dataset/cifar10_mlptesting_1m/generated/generated_model.pth"
-
-
-class Cifar10_GoogleNet(BaseDataset):
-    data_path = "./dataset/cifar10_googlenet_6m/checkpoint"
-    generated_path = "./dataset/cifar10_googlenet_6m/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_googlenet_6m/test.py " + \
-                   "./dataset/cifar10_googlenet_6m/generated/generated_model.pth"
-
-
 class Cifar10_ResNet18(BaseDataset):
-    data_path = "./dataset/cifar10_resnet18_11m/checkpoint"
-    generated_path = "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_resnet18_11m/test.py " + \
-                   "./dataset/cifar10_resnet18_11m/generated/generated_model.pth"
+    data_path = "./dataset/cifar10_resnet18/checkpoint"
+    generated_path = "./dataset/cifar10_resnet18/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_resnet18/test.py " + \
+                   "./dataset/cifar10_resnet18/generated/generated_model.pth"
 
+class Cifar10_ResNet50(BaseDataset):
+    data_path = "./dataset/cifar10_resnet50/checkpoint"
+    generated_path = "./dataset/cifar10_resnet50/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_resnet50/test.py " + \
+                   "./dataset/cifar10_resnet50/generated/generated_model.pth"
 
-class ImageNet_ConvNeXt(BaseDataset):
-    data_path = "./dataset/imagenet_convnext_4m/checkpoint"
-    generated_path = "./dataset/imagenet_convnext_4m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_convnext_4m/test.py " + \
-                   "./dataset/imagenet_convnext_4m/generated/generated_model.pth"
+class Cifar10_ResNet101(BaseDataset):
+    data_path = "./dataset/cifar10_resnet101/checkpoint"
+    generated_path = "./dataset/cifar10_resnet101/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_resnet101/test.py " + \
+                   "./dataset/cifar10_resnet101/generated/generated_model.pth"
 
-
-class ImageNet_ViTTiny(BaseDataset):
-    data_path = "./dataset/imagenet_vittiny_6m/checkpoint"
-    generated_path = "./dataset/imagenet_vittiny_6m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_vittiny_6m/test.py " + \
-                   "./dataset/imagenet_vittiny_6m/generated/generated_model.pth"
-
-
-class ImageNet_ViTSmall(BaseDataset):
-    data_path = "./dataset/imagenet_vitsmall_22m/checkpoint"
-    generated_path = "./dataset/imagenet_vitsmall_22m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_vitsmall_22m/test.py " + \
-                   "./dataset/imagenet_vitsmall_22m/generated/generated_model.pth"
-
-
-class ImageNet_ViTBase(BaseDataset):
-    data_path = "./dataset/imagenet_vitbase_86m/checkpoint"
-    generated_path = "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_vitbase_86m/test.py " + \
-                   "./dataset/imagenet_vitbase_86m/generated/generated_model.pth"
-
+class ImageNet_ResNet18(BaseDataset):
+    data_path = "./dataset/imagenet_resnet18/checkpoint"
+    generated_path = "./dataset/imagenet_resnet18/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_resnet18/test.py " + \
+                   "./dataset/imagenet_resnet18/generated/generated_model.pth"
 
 class ImageNet_ResNet50(BaseDataset):
-    data_path = "./dataset/imagenet_resnet50_26m/checkpoint"
-    generated_path = "./dataset/imagenet_resnet50_26m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_resnet50_26m/test.py " + \
-                   "./dataset/imagenet_resnet50_26m/generated/generated_model.pth"
+    data_path = "./dataset/imagenet_resnet50/checkpoint"
+    generated_path = "./dataset/imagenet_resnet50/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_resnet50/test.py " + \
+                   "./dataset/imagenet_resnet50/generated/generated_model.pth"
 
+class ImageNet_ResNet101(BaseDataset):
+    data_path = "./dataset/imagenet_resnet101/checkpoint"
+    generated_path = "./dataset/imagenet_resnet101/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_resnet101/test.py " + \
+                   "./dataset/imagenets_resnet101/generated/generated_model.pth"
 
-class ImageNet_Convnext(BaseDataset):
-    data_path = "./dataset/imagenet_convnext_198m/checkpoint"
-    generated_path = "./dataset/imagenet_convnext_198m/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_convnext_198m/test.py " + \
-                   "./dataset/imagenet_convnext_198m/generated/generated_model.pth"
+class ImageNet_ViTTiny(BaseDataset):
+    data_path = "./dataset/imagenet_vittiny/checkpoint"
+    generated_path = "./dataset/imagenet_vittiny/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vittiny/test.py " + \
+                   "./dataset/imagenet_vittiny/generated/generated_model.pth"
+
+class ImageNet_ViTSmall(BaseDataset):
+    data_path = "./dataset/imagenet_vitsmall/checkpoint"
+    generated_path = "./dataset/imagenet_vitsmall/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vitsmall/test.py " + \
+                   "./dataset/imagenet_vitsmall/generated/generated_model.pth"
+
+class ImageNet_ViTBase(BaseDataset):
+    data_path = "./dataset/imagenet_vitbase/checkpoint"
+    generated_path = "./dataset/imagenet_vitbase/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vitbase/test.py " + \
+                   "./dataset/imagenet_vitbase/generated/generated_model.pth"
+
 
 
 
@@ -231,54 +258,4 @@ class ConditionalDataset(BaseDataset):
         condition = self._extract_condition(index)
         param = self.preprocess(diction)
         return param, condition
-
-
-
-
-class Cifar10_ViTTiny_Classifier(ConditionalDataset):
-    dataset_config = "./dataset/Cifar10/config.json"
-    data_path = "./dataset/cifar10_vittiny_classifier/checkpoint"
-    generated_path = "./dataset/cifar10_vittiny_classifier/generated/generated_model_class{}.pth"
-    test_command = "python ./dataset/cifar10_vittiny_classifier/test.py " + \
-                   "./dataset/cifar10_vittiny_classifier/generated/generated_model_class{}.pth"
-
-    def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
-        super().__init__(checkpoint_path=checkpoint_path, dim_per_token=dim_per_token, **kwargs)
-        # load dataset_config
-        with open(self.dataset_config, "r") as f:
-            dataset_config = json.load(f)
-        # train dataset
-        self.dataset = CIFAR10(root=dataset_config["dataset_root"], train=True, transform=None)
-        self.indices = [[] for _ in range(10)]
-        for index, (_, label) in enumerate(self.dataset):
-            self.indices[label].append(index)
-        self.transform = transforms.Compose([
-            transforms.Resize(64),
-            transforms.RandomCrop(64, padding=4),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandAugment(),
-            transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
-        ])
-        # test dataset
-        self.test_dataset = CIFAR10(root=dataset_config["dataset_root"], train=False, transform=None)
-        self.test_indices = [[] for _ in range(10)]
-        for index, (_, label) in enumerate(self.test_dataset):
-            self.test_indices[label].append(index)
-        self.test_transform = transforms.Compose([
-            transforms.Resize(64),
-            transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
-        ])
-
-    def _extract_condition(self, index: int):
-        optim_class = int(super()._extract_condition(index)[1][5:])
-        img_index = random.choice(self.indices[optim_class])
-        img = self.transform(self.dataset[img_index][0])
-        return img
-
-    def get_image_by_class_index(self, class_index):
-        img_index = random.choice(self.test_indices[class_index])
-        img = self.test_transform(self.test_dataset[img_index][0])
-        return img
 

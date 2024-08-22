@@ -44,13 +44,13 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
     "batch_size": 1000 if __name__ == "__main__" else 50,
-    "num_workers": 25,
-    "learning_rate": 0.05,
+    "num_workers": 50,
+    "learning_rate": 0.01,
     "weight_decay": 0.001,
-    "epochs": 150,
-    "save_learning_rate": 1e-5,
+    "epochs": 400,
+    "save_learning_rate": 3e-5,
     "total_save_number": 100,
-    "tag": os.path.basename(os.path.dirname(__file__)).rsplit("_", 1)[0],
+    "tag": os.path.basename(os.path.dirname(__file__)),
 }
 config.update(additional_config)
 
@@ -64,23 +64,15 @@ dataset = Dataset(
     download=True,
     transform=transforms.Compose([
         transforms.Resize(64),
+        transforms.RandomCrop(64, padding=8),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandAugment(),
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
     ])
 )
 train_loader = DataLoader(
-    dataset=Dataset(
-        root=config["dataset_root"],
-        train=True,
-        download=True,
-        transform=transforms.Compose([
-            transforms.Resize(64),
-            transforms.RandomCrop(64, padding=8),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandAugment(),
-            transforms.ToTensor(),
-            transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
-        ])),
+    dataset=dataset,
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
     shuffle=True,

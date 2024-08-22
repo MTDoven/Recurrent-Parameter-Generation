@@ -3,15 +3,15 @@ import timm
 
 
 def Model():
-    model = timm.create_model("resnet18", pretrained=False)
-    model.fc = nn.Linear(512, 10, bias=True)
+    model = timm.create_model("resnet50", pretrained=False)
+    model.fc = nn.Linear(2048, 10, bias=True)
     # nn.init.zeros_(model.fc.weight)
     # nn.init.zeros_(model.fc.bias)
     return model, model.fc
 
 
 if __name__ == "__main__":
-    model = Model()
+    model, _ = Model()
     print(model)
     num_param = 0
     for v in model.parameters():
