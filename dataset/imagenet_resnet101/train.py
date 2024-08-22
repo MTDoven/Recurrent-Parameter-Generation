@@ -45,7 +45,7 @@ config = {
     "batch_size": 256 if __name__ == "__main__" else 50,
     "num_workers": 32,
     "learning_rate": 3e-5,
-    "weight_decay": 0.005,
+    "weight_decay": 0.1,
     "epochs": 1,
     "save_learning_rate": 3e-5,
     "total_save_number": 100,

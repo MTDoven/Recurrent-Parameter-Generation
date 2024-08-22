@@ -12,10 +12,9 @@ np.random.seed(seed)
 random.seed(seed)
 
 
-# relative import
-if __name__ == "__main__":
+try:  # relative import
     from model import Model
-else:  # relative import
+except ImportError:
     from .model import Model
 
 # import
@@ -25,7 +24,6 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10 as Dataset
-from copy import deepcopy
 import os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
