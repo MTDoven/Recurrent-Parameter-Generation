@@ -1,3 +1,4 @@
+# set global seed
 import random
 import numpy as np
 import torch
@@ -6,39 +7,50 @@ torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
 torch.backends.cudnn.deterministic = True
-torch.backends.cudnn.benchmark = False
+torch.backends.cudnn.benchmark = True
 np.random.seed(seed)
 random.seed(seed)
 
+
+# relative import
+if __name__ == "__main__":
+    from model import Model
+else:  # relative import
+    from .model import Model
+
+# import
 import torch.nn as nn
-import torch.optim as optim
+from torch.optim import AdamW
+from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import CIFAR10
-try:  # relative import
-    from .model import cifar10_classify as Model
-except:  # absolute import
-    from model import cifar10_classify as Model
-import sys
+from copy import deepcopy
 import os
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# load additional config
 import json
-config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "Cifar10")
-with open(os.path.join(config_root, "config.json"), "r") as f:
+config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.json")
+with open(config_file, "r") as f:
     additional_config = json.load(f)
 
+
+
+
+# config
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
-    # dataset setting
     "dataset_root": "from_additional_config",
-    "classes": ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck'),
-    # train setting
-    "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-    "batch_size": 1000,
-    "num_workers": 16,
-    "learning_rate": 0.02,
-    "epochs": 150,
-    "test_freq": 1,
-    "weight_decay": 0.005,
-    "momentum": 0.9,
+    "batch_size": 500 if __name__ == "__main__" else 50,
+    "num_workers": 25,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "epochs": 50,
+    "save_learning_rate": 1e-5,
+    "total_save_number": 100,
+    "tag": os.path.basename(os.path.dirname(__file__)).rsplit("_", 1)[0],
 }
 config.update(additional_config)
 
@@ -46,8 +58,16 @@ config.update(additional_config)
 
 
 # Data
-print('==> Preparing data..')
-
+dataset = CIFAR10(
+    root=config["dataset_root"],
+    train=True,
+    download=True,
+    transform=transforms.Compose([
+        transforms.Resize(64),
+        transforms.ToTensor(),
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    ])
+)
 train_loader = DataLoader(
     dataset=CIFAR10(
         root=config["dataset_root"],
@@ -83,89 +103,108 @@ test_loader = DataLoader(
     shuffle=False,
 )
 
-
 # Model
-print('==> Building model..')
-
-model = Model().to(config["device"])
+model, head = Model()
+model = model.to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.AdamW(model.parameters(),
-                       lr=config["learning_rate"],
-                       weight_decay=config["weight_decay"])
-scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer,
-                                                 T_max=config["epochs"],
-                                                 eta_min=1e-4)
+head_optimizer = AdamW(
+    head.parameters(),
+    lr=0.05,
+    weight_decay=config["weight_decay"],
+)
+optimizer = AdamW(
+    model.parameters(),
+    lr=config["learning_rate"],
+    weight_decay=config["weight_decay"],
+)
+scheduler = lr_scheduler.CosineAnnealingLR(
+    optimizer,
+    T_max=config["epochs"],
+    eta_min=config["save_learning_rate"],
+)
+
+
 
 
 # Training
-print('==> Defining training..')
-
-def train(epoch, save_name):
-    print(f"\nEpoch: {epoch}", end=": ")
+def train(model=model, optimizer=optimizer, scheduler=scheduler):
     model.train()
-    train_loss = 0
-    correct = 0
-    total = 0
     for batch_idx, (inputs, targets) in enumerate(train_loader):
-        inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+        inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
-        outputs = model(inputs)
-        loss = criterion(outputs, targets)
+        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
         loss.backward()
         optimizer.step()
-        # to logging losses
-        train_loss += loss.item()
-        _, predicted = outputs.max(1)
-        total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
-    print('\r', 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
-          (train_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
+    if scheduler is not None:
+        scheduler.step()
 
-def test(save_name):
-    print("\n==> Testing..")
-    global best_acc
+# test
+@torch.no_grad()
+def test(model=model):
     model.eval()
+    all_targets = []
+    all_predicts = []
     test_loss = 0
     correct = 0
     total = 0
-    with torch.no_grad():
-        for batch_idx, (inputs, targets) in enumerate(test_loader):
-            inputs, targets = inputs.to(config["device"]), targets.to(config["device"])
+    for batch_idx, (inputs, targets) in enumerate(test_loader):
+        inputs, targets = inputs.to(device), targets.to(device)
+        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
-            # to logging losses
-            test_loss += loss.item()
-            _, predicted = outputs.max(1)
-            total += targets.size(0)
-            correct += predicted.eq(targets).sum().item()
-        print('\r', batch_idx, len(test_loader), 'Loss: %.4f | Acc: %.4f%% (%d/%d)' %
-              (test_loss/(batch_idx+1), 100.*correct/total, correct, total), end="")
-    # Save checkpoint.
-    acc = 100.*correct/total
-    if save_name is not None:  # and acc > best_acc:
-        print('\tSaving..')
-        state = {}
-        for key, value in model.state_dict().items():
-            state[key] = value.cpu().to(torch.float32)
+        # to logging losses
+        all_targets.extend(targets.flatten().tolist())
+        test_loss += loss.item()
+        _, predicts = outputs.max(1)
+        all_predicts.extend(predicts.flatten().tolist())
+        total += targets.size(0)
+        correct += predicts.eq(targets).sum().item()
+    loss = test_loss / (batch_idx + 1)
+    acc = correct / total
+    print(f"Loss: {loss:.4f} | Acc: {acc:.4f}")
+    model.train()
+    return loss, acc, all_targets, all_predicts
+
+# save train
+def save_train(model=model, optimizer=optimizer):
+    data_loader = DataLoader(
+        dataset=dataset,
+        batch_size=min(len(dataset) // config["total_save_number"], config["batch_size"]),
+        num_workers=config["num_workers"],
+        shuffle=True,
+        drop_last=True,
+    )
+    model.train()
+    for batch_idx, (inputs, targets) in enumerate(data_loader):
+        inputs, targets = inputs.to(device), targets.to(device)
+        optimizer.zero_grad()
+        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+        # Save checkpoint
+        new_state = {key: value.to(torch.float16).to(torch.float32) for key, value in model.state_dict().items()}
+        new_model = deepcopy(model)
+        new_model.load_state_dict(new_state)
+        _, acc, _, _ = test(model=new_model)
         if not os.path.isdir('checkpoint'):
             os.mkdir('checkpoint')
-        torch.save(state, f'checkpoint/{save_name}_acc{correct / total:.4f}_seed{SEED}_resnet18.pth')
-        best_acc = acc
+        save_state = {key: value.cpu().to(torch.float16) for key, value in model.state_dict().items()}
+        torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+        # exit loop
+        if batch_idx+1 == config["total_save_number"]:
+            break
 
 
-best_acc = 0  # best test accuracy
+
+
+# main
 if __name__ == '__main__':
-    # config save name
-    save_name = 0
-    # main train
-    for epoch in range(0, config["epochs"]):
-        epoch += 1
-        train(epoch, str(save_name).zfill(4))
-        if epoch % config["test_freq"] == 0:
-            test(str(save_name).zfill(4))
-        scheduler.step()
-        save_name += 1
-
-    # fix some bug caused by num_workers
-    del train_loader
-    exit(0)
+    train(model=model, optimizer=head_optimizer, scheduler=None)
+    for epoch in range(config["epochs"]):
+        train(model=model, optimizer=optimizer, scheduler=scheduler)
+        test(model=model)
+    save_train(model=model, optimizer=optimizer)

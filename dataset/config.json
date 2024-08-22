@@ -1,0 +1,7 @@
+{
+  "dataset_root": "/home/wangkai/arpgen/Datasets",
+  "imagenet_root": {
+    "train": "/home/wangkai/datasets/imagenet/train",
+    "val": "/home/wangkai/datasets/imagenet/val"
+  }
+}

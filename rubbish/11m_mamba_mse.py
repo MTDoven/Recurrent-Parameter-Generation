@@ -12,7 +12,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model.mamba import MambaModel as Model
 from model.diffusion import DDIMSampler
-from dataset.Dataset import Cifar10_ResNet18
+from dataset.BaseDataset import Cifar10_ResNet18
 if USE_WANDB:
     import wandb
 import random

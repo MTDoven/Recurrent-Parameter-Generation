@@ -1,4 +1,0 @@
-{
-  "train_image_root": "/home/wangkai/datasets/imagenet/train",
-  "test_image_root": "/home/wangkai/datasets/imagenet/val"
-}

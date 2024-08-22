@@ -80,7 +80,7 @@ class RNNModule(nn.Module):
 
     def __init__(self, hidden_dim, book_size, out_conv_ks):
         super().__init__()
-        from dataset.Dataset import Cifar10_MLP
+        from dataset.BaseDataset import Cifar10_MLP
         dataset = Cifar10_MLP(checkpoint_path="/home/wangkai/AR-Param-Generation/AR-Param-Generation/dataset/cifar10_MLP_middle/checkpoint",
                               dim_per_token=2048, predict_length=64)
         model_param = dataset[0].to(torch.float32)

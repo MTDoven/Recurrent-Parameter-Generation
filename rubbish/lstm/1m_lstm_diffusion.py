@@ -11,7 +11,7 @@ from torch.nn import functional as F
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from torch.utils.data import DataLoader
 from model import LstmDiffusion
-from dataset.Dataset import Cifar10_MLP
+from dataset.BaseDataset import Cifar10_MLP
 if USE_WANDB:
     import wandb
 import random
