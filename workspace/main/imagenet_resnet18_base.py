@@ -37,8 +37,8 @@ config = {
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 50000,
-    "learning_rate": 0.0005,
-    "weight_decay": 0.00001,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0,
     "save_every": 50000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
@@ -51,12 +51,13 @@ config = {
 config["model_config"] = {
     # mamba config
     "d_condition": 1,
-    "d_model": 4096,
-    "d_state": 64,
+    "d_model_1": 4096,
+    "d_model_2": 8192,
+    "d_state": 128,
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 1024,
+    "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
@@ -97,7 +98,7 @@ Model.config = config["model_config"]
 model = Model(
     sequence_length=config["sequence_length"],
     positional_embedding=train_set.get_position_embedding(
-        positional_embedding_dim=config["model_config"]["d_model"],
+        positional_embedding_dim=config["model_config"]["d_model_1"],
     ),  # positional_embedding
 )  # model setting is in model
 
