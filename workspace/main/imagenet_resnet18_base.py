@@ -61,7 +61,7 @@ config["model_config"] = {
     "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
-    "kernel_size": 7,
+    "kernel_size": 65,
     "sample_mode": DDIMSampler,
     "beta": (0.0001, 0.02),
     "T": 1000,
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="ARPGEN", name=__file__.split("/")[-1][:-3], config=config,)
+    wandb.init(project="ARPGEN", name=__file__.split("/")[-1][:-3], config=config)
 
 
 
