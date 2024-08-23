@@ -4,7 +4,7 @@ import timm
 
 def Model():
     model = timm.create_model("convnext_tiny", pretrained=True)
-    return model, model.fc
+    return model, model.head.fc
 
 
 if __name__ == "__main__":
