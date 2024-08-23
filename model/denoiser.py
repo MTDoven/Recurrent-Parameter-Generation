@@ -14,7 +14,7 @@ class TimestepEmbedder(nn.Module):
             nn.Linear(frequency_embedding_size, hidden_dim, bias=True),
             nn.SiLU(),
             nn.Linear(hidden_dim, hidden_dim, bias=True)
-        )  # FIXME: this is too big!
+        )  # FIXME: this is too big! Why this is such necessary?
         half = frequency_embedding_size // 2
         freqs = torch.exp(-math.log(max_period) * torch.arange(start=0, end=half) / half)
         self.register_buffer("freqs", freqs)
