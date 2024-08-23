@@ -78,7 +78,7 @@ sample = train_set[0]
 print("checkpoint number:", train_set.real_length)
 print("input shape:", sample.shape)
 print("useful ratio:", torch.where(torch.isnan(sample), 0., 1.).mean())
-del sample
+mask = torch.where(torch.isnan(sample), torch.nan, 1.)
 if config["sequence_length"] == "auto":
     config["sequence_length"] = train_set.sequence_length
     print(f"sequence length: {config['sequence_length']}")
@@ -177,7 +177,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     # _, condition = train_set[0]
     with torch.no_grad():
         prediction = model(sample=True)
-        generated_norm = prediction.abs().mean()
+        generated_norm = torch.nanmean((prediction.cpu() * mask).abs())
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB and accelerator.is_main_process:
         wandb.log({"generated_norm": generated_norm.item()})

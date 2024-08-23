@@ -44,10 +44,10 @@ config = {
     "dataset_root": "from_additional_config",
     "batch_size": 256 if __name__ == "__main__" else 50,
     "num_workers": 8,
-    "learning_rate": 1e-4,
+    "learning_rate": 1e-5,
     "weight_decay": 0.005,
     "epochs": 1,
-    "save_learning_rate": 1e-4,
+    "save_learning_rate": 1e-5,
     "total_save_number": 100,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
