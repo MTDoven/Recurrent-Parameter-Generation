@@ -176,7 +176,7 @@ def save_train(model=model, optimizer=optimizer):
         loss.backward()
         optimizer.step()
         # Save checkpoint
-        if batch_idx % (len(dataset) // config["total_save_number"]) == 0:
+        if batch_idx % (len(dataset) // data_loader.batch_size // config["total_save_number"]) == 0:
             _, acc, _, _ = test(model=model)
             if not os.path.isdir('checkpoint'):
                 os.mkdir('checkpoint')
