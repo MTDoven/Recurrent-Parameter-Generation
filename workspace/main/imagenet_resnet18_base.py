@@ -47,25 +47,24 @@ config = {
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
     "test_command": Dataset.test_command,
-    # to log
-    "model_config": {
-        # mamba config
-        "d_condition": 1,
-        "d_model": 4096,
-        "d_state": 64,
-        "d_conv": 4,
-        "expand": 2,
-        # diffusion config
-        "diffusion_batch": 512,
-        "layer_channels": [1, 32, 64, 128, 64, 32, 16],
-        "model_dim": 8192,  # save as dim_per_token
-        "condition_dim": 4096,  # save as d_model
-        "kernel_size": 9,
-        "sample_mode": DDIMSampler,
-        "beta": (0.0001, 0.02),
-        "T": 1000,
-        "forward_once": True,
-    },
+}
+config["model_config"] = {
+    # mamba config
+    "d_condition": 1,
+    "d_model": 4096,
+    "d_state": 64,
+    "d_conv": 4,
+    "expand": 2,
+    # diffusion config
+    "diffusion_batch": 512,
+    "layer_channels": [1, 32, 64, 128, 64, 32, 1],
+    "dim_per_token": config["dim_per_token"],
+    "kernel_size": 9,
+    "shrunk": 8,
+    "sample_mode": DDIMSampler,
+    "beta": (0.0001, 0.02),
+    "T": 1000,
+    "forward_once": True,
 }
 
 

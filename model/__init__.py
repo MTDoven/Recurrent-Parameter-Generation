@@ -16,7 +16,6 @@ class ModelDiffusion(nn.Module, ABC):
         super().__init__()
         DiffusionLoss.config = self.config
         self.criteria = DiffusionLoss()
-        assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
         # to define model after this function
 
@@ -26,15 +25,13 @@ class ModelDiffusion(nn.Module, ABC):
         c = self.model(output_shape, condition)
         # Given condition c and ground truth token x, compute loss
         loss = self.criteria(x=x_0, c=c, **kwargs)
-        if kwargs.get("parameter_weight_decay"):
-            loss += torch.square(c).mean() * kwargs["parameter_weight_decay"]
         return loss
 
     @torch.no_grad()
     def sample(self, x=None, condition=None):
         z = self.model([1, self.sequence_length, self.config["d_model"]], condition)
         if x is None:
-            x = torch.randn((1, self.sequence_length, self.config["model_dim"]), device=z.device)
+            x = torch.randn((1, self.sequence_length, self.config["dim_per_token"]), device=z.device)
         x = self.criteria.sample(x, z)
         return x
 
