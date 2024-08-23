@@ -159,15 +159,8 @@ def test(model=model):
 
 # save train
 def save_train(model=model, optimizer=optimizer):
-    data_loader = DataLoader(
-        dataset=dataset,
-        batch_size=min(len(dataset) // config["total_save_number"], config["batch_size"]),
-        num_workers=config["num_workers"],
-        shuffle=True,
-        drop_last=True,
-    )
     model.train()
-    for batch_idx, (inputs, targets) in enumerate(data_loader):
+    for batch_idx, (inputs, targets) in enumerate(train_loader):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
         with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
@@ -176,16 +169,13 @@ def save_train(model=model, optimizer=optimizer):
         loss.backward()
         optimizer.step()
         # Save checkpoint
-        if batch_idx % (len(dataset) // data_loader.batch_size // config["total_save_number"]) == 0:
+        if batch_idx % (len(dataset) // train_loader.batch_size // config["total_save_number"]) == 0:
             _, acc, _, _ = test(model=model)
             if not os.path.isdir('checkpoint'):
                 os.mkdir('checkpoint')
             save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
             torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
             print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
-        # exit loop
-        if batch_idx+1 == config["total_save_number"]:
-            break
 
 
 

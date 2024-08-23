@@ -66,6 +66,20 @@ def token_to_layer(tokens, shape):
         param = torch.cat(output, dim=0).view(shape)
         return param, tokens
 
+def positional_embedding_2d(dim1, dim2, d_model):
+    assert d_model % 4 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
+    pe = torch.zeros(d_model, dim1, dim2)
+    # Each dimension use half of d_model
+    d_model = int(d_model / 2)
+    div_term = torch.exp(torch.arange(0., d_model, 2) * -(math.log(10000.0) / d_model))
+    pos_w = torch.arange(0., dim2).unsqueeze(1)
+    pos_h = torch.arange(0., dim1).unsqueeze(1)
+    pe[0:d_model:2, :, :] = torch.sin(pos_w * div_term).transpose(0, 1).unsqueeze(1).repeat(1, dim1, 1)
+    pe[1:d_model:2, :, :] = torch.cos(pos_w * div_term).transpose(0, 1).unsqueeze(1).repeat(1, dim1, 1)
+    pe[d_model::2, :, :] = torch.sin(pos_h * div_term).transpose(0, 1).unsqueeze(2).repeat(1, 1, dim2)
+    pe[d_model+1::2, :, :] = torch.cos(pos_h * div_term).transpose(0, 1).unsqueeze(2).repeat(1, 1, dim2)
+    return pe.permute(1, 2, 0)
+
 
 
 
@@ -136,6 +150,30 @@ class BaseDataset(Dataset, ABC):
             max_num = self.length * 1000000
         self.length = max_num
         return self
+
+    def get_position_embedding(self, positional_embedding_dim=None):
+        if positional_embedding_dim is None:
+            positional_embedding_dim = self.dim_per_token
+        assert self.structure is not None
+        positional_embedding_index = []
+        for key, item in self.structure.items():
+            if ("num_batches_tracked" in key) or (item[-1] is None):
+                continue
+            else:  # conv & linear
+                shape, *_ = item
+            fake_param = torch.ones(size=shape)
+            fake_param = layer_to_token(fake_param, self.dim_per_token)
+            positional_embedding_index.append(list(range(fake_param.size(0))))
+        dim1 = len(positional_embedding_index)
+        dim2 = max([len(token_per_layer) for token_per_layer in positional_embedding_index])
+        full_pe = positional_embedding_2d(dim1, dim2, positional_embedding_dim)
+        positional_embedding = []
+        for layer_index, token_indexes in enumerate(positional_embedding_index):
+            for token_index in token_indexes:
+                this_pe = full_pe[layer_index, token_index]
+                positional_embedding.append(this_pe)
+        positional_embedding = torch.stack(positional_embedding)
+        return positional_embedding
 
     def __len__(self):
         return self.length
@@ -259,3 +297,14 @@ class ConditionalDataset(BaseDataset):
         param = self.preprocess(diction)
         return param, condition
 
+
+
+
+if __name__ == "__main__":
+    dataset = Cifar10_ResNet18(
+        dim_per_token=8192,
+        checkpoint_path="./cifar10_resnet18/checkpoint")
+    example = dataset[0]
+    print(example.shape, dataset.get_position_embedding(positional_embedding_dim=4096).shape)
+    useful_rate = torch.where(torch.isnan(example), 0., 1.).mean()
+    print("useful rate:", useful_rate)
