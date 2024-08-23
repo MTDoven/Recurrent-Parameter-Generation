@@ -22,7 +22,7 @@ class MambaModel(nn.Module):
                        d_conv=self.config["d_conv"],
                        expand=self.config["expand"])
         mamba2.in_proj = nn.Linear(mamba1.out_proj.out_features, mamba2.in_proj.out_features, bias=False)
-        mamba2.out_proj = nn.Linear(mamba2.out_proj.in_features, self.config["dim_per_token"], bias=False)
+        mamba2.out_proj = nn.Linear(mamba2.out_proj.in_features, self.config["dim_per_token"], bias=True)
         self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
         self.to_condition = nn.Sequential(
             nn.LeakyReLU(),

@@ -155,7 +155,6 @@ class DiffusionLoss(nn.Module):
             layer_channels=self.config["layer_channels"],
             model_dim=self.config["dim_per_token"],
             kernel_size=self.config["kernel_size"],
-            shrunk=self.config["shrunk"],
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(
             model=self.net,

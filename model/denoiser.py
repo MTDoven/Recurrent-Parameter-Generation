@@ -26,26 +26,11 @@ class TimestepEmbedder(nn.Module):
         return t_emb
 
 
-class BottleNeck(nn.Module):
-    def __init__(self, num_feature, shrunk):
-        super().__init__()
-        self.linear1 = nn.Linear(num_feature, num_feature // shrunk)
-        self.activate = nn.SiLU()
-        self.linear2 = nn.Linear(num_feature // shrunk, num_feature)
-
-    def forward(self, x):
-        origin_x = x
-        x = self.linear1(x)
-        x = self.activate(x)
-        x = self.linear2(x)
-        return x + origin_x
-
-
 class ConditionalUNet(nn.Module):
-    def __init__(self, layer_channels, model_dim, kernel_size, shrunk):
+    def __init__(self, layer_channels, model_dim, kernel_size):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=model_dim)
-        self.condi_embedder = BottleNeck(model_dim, shrunk=shrunk)
+        self.condi_embedder = nn.Identity()  # nn.Linear(condition_dim, model_dim)
         self.encoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1):
             self.encoder_list.append(nn.ModuleList([
@@ -83,8 +68,7 @@ if __name__ == "__main__":
     model = ConditionalUNet(
         layer_channels=(1, 32, 64, 128, 64, 32, 1),
         model_dim=8192,
-        kernel_size=9,
-        shrunk=8,
+        kernel_size=7,
     )  # define model
     x = torch.ones((4, 8192))
     t = torch.tensor([1, 2, 3, 4])

@@ -12,10 +12,10 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
-import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
+from bitsandbytes import optim
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -36,12 +36,12 @@ config = {
     # train setting
     "batch_size": 4,
     "num_workers": 8,
-    "total_steps": 30000,
-    "learning_rate": 0.00005,
+    "total_steps": 50000,
+    "learning_rate": 0.0005,
     "weight_decay": 0.00001,
-    "save_every": 30000//25,
+    "save_every": 50000//25,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 25000,
+    "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -56,11 +56,10 @@ config["model_config"] = {
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 512,
+    "diffusion_batch": 1024,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
-    "kernel_size": 9,
-    "shrunk": 8,
+    "kernel_size": 7,
     "sample_mode": DDIMSampler,
     "beta": (0.0001, 0.02),
     "T": 1000,
@@ -104,7 +103,7 @@ model = Model(
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(
+optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
