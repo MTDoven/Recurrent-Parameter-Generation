@@ -51,6 +51,7 @@ config = {
 config["model_config"] = {
     # mamba config
     "d_condition": 1,
+    "d_model": 4096,
     "d_model_1": 4096,
     "d_model_2": 8192,
     "d_state": 128,
@@ -98,7 +99,7 @@ Model.config = config["model_config"]
 model = Model(
     sequence_length=config["sequence_length"],
     positional_embedding=train_set.get_position_embedding(
-        positional_embedding_dim=config["model_config"]["d_model_1"],
+        positional_embedding_dim=config["model_config"]["d_model"],
     ),  # positional_embedding
 )  # model setting is in model
 
