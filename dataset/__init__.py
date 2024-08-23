@@ -303,7 +303,8 @@ class ConditionalDataset(BaseDataset):
 if __name__ == "__main__":
     dataset = Cifar10_ResNet18(
         dim_per_token=8192,
-        checkpoint_path="./cifar10_resnet18/checkpoint")
+        checkpoint_path="./cifar10_resnet18/checkpoint",
+    )
     example = dataset[0]
     print(example.shape, dataset.get_position_embedding(positional_embedding_dim=4096).shape)
     useful_rate = torch.where(torch.isnan(example), 0., 1.).mean()

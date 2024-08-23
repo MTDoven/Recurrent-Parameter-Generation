@@ -7,30 +7,31 @@ import math
 class MambaModel(nn.Module):
     config = {}
 
-    def __init__(self, sequence_length):
+    def __init__(self, positional_embedding):
         super().__init__()
-        mamba_config = {
-            "d_model": self.config["d_model"],
-            "d_state": self.config["d_state"],
-            "d_conv": self.config["d_conv"],
-            "expand": self.config["expand"],
-        }
-        self.mamba_forward = nn.Sequential(*[Mamba(**mamba_config) for _ in range(self.config["num_layers"])])
-        self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
-        pe = self.get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
+        if self.config.get("d_model_1") is None:
+            assert self.config.get("d_model_2") is None
+            self.config["d_model_1"] = self.config["d_model"]
+            self.config["d_model_2"] = self.config["d_model"]
+        mamba1 = Mamba(d_model=self.config["d_model_1"],
+                       d_state=self.config["d_state"],
+                       d_conv=self.config["d_conv"],
+                       expand=self.config["expand"])
+        mamba2 = Mamba(d_model=self.config["d_model_2"],
+                       d_state=self.config["d_state"],
+                       d_conv=self.config["d_conv"],
+                       expand=self.config["expand"])
+        mamba2.in_proj = nn.Linear(mamba1.out_proj.out_features, mamba2.in_proj.out_features, bias=False)
+        self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
+        self.to_condition = nn.Sequential(
+            nn.LeakyReLU(),
+            nn.Linear(self.config["d_condition"], self.config["d_model"]),
+        )
+        pe = positional_embedding[None]
         if self.config.get("trainable_pe"):
             self.pe = nn.Parameter(pe)
         else:  # fixed positional embedding
             self.register_buffer("pe", pe)
-
-    @staticmethod
-    def get_sinusoid(max_len, d_model):
-        pe = torch.zeros(max_len, d_model)
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        pe[:, 0::2] = torch.sin(position * div_term)
-        pe[:, 1::2] = torch.cos(position * div_term)
-        return pe
 
     def forward(self, output_shape, condition=torch.tensor([0.])):
         condition = self.to_condition(condition.view(-1, 1, self.config["d_condition"]).to(self.pe.device))
