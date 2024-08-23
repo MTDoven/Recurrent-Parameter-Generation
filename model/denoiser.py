@@ -25,21 +25,19 @@ class TimestepEmbedder(nn.Module):
 
 
 class AdaptiveLayerNorm(nn.Module):
-    def __init__(self, num_features, out_channel, condition_dim, kernel_size, shrunk):
+    def __init__(self, num_features, out_channel, condition_dim, kernel_size):
         super(AdaptiveLayerNorm, self).__init__()
         assert condition_dim >= num_features, f"c:{condition_dim}, n:{num_features}"
         assert condition_dim % num_features == 0, f"c:{condition_dim}, n:{num_features}"
         self.scale_proj = nn.Sequential(
-            nn.Conv1d(1, out_channel, kernel_size,
-                      condition_dim // num_features * shrunk, kernel_size // 2),
+            nn.Conv1d(1, out_channel, kernel_size, condition_dim // num_features, kernel_size // 2),
             nn.SiLU(),
-            nn.Linear(num_features // shrunk, num_features),
+            nn.Conv1d(out_channel, out_channel, kernel_size, 1, kernel_size // 2),
         )
         self.bias_proj = nn.Sequential(
-            nn.Conv1d(1, out_channel, kernel_size,
-                      condition_dim // num_features * shrunk, kernel_size // 2),
+            nn.Conv1d(1, out_channel, kernel_size, condition_dim // num_features, kernel_size // 2),
             nn.SiLU(),
-            nn.Linear(num_features // shrunk, num_features),
+            nn.Conv1d(out_channel, out_channel, kernel_size, 1, kernel_size // 2),
         )
         self.layer_norm = nn.LayerNorm(num_features, elementwise_affine=False)
 
@@ -55,7 +53,7 @@ class Identity(nn.Identity):
 
 
 class ConditionalUNet(nn.Module):
-    def __init__(self, layer_channels, model_dim, condition_dim, kernel_size, shrunk, condition_kernel_size=65):
+    def __init__(self, layer_channels, model_dim, condition_dim, kernel_size, condition_kernel_size=33):
         super().__init__()
         encode_channels = layer_channels[:len(layer_channels) // 2 + 1]
         decode_channels = layer_channels[len(layer_channels) // 2:]
@@ -68,10 +66,9 @@ class ConditionalUNet(nn.Module):
                 nn.Conv1d(encode_channels[i],
                           encode_channels[i+1],
                           kernel_size, 2, kernel_size // 2),
+                nn.Sequential(nn.BatchNorm1d(encode_channels[i+1]), nn.SiLU()),
                 AdaptiveLayerNorm(model_dim // int(2**(i+1)),
-                                  encode_channels[i+1], condition_dim, condition_kernel_size, shrunk)
-                        if i != 0 else Identity(),
-                nn.SiLU(),
+                                  encode_channels[i+1], condition_dim, condition_kernel_size),
             ]))
         self.decoder_list = nn.ModuleList([])
         for i in range(len(decode_channels) - 1):
@@ -79,10 +76,10 @@ class ConditionalUNet(nn.Module):
                 nn.ConvTranspose1d(decode_channels[i] if i == 0 else decode_channels[i]+encode_channels[-i-1],
                                    decode_channels[i+1],
                                    kernel_size+1, 2, kernel_size // 2),
+                nn.Sequential(nn.BatchNorm1d(decode_channels[i+1]), nn.ELU()),
                 AdaptiveLayerNorm(model_dim // int(2**(len(decode_channels)-2-i)),
-                                  decode_channels[i+1], condition_dim, condition_kernel_size, shrunk)
+                                  decode_channels[i+1], condition_dim, condition_kernel_size)
                         if i != len(decode_channels) - 2 else Identity(),
-                nn.SiLU(),
             ]))
         self.output_layer = nn.Conv1d(decode_channels[-1], 1, kernel_size, 1, kernel_size // 2)
 
@@ -90,17 +87,17 @@ class ConditionalUNet(nn.Module):
         x = x[:, None, :]
         c = c[:, None, :]
         x_list = []
-        for i, (module, norm, activation) in enumerate(self.encoder_list):
+        for i, (module, activation, norm) in enumerate(self.encoder_list):
             x = module(x)
-            x = norm(x, c)
             x = activation(x)
+            x = norm(x, c)
             x_list.append(x)
         x = x * self.time_embedder(t)[:, None, :]
-        for i, (module, norm, activation) in enumerate(self.decoder_list):
+        for i, (module, activation, norm) in enumerate(self.decoder_list):
             x = x if i == 0 else torch.cat((x, x_list[-1-i]), dim=-2)
             x = module(x)
-            x = norm(x, c)
             x = activation(x)
+            x = norm(x, c)
         x = self.output_layer(x)
         assert x.size(-2) == 1
         return x[:, 0, :]
@@ -114,7 +111,6 @@ if __name__ == "__main__":
         model_dim=16384,
         condition_dim=8192,
         kernel_size=9,
-        shrunk=4,
     )  # define model
     x = torch.ones((4, 16384))
     t = torch.tensor([1, 2, 3, 4])

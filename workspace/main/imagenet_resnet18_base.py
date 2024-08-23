@@ -38,7 +38,7 @@ config = {
     "num_workers": 8,
     "total_steps": 30000,
     "learning_rate": 0.00005,
-    "weight_decay": 0.0001,
+    "weight_decay": 0.00001,
     "save_every": 30000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 25000,
@@ -61,7 +61,6 @@ config = {
         "model_dim": 8192,  # save as dim_per_token
         "condition_dim": 4096,  # save as d_model
         "kernel_size": 9,
-        "shrunk": 2,
         "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
@@ -79,6 +78,7 @@ sample = train_set[0]
 print("checkpoint number:", train_set.real_length)
 print("input shape:", sample.shape)
 print("useful ratio:", torch.where(torch.isnan(sample), 0., 1.).mean())
+del sample
 if config["sequence_length"] == "auto":
     config["sequence_length"] = train_set.sequence_length
     print(f"sequence length: {config['sequence_length']}")
