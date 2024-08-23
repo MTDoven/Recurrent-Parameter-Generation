@@ -6,15 +6,15 @@ import math
 
 
 class TimestepEmbedder(nn.Module):
-    def __init__(self, hidden_dim, frequency_embedding_size=64, max_period=10000):
+    def __init__(self, hidden_dim, frequency_embedding_size=256, max_period=10000):
         super().__init__()
         assert frequency_embedding_size % 2 == 0
         self.frequency_embedding_size = frequency_embedding_size
         self.mlp = nn.Sequential(
-            nn.Linear(frequency_embedding_size, frequency_embedding_size, bias=True),
+            nn.Linear(frequency_embedding_size, hidden_dim, bias=True),
             nn.SiLU(),
-            nn.Linear(frequency_embedding_size, hidden_dim, bias=True)
-        )  # 64 * 8192 + 64 * 64 = 528384
+            nn.Linear(hidden_dim, hidden_dim, bias=True)
+        )  # FIXME: this is too big!
         half = frequency_embedding_size // 2
         freqs = torch.exp(-math.log(max_period) * torch.arange(start=0, end=half) / half)
         self.register_buffer("freqs", freqs)
@@ -67,12 +67,12 @@ class ConditionalUNet(nn.Module):
 if __name__ == "__main__":
     model = ConditionalUNet(
         layer_channels=(1, 32, 64, 128, 64, 32, 1),
-        model_dim=8192,
+        model_dim=6144,
         kernel_size=65,
     )  # define model
-    x = torch.ones((4, 8192))
+    x = torch.ones((4, 6144))
     t = torch.tensor([1, 2, 3, 4])
-    c = torch.ones((4, 8192))
+    c = torch.ones((4, 6144))
     y = model(x, t, c)
     print(y.shape)
     # param count
