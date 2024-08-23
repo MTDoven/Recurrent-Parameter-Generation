@@ -25,7 +25,7 @@ class MambaModel(nn.Module):
         self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
         self.to_condition = nn.Sequential(
             nn.LeakyReLU(),
-            nn.Linear(self.config["d_condition"], self.config["d_model"]),
+            nn.Linear(self.config["d_condition"], self.config["d_model_1"]),
         )
         pe = positional_embedding[None]
         if self.config.get("trainable_pe"):
@@ -33,7 +33,10 @@ class MambaModel(nn.Module):
         else:  # fixed positional embedding
             self.register_buffer("pe", pe)
 
-    def forward(self, output_shape, condition=torch.tensor([0.])):
-        condition = self.to_condition(condition.view(-1, 1, self.config["d_condition"]).to(self.pe.device))
-        x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
-        return x
+    def forward(self, output_shape, condition=None):
+        if condition is None:
+            assert self.config["d_condition"] == 1
+            condition = torch.zeros(size=(1, 1), device=self.pe.device)
+        condition = self.to_condition(condition)[:, None, :]
+        x = self.mamba_forward(self.pe + condition)
+        return x.repeat(output_shape[0], 1, 1) if x.size(0) == 1 else x

@@ -1,11 +1,10 @@
 import torch
 from abc import ABC
 from torch import nn
+from .lstm import LstmModel
 from .mamba import MambaModel
 from .transformer import TransformerModel
-from .lstm import LstmModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
-from .extractor import ResNet18
 
 
 
@@ -15,14 +14,13 @@ class ModelDiffusion(nn.Module, ABC):
 
     def __init__(self, sequence_length):
         super().__init__()
-
         DiffusionLoss.config = self.config
         self.criteria = DiffusionLoss()
         assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
         # to define model after this function
 
-    def forward(self, output_shape=None, x_0=None, condition: torch.Tensor = torch.tensor(0.), **kwargs):
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
         if kwargs.get("sample"):
             return self.sample(x=None, condition=condition)
         c = self.model(output_shape, condition)
@@ -33,7 +31,7 @@ class ModelDiffusion(nn.Module, ABC):
         return loss
 
     @torch.no_grad()
-    def sample(self, x=None, condition: torch.Tensor = torch.tensor(0.)):
+    def sample(self, x=None, condition=None):
         z = self.model([1, self.sequence_length, self.config["d_model"]], condition)
         if x is None:
             x = torch.randn((1, self.sequence_length, self.config["model_dim"]), device=z.device)
@@ -44,43 +42,25 @@ class ModelDiffusion(nn.Module, ABC):
 class MambaDiffusion(ModelDiffusion):
     config = {}
 
-    def __init__(self, sequence_length):
+    def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         MambaModel.config = self.config
-        self.model = MambaModel(sequence_length=sequence_length)
+        self.model = MambaModel(positional_embedding=positional_embedding)
 
 
 class TransformerDiffusion(ModelDiffusion):
     config = {}
 
-    def __init__(self, sequence_length):
+    def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         TransformerModel.config = self.config
-        self.model = TransformerModel(sequence_length=sequence_length)
+        self.model = TransformerModel(positional_embedding=positional_embedding)
 
 
 class LstmDiffusion(ModelDiffusion):
     config = {}
 
-    def __init__(self, sequence_length):
+    def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         LstmModel.config = self.config
-        self.model = LstmModel(sequence_length=sequence_length)
-
-
-
-
-class ClassifierMambaDiffusion(MambaDiffusion):
-    config = {}
-
-    def __init__(self, sequence_length):
-        super().__init__(sequence_length)
-        self.condition_extractor, output_dim = ResNet18()
-        assert self.config["d_condition"] == output_dim
-        self.register_buffer("device_sign_buffer", torch.zeros(1))
-
-    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
-        condition = self.condition_extractor(condition.to(self.device_sign_buffer.device))
-        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
-
-
+        self.model = LstmModel(positional_embedding=positional_embedding)

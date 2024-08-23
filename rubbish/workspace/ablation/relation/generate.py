@@ -5,7 +5,7 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 # torch
 import torch
 # father
-from workspace.ablation.relation import short_256 as item
+from workspace.main.relation import short_256 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config

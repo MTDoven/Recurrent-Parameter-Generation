@@ -153,7 +153,7 @@ class BaseDataset(Dataset, ABC):
 
     def get_position_embedding(self, positional_embedding_dim=None):
         if positional_embedding_dim is None:
-            positional_embedding_dim = self.dim_per_token
+            positional_embedding_dim = self.dim_per_token // 2
         assert self.structure is not None
         positional_embedding_index = []
         for key, item in self.structure.items():
@@ -207,7 +207,7 @@ class BaseDataset(Dataset, ABC):
 
     def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
         diction = {}
-        params = params.flatten()
+        params = params if len(params.shape) == 2 else params.squeeze(0)
         for key, item in self.structure.items():
             if ("num_batches_tracked" in key) or (item[-1] is None):
                 shape, mean, std = item

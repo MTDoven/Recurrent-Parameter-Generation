@@ -5,7 +5,7 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 # torch
 import torch
 # father
-from workspace.ablation.batchsize import vittiny_4096 as item
+from workspace.main.structure import transformer_8192 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config

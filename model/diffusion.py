@@ -156,6 +156,7 @@ class DiffusionLoss(nn.Module):
             model_dim=self.config["model_dim"],
             condition_dim=self.config["condition_dim"],
             kernel_size=self.config["kernel_size"],
+            shrunk=self.config["shrunk"],
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(
             model=self.net,
