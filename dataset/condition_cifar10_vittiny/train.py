@@ -26,6 +26,7 @@ import torch.nn as nn
 from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
+from torch.nn import functional as F
 import os
 import sys
 import warnings
@@ -45,11 +46,12 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
     "batch_size": 500 if __name__ == "__main__" else 50,
-    "num_workers": 1,
+    "num_workers": 16,
     "pre_learning_rate": 0.01,
-    "learning_rate": 2e-5,
+    "learning_rate": 1e-4,
     "weight_decay": 0.1,
-    "epochs": 30,
+    "momentum": 0.8,
+    "epochs": 15,
     "save_learning_rate": 2e-5,
     "total_save_number": 5,
     "tag": os.path.basename(os.path.dirname(__file__)),
@@ -57,7 +59,7 @@ config = {
     "optimize_class_int": get_optimize_class()[1],
 }
 config.update(additional_config)
-print("Training:", "optimize_class")
+print("Training:", config["optimize_class"])
 
 
 
@@ -91,16 +93,29 @@ test_loader = DataLoader(
 # Model
 model, head = Model()
 model = model.to(device)
-criterion = nn.CrossEntropyLoss()
+class FocalLoss(nn.Module):
+    def __init__(self, weight=None, gamma=2):
+        super(FocalLoss, self).__init__()
+        self.weight = weight
+        self.gamma = gamma
+    def forward(self, input, target):
+        ce_loss = F.cross_entropy(input, target, reduction='none', weight=self.weight)
+        pt = torch.exp(-ce_loss)
+        focal_loss = (1 - pt) ** self.gamma * ce_loss
+        return focal_loss.mean()
+criterion = FocalLoss()
+
+# Optimizer
 head_optimizer = optim.AdamW(
     head.parameters(),
     lr=config["pre_learning_rate"],
     weight_decay=config["weight_decay"],
 )
-optimizer = optim.AdamW(
+optimizer = optim.SGD(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
+    momentum=config["momentum"],
 )
 scheduler = lr_scheduler.CosineAnnealingLR(
     optimizer,

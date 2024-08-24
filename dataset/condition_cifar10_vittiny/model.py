@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import timm
 
@@ -10,7 +11,8 @@ def Model():
         nn.Linear(192, 2, bias=False),
     )
     for param in model.head.parameters():
-        nn.init.zeros_(param)
+        param = nn.Parameter(torch.ones_like(param) / 192)
+        param.requires_grad = True
     return model, model.head
 
 
