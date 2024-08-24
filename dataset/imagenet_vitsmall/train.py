@@ -19,7 +19,7 @@ except ImportError:
 
 # import
 import torch.nn as nn
-from torch.optim import AdamW
+from torch import optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
@@ -42,12 +42,13 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 256 if __name__ == "__main__" else 50,
+    "batch_size": 512 if __name__ == "__main__" else 50,
     "num_workers": 8,
-    "learning_rate": 1e-4,
+    "learning_rate": 5e-5,
     "weight_decay": 0.1,
+    "momentum": 0.3,
     "epochs": 1,
-    "save_learning_rate": 1e-4,
+    "save_learning_rate": 5e-5,
     "total_save_number": 100,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
@@ -61,7 +62,7 @@ dataset = Dataset(
     root=config["imagenet_root"]["train"],
     transform=transforms.Compose([
         transforms.Resize(224),
-        transforms.RandomCrop(224, padding=32),
+        transforms.RandomCrop(224),
         transforms.RandomHorizontalFlip(),
         transforms.RandAugment(),
         transforms.ToTensor(),
@@ -89,21 +90,20 @@ test_loader = DataLoader(
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],
     shuffle=False,
+    pin_memory=True,
+    persistent_workers=True,
+    pin_memory_device="cuda",
 )
 
 # Model
 model, head = Model()
 model = model.to(device)
 criterion = nn.CrossEntropyLoss()
-head_optimizer = AdamW(
-    head.parameters(),
-    lr=0.05,
-    weight_decay=config["weight_decay"],
-)
-optimizer = AdamW(
+optimizer = optim.SGD(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
+    momentum=config["momentum"],
 )
 scheduler = lr_scheduler.CosineAnnealingLR(
     optimizer,
@@ -182,7 +182,7 @@ def save_train(model=model, optimizer=optimizer):
 
 # main
 if __name__ == '__main__':
-    # train(model=model, optimizer=head_optimizer, scheduler=None)
+    test(model=model)
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
         test(model=model)
