@@ -263,12 +263,6 @@ class ImageNet_ResNet50(BaseDataset):
     test_command = "python ./dataset/imagenet_resnet50/test.py " + \
                    "./dataset/imagenet_resnet50/generated/generated_model.pth"
 
-class ImageNet_ResNet101(BaseDataset):
-    data_path = "./dataset/imagenet_resnet101/checkpoint"
-    generated_path = "./dataset/imagenet_resnet101/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_resnet101/test.py " + \
-                   "./dataset/imagenets_resnet101/generated/generated_model.pth"
-
 class ImageNet_ViTTiny(BaseDataset):
     data_path = "./dataset/imagenet_vittiny/checkpoint"
     generated_path = "./dataset/imagenet_vittiny/generated/generated_model.pth"
@@ -280,12 +274,6 @@ class ImageNet_ViTSmall(BaseDataset):
     generated_path = "./dataset/imagenet_vitsmall/generated/generated_model.pth"
     test_command = "python ./dataset/imagenet_vitsmall/test.py " + \
                    "./dataset/imagenet_vitsmall/generated/generated_model.pth"
-
-class ImageNet_ViTBase(BaseDataset):
-    data_path = "./dataset/imagenet_vitbase/checkpoint"
-    generated_path = "./dataset/imagenet_vitbase/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_vitbase/test.py " + \
-                   "./dataset/imagenet_vitbase/generated/generated_model.pth"
 
 
 
