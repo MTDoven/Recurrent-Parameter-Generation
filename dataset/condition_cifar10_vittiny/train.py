@@ -49,9 +49,9 @@ config = {
     "num_workers": 16,
     "pre_learning_rate": 0.01,
     "learning_rate": 1e-4,
+    "pre_epochs": 2,
+    "epochs": 13,
     "weight_decay": 0.1,
-    "momentum": 0.8,
-    "epochs": 15,
     "save_learning_rate": 2e-5,
     "total_save_number": 5,
     "tag": os.path.basename(os.path.dirname(__file__)),
@@ -111,11 +111,10 @@ head_optimizer = optim.AdamW(
     lr=config["pre_learning_rate"],
     weight_decay=config["weight_decay"],
 )
-optimizer = optim.SGD(
+optimizer = optim.AdamW(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
-    momentum=config["momentum"],
 )
 scheduler = lr_scheduler.CosineAnnealingLR(
     optimizer,
@@ -190,8 +189,8 @@ def save_train(model=model, optimizer=optimizer):
         if not os.path.isdir('checkpoint'):
             os.mkdir('checkpoint')
         save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
-        torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_class{config['optimize_class_int']:04d}_{config['tag']}.pth")
-        print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_class{config['optimize_class_int']:04d}_{config['tag']}.pth")
+        torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_class{config['optimize_class_int']}_{config['tag']}.pth")
+        print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_class{config['optimize_class_int']}_{config['tag']}.pth")
         # exit loop
         if batch_idx+1 == config["total_save_number"]:
             break
@@ -201,9 +200,10 @@ def save_train(model=model, optimizer=optimizer):
 
 # main
 if __name__ == '__main__':
-    train(model=model, optimizer=head_optimizer, scheduler=None)
-    train(model=model, optimizer=head_optimizer, scheduler=None)
+    for epoch in range(config["pre_epochs"]):
+        train(model=model, optimizer=head_optimizer, scheduler=None)
+        # test(model=model)
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
-        test(model=model)
+        # test(model=model)
     save_train(model=model, optimizer=optimizer)
