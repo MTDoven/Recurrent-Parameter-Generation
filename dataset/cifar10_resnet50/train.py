@@ -41,12 +41,12 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 1000 if __name__ == "__main__" else 50,
-    "num_workers": 50,
-    "learning_rate": 0.01,
-    "weight_decay": 0.001,
-    "epochs": 400,
-    "save_learning_rate": 3e-5,
+    "batch_size": 250 if __name__ == "__main__" else 50,
+    "num_workers": 25,
+    "learning_rate": 0.0002,
+    "weight_decay": 0.05,
+    "epochs": 15,
+    "save_learning_rate": 2e-5,
     "total_save_number": 100,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
@@ -61,8 +61,8 @@ dataset = Dataset(
     train=True,
     download=True,
     transform=transforms.Compose([
-        transforms.Resize(64),
-        transforms.RandomCrop(64, padding=8),
+        transforms.Resize(224),
+        transforms.RandomCrop(224, padding=32),
         transforms.RandomHorizontalFlip(),
         transforms.RandAugment(),
         transforms.ToTensor(),
@@ -84,7 +84,7 @@ test_loader = DataLoader(
         train=False,
         download=True,
         transform=transforms.Compose([
-            transforms.Resize(64),
+            transforms.Resize(224),
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2471, 0.2435, 0.2616)),
         ])),
@@ -191,7 +191,9 @@ def save_train(model=model, optimizer=optimizer):
 
 # main
 if __name__ == '__main__':
-    # train(model=model, optimizer=head_optimizer, scheduler=None)
+    for epoch in range(2):
+        train(model=model, optimizer=head_optimizer, scheduler=None)
+        test(model=model)
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
         test(model=model)

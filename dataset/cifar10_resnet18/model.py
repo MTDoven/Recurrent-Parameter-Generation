@@ -3,7 +3,7 @@ import timm
 
 
 def Model():
-    model = timm.create_model("resnet18", pretrained=False)
+    model = timm.create_model("resnet18", pretrained=True)
     model.fc = nn.Linear(512, 10, bias=True)
     # nn.init.zeros_(model.fc.weight)
     # nn.init.zeros_(model.fc.bias)
