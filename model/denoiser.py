@@ -67,12 +67,12 @@ class ConditionalUNet(nn.Module):
 if __name__ == "__main__":
     model = ConditionalUNet(
         layer_channels=(1, 32, 64, 128, 64, 32, 1),
-        model_dim=6144,
+        model_dim=8192,
         kernel_size=65,
     )  # define model
-    x = torch.ones((4, 6144))
+    x = torch.ones((4, 8192))
     t = torch.tensor([1, 2, 3, 4])
-    c = torch.ones((4, 6144))
+    c = torch.ones((4, 8192))
     y = model(x, t, c)
     print(y.shape)
     # param count
