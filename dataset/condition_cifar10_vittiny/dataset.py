@@ -38,6 +38,6 @@ def get_optimize_class():
     except IndexError:
         RuntimeError("sys.argv[1] not found")
     class_int_string = str(re.search(r'class(\d+)', string).group(1)).zfill(4)
-    one_hot_string = bin(int(class_int_string))[2:]
+    one_hot_string = bin(int(class_int_string))[2:].zfill(10)
     optimize_class = [index for index, i in enumerate(one_hot_string) if i == "1"]
     return list(optimize_class), class_int_string
