@@ -1,9 +1,10 @@
 #!/bin/bash
 
 start=1
-end=1023
+end=1022
 
-for ((i=start; i<=end; i++))
+for i in $(seq $start $end)
 do
-    CUDA_VISIBLE_DEVICES=0 python train.sh class$i
+    srun -p Gveval-S1 --job-name=train --gres=gpu:1 --ntasks-per-node=1 python train.py class$i
+    sleep 1
 done
