@@ -17,7 +17,7 @@ def pad_to_length(x, common_factor):
     # print(f"padding {x.shape} according to {common_factor}")
     full_length = (x.numel() // common_factor + 1) * common_factor
     padding_length = full_length - len(x.flatten())
-    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=torch.nan)
+    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=0.)
     x = torch.cat((x.flatten(), padding), dim=0)
     return x
 
