@@ -54,7 +54,7 @@ config["model_config"] = {
     "d_model": 4096,
     "d_model_1": 4096,
     "d_model_2": 8192,
-    "d_state": 128,
+    "d_state": 64,
     "d_conv": 4,
     "expand": 2,
     # diffusion config
