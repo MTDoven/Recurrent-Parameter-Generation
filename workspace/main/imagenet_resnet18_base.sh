@@ -3,6 +3,6 @@ accelerate launch \
   --num_processes=1 \
   --gpu_ids='7' \
   --num_machines=1 \
-  --mixed_precision=no \
+  --mixed_precision=bf16 \
   --dynamo_backend=no \
   imagenet_resnet18_base.py \
