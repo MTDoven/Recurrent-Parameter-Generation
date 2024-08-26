@@ -1,6 +1,6 @@
 #!/bin/bash
 
-start=67
+start=0
 end=99
 
 for i in $(seq $start $end)

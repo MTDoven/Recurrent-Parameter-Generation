@@ -2,6 +2,24 @@
 import random
 import numpy as np
 import torch
+import re
+import sys
+def get_permutation_state():
+    try:  # get string
+        string = sys.argv[1]
+    except IndexError:
+        RuntimeError("sys.argv[1] not found")
+    class_int_string = str(re.search(r'class(\d+)', string).group(1)).zfill(4)
+    return int(class_int_string)
+seed = SEED = get_permutation_state()
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = True
+np.random.seed(seed)
+random.seed(seed)
+print("Seed:", SEED)
 
 try:  # relative import
     from model import Model
@@ -16,13 +34,11 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import CIFAR10 as Dataset
 from torchvision import transforms
 from torch.nn import functional as F
-import re
-import os
-import sys
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # load additional config
+import os
 import json
 config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.json")
 with open(config_file, "r") as f:
@@ -45,24 +61,6 @@ config = {
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
 config.update(additional_config)
-
-def get_permutation_state():
-    try:  # get string
-        string = sys.argv[1]
-    except IndexError:
-        RuntimeError("sys.argv[1] not found")
-    class_int_string = str(re.search(r'class(\d+)', string).group(1)).zfill(4)
-    return int(class_int_string)
-
-seed = SEED = get_permutation_state()
-torch.manual_seed(seed)
-torch.cuda.manual_seed(seed)
-torch.cuda.manual_seed_all(seed)
-torch.backends.cudnn.deterministic = True
-torch.backends.cudnn.benchmark = True
-np.random.seed(seed)
-random.seed(seed)
-print("Seed:", SEED)
 
 
 
