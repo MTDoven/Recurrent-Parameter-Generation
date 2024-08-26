@@ -10,6 +10,8 @@ class Condition(nn.Module):
         self.d_condition = d_condition
         self.d_model = d_model
         self.gate = nn.Parameter(torch.ones(1, sequence_length, 1))
+        if d_condition == 1:
+            self.gate.requires_grad = False
         self.linear = nn.Linear(d_condition, d_model)
 
     def forward(self, condition):
