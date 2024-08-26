@@ -48,12 +48,12 @@ config = {
     "batch_size": 250 if __name__ == "__main__" else 50,
     "num_workers": 20,
     "pre_learning_rate": 0.01,
-    "learning_rate": 1e-4,
+    "learning_rate": 3e-5,
     "pre_epochs": 2,
-    "epochs": 28,
+    "epochs": 13,
     "weight_decay": 0.1,
-    "save_learning_rate": 2e-5,
-    "total_save_number": 5,
+    "save_learning_rate": 1e-5,
+    "total_save_number": 20,
     "tag": os.path.basename(os.path.dirname(__file__)),
     "optimize_class": get_optimize_class()[0],
     "optimize_class_int": get_optimize_class()[1],
@@ -202,8 +202,8 @@ def save_train(model=model, optimizer=optimizer):
 if __name__ == '__main__':
     for epoch in range(config["pre_epochs"]):
         train(model=model, optimizer=head_optimizer, scheduler=None)
-        # test(model=model)
+        test(model=model)
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
-        # test(model=model)
+        test(model=model)
     save_train(model=model, optimizer=optimizer)

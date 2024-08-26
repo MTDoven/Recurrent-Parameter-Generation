@@ -15,7 +15,6 @@ class BinaryClassifierDataset(Dataset):
             download=True,
             transform=transforms.Compose([
                 transforms.Resize(224),
-                transforms.RandomCrop(224, padding=32),
                 transforms.RandomHorizontalFlip(),
                 transforms.AutoAugment(policy=transforms.AutoAugmentPolicy("cifar10")),
                 transforms.ToTensor(),

@@ -4,7 +4,7 @@ import timm
 
 
 def Model():
-    model = timm.create_model("vit_tiny_patch16_224", pretrained=False)
+    model = timm.create_model("vit_tiny_patch16_224", pretrained=True)
     model.head = nn.Linear(192, 2)
     return model, model.head
 
