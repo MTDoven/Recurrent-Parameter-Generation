@@ -45,12 +45,12 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 500 if __name__ == "__main__" else 50,
-    "num_workers": 16,
+    "batch_size": 250 if __name__ == "__main__" else 50,
+    "num_workers": 20,
     "pre_learning_rate": 0.01,
     "learning_rate": 1e-4,
     "pre_epochs": 2,
-    "epochs": 13,
+    "epochs": 28,
     "weight_decay": 0.1,
     "save_learning_rate": 2e-5,
     "total_save_number": 5,

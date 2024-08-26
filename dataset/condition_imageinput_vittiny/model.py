@@ -4,15 +4,8 @@ import timm
 
 
 def Model():
-    model = timm.create_model("vit_tiny_patch16_224", pretrained=True)
-    model.head = nn.Sequential(
-        nn.Linear(192, 192, bias=True),
-        nn.SiLU(),
-        nn.Linear(192, 2, bias=False),
-    )
-    for param in model.head.parameters():
-        param = nn.Parameter(torch.ones_like(param) / 192)
-        param.requires_grad = True
+    model = timm.create_model("vit_tiny_patch16_224", pretrained=False)
+    model.head = nn.Linear(192, 2)
     return model, model.head
 
 
