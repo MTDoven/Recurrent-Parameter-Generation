@@ -10,67 +10,90 @@ import json
 from abc import ABC
 
 
-def pad_to_length(x, common_factor):
+def pad_to_length(x, common_factor, **config):
     if x.numel() % common_factor == 0:
         return x.flatten()
-    assert x.numel() < common_factor
     # print(f"padding {x.shape} according to {common_factor}")
     full_length = (x.numel() // common_factor + 1) * common_factor
     padding_length = full_length - len(x.flatten())
-    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=0.)
+    padding = torch.full([padding_length, ], dtype=x.dtype, device=x.device, fill_value=config["fill_value"])
     x = torch.cat((x.flatten(), padding), dim=0)
     return x
 
-def layer_to_token(x, common_factor):
-    if x.numel() <= common_factor:
-        return pad_to_length(x.flatten(), common_factor)[None]
-    dim2 = x[0].numel()
-    dim1 = x.shape[0]
-    if dim2 <= common_factor:
-        i = int(dim1 / (common_factor / dim2))
-        while True:
-            if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
-                output = x.view(-1, dim2 * (dim1 // i))
-                output = [pad_to_length(item, common_factor) for item in output]
-                return torch.stack(output, dim=0)
-            i += 1
-    else:  # dim2 > common_factor
-        output = [layer_to_token(item, common_factor) for item in x]
-        return torch.cat(output, dim=0)
+def layer_to_token(x, common_factor, **config):
+    if config["granularity"] == 2:  # split by output
+        if x.numel() <= common_factor:
+            return pad_to_length(x.flatten(), common_factor, **config)[None]
+        dim2 = x[0].numel()
+        dim1 = x.shape[0]
+        if dim2 <= common_factor:
+            i = int(dim1 / (common_factor / dim2))
+            while True:
+                if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
+                    output = x.view(-1, dim2 * (dim1 // i))
+                    output = [pad_to_length(item, common_factor, **config) for item in output]
+                    return torch.stack(output, dim=0)
+                i += 1
+        else:  # dim2 > common_factor
+            output = [layer_to_token(item, common_factor, **config) for item in x]
+            return torch.cat(output, dim=0)
+    elif config["granularity"] == 1:  # split by layer
+        return pad_to_length(x.flatten(), common_factor, **config).view(-1, common_factor)
+    elif config["granularity"] == 0:  # flatten directly
+        return x.flatten()
+    else:  # NotImplementedError
+        raise NotImplementedError("granularity: 0: flatten directly, 1: split by layer, 2: split by output dim")
 
-def token_to_layer(tokens, shape):
+
+def token_to_layer(tokens, shape, **config):
     common_factor = tokens.shape[-1]
-    num_element = math.prod(shape)
-    if num_element <= common_factor:
-        param = tokens[0][:num_element].view(shape)
-        tokens = tokens[1:]
+    if config["granularity"] == 2:  # split by output
+        num_element = math.prod(shape)
+        if num_element <= common_factor:
+            param = tokens[0][:num_element].view(shape)
+            tokens = tokens[1:]
+            return param, tokens
+        dim2 = num_element // shape[0]
+        dim1 = shape[0]
+        if dim2 <= common_factor:
+            i = int(dim1 / (common_factor / dim2))
+            while True:
+                if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
+                    item_per_token = dim2 * (dim1 // i)
+                    length = num_element // item_per_token
+                    output = [item[:item_per_token] for item in tokens[:length]]
+                    param = torch.cat(output, dim=0).view(shape)
+                    tokens = tokens[length:]
+                    return param, tokens
+                i += 1
+        else:  # dim2 > common_factor
+            output = []
+            for i in range(shape[0]):
+                param, tokens = token_to_layer(tokens, shape[1:], **config)
+                output.append(param.flatten())
+            param = torch.cat(output, dim=0).view(shape)
+            return param, tokens
+    elif config["granularity"] == 1:  # split by layer
+        num_element = math.prod(shape)
+        token_num = num_element // common_factor if num_element % common_factor == 0 \
+                else num_element // common_factor + 1
+        param = tokens.flatten()[:num_element].view(shape)
+        tokens = tokens[token_num:]
         return param, tokens
-    dim2 = num_element // shape[0]
-    dim1 = shape[0]
-    if dim2 <= common_factor:
-        i = int(dim1 / (common_factor / dim2))
-        while True:
-            if dim1 % i == 0 and dim2 * (dim1 // i) <= common_factor:
-                item_per_token = dim2 * (dim1 // i)
-                length = num_element // item_per_token
-                output = [item[:item_per_token] for item in tokens[:length]]
-                param = torch.cat(output, dim=0).view(shape)
-                tokens = tokens[length:]
-                return param, tokens
-            i += 1
-    else:  # dim2 > common_factor
-        output = []
-        for i in range(shape[0]):
-            param, tokens = token_to_layer(tokens, shape[1:])
-            output.append(param.flatten())
-        param = torch.cat(output, dim=0).view(shape)
+    elif config["granularity"] == 0:  # flatten directly
+        num_element = math.prod(shape)
+        param = tokens.flatten()[:num_element].view(shape)
+        tokens = pad_to_length(tokens.flatten()[num_element:],
+                common_factor, fill_value=torch.nan).view(-1, common_factor)
         return param, tokens
+    else:  # NotImplementedError
+        raise NotImplementedError("granularity: 0: flatten directly, 1: split by layer, 2: split by output dim")
+
 
 def positional_embedding_2d(dim1, dim2, d_model):
     assert d_model % 4 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
     pe = torch.zeros(d_model, dim1, dim2)
-    # Each dimension use half of d_model
-    d_model = int(d_model / 2)
+    d_model = int(d_model / 2)  # Each dimension use half of d_model
     div_term = torch.exp(torch.arange(0., d_model, 2) * -(math.log(10000.0) / d_model))
     pos_w = torch.arange(0., dim2).unsqueeze(1)
     pos_h = torch.arange(0., dim1).unsqueeze(1)
@@ -81,13 +104,27 @@ def positional_embedding_2d(dim1, dim2, d_model):
     return pe.permute(1, 2, 0)
 
 
+def positional_embedding_1d(dim1, d_model):
+    assert d_model % 2 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
+    pe = torch.zeros(dim1, d_model)
+    position = torch.arange(0, dim1).unsqueeze(1)
+    div_term = torch.exp((torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model)))
+    pe[:, 0::2] = torch.sin(position.float() * div_term)
+    pe[:, 1::2] = torch.cos(position.float() * div_term)
+    return pe
+
+
 
 
 class BaseDataset(Dataset, ABC):
     data_path = None
     generated_path = None
     test_command = None
-    config = {}
+    config = {
+        "fill_value": 0.,
+        "granularity": 1,  # 0: flatten directly, 1: split by layer, 2: split by output
+        "pe_granularity": 1,  # 0: no embedding, 1: 1d embedding, 2: 2d embedding
+    }
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
         self.config.update(kwargs)
@@ -154,26 +191,33 @@ class BaseDataset(Dataset, ABC):
     def get_position_embedding(self, positional_embedding_dim=None):
         if positional_embedding_dim is None:
             positional_embedding_dim = self.dim_per_token // 2
-        assert self.structure is not None
-        positional_embedding_index = []
-        for key, item in self.structure.items():
-            if ("num_batches_tracked" in key) or (item[-1] is None):
-                continue
-            else:  # conv & linear
-                shape, *_ = item
-            fake_param = torch.ones(size=shape)
-            fake_param = layer_to_token(fake_param, self.dim_per_token)
-            positional_embedding_index.append(list(range(fake_param.size(0))))
-        dim1 = len(positional_embedding_index)
-        dim2 = max([len(token_per_layer) for token_per_layer in positional_embedding_index])
-        full_pe = positional_embedding_2d(dim1, dim2, positional_embedding_dim)
-        positional_embedding = []
-        for layer_index, token_indexes in enumerate(positional_embedding_index):
-            for token_index in token_indexes:
-                this_pe = full_pe[layer_index, token_index]
-                positional_embedding.append(this_pe)
-        positional_embedding = torch.stack(positional_embedding)
-        return positional_embedding
+        assert self.structure is not None, "run get_structure before get_position_embedding"
+        if self.config["pe_granularity"] == 2:
+            positional_embedding_index = []
+            for key, item in self.structure.items():
+                if ("num_batches_tracked" in key) or (item[-1] is None):
+                    continue
+                else:  # conv & linear
+                    shape, *_ = item
+                fake_param = torch.ones(size=shape)
+                fake_param = layer_to_token(fake_param, self.dim_per_token, **self.config)
+                positional_embedding_index.append(list(range(fake_param.size(0))))
+            dim1 = len(positional_embedding_index)
+            dim2 = max([len(token_per_layer) for token_per_layer in positional_embedding_index])
+            full_pe = positional_embedding_2d(dim1, dim2, positional_embedding_dim)
+            positional_embedding = []
+            for layer_index, token_indexes in enumerate(positional_embedding_index):
+                for token_index in token_indexes:
+                    this_pe = full_pe[layer_index, token_index]
+                    positional_embedding.append(this_pe)
+            positional_embedding = torch.stack(positional_embedding)
+            return positional_embedding
+        elif self.config["pe_granularity"] == 1:
+            return positional_embedding_1d(self.sequence_length, positional_embedding_dim)
+        elif self.config["pe_granularity"] == 0:
+            return torch.zeros_like(self.__getitem__(0))
+        else:  # NotImplementedError
+            raise NotImplementedError("pe_granularity: 0: no embedding, 1: 1d embedding, 2: 2d embedding")
 
     def __len__(self):
         return self.length
@@ -199,9 +243,11 @@ class BaseDataset(Dataset, ABC):
             else:  # normal
                 shape, mean, std = self.structure[key]
             value = (value - mean) / std
-            value = layer_to_token(value, self.dim_per_token)
+            value = layer_to_token(value, self.dim_per_token, **self.config)
             param_list.append(value)
         param = torch.cat(param_list, dim=0)
+        if self.config["granularity"] == 0:  # padding directly process tail
+            param = pad_to_length(param, self.dim_per_token, **self.config).view(-1, self.dim_per_token)
         # print("Sequence length:", param.size(0))
         return param
 
@@ -217,7 +263,7 @@ class BaseDataset(Dataset, ABC):
                 shape, pre_mean, mean, std = item
             else:  # conv & linear
                 shape, mean, std = item
-            this_param, params = token_to_layer(params, shape)
+            this_param, params = token_to_layer(params, shape, **self.config)
             this_param = this_param * std + mean
             if "running_var" in key:
                 this_param = torch.clip(torch.exp(this_param) - 0.05, min=0.001) * pre_mean
