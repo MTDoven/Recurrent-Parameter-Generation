@@ -34,7 +34,7 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 4,
+    "batch_size": 1,
     "num_workers": 8,
     "total_steps": 50000,
     "learning_rate": 0.00003,
