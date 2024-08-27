@@ -15,7 +15,7 @@ class Condition(nn.Module):
     def forward(self, condition):
         assert len(condition.shape) == 2
         assert condition.shape[-1] == self.d_condition
-        c = self.linear(condition)[:, None, :] * self.gate
+        c = self.linear(condition)[:, None, :] * torch.sigmoid(self.gate)
         return c
 
 
@@ -32,14 +32,14 @@ class MambaModel(nn.Module):
                        d_state=self.config["d_state"],
                        d_conv=self.config["d_conv"],
                        expand=self.config["expand"])
-        project = nn.Sequential(nn.ELU(),
+        project = nn.Sequential(nn.SiLU(),
                                 nn.Linear(self.config["d_model_1"], self.config["d_model_2"]),
                                 nn.LayerNorm(self.config["d_model_2"]))
         mamba2 = Mamba(d_model=self.config["d_model_2"],
                        d_state=self.config["d_state"],
                        d_conv=self.config["d_conv"],
                        expand=self.config["expand"])
-        to_output = nn.Sequential(nn.ELU(),
+        to_output = nn.Sequential(nn.SiLU(),
                                   nn.Linear(self.config["d_model_2"], self.config["dim_per_token"]))
         self.mamba_forward = nn.Sequential(*[mamba1, project, mamba2, to_output])
         self.to_condition = Condition(d_condition=self.config["d_condition"],

@@ -94,7 +94,7 @@ def positional_embedding_2d(dim1, dim2, d_model):
     assert d_model % 4 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
     pe = torch.zeros(d_model, dim1, dim2)
     d_model = int(d_model / 2)  # Each dimension use half of d_model
-    div_term = torch.exp(torch.arange(0., d_model, 2) * -(math.log(10000.0) / d_model))
+    div_term = torch.exp(torch.arange(0., d_model, 2, dtype=torch.float32) * -(math.log(10000.0) / d_model))
     pos_w = torch.arange(0., dim2).unsqueeze(1)
     pos_h = torch.arange(0., dim1).unsqueeze(1)
     pe[0:d_model:2, :, :] = torch.sin(pos_w * div_term).transpose(0, 1).unsqueeze(1).repeat(1, dim1, 1)
@@ -108,7 +108,7 @@ def positional_embedding_1d(dim1, d_model):
     assert d_model % 2 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
     pe = torch.zeros(dim1, d_model)
     position = torch.arange(0, dim1).unsqueeze(1)
-    div_term = torch.exp((torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model)))
+    div_term = torch.exp((torch.arange(0, d_model, 2, dtype=torch.float32) * -(math.log(10000.0) / d_model)))
     pe[:, 0::2] = torch.sin(position.float() * div_term)
     pe[:, 1::2] = torch.cos(position.float() * div_term)
     return pe
@@ -121,9 +121,9 @@ class BaseDataset(Dataset, ABC):
     generated_path = None
     test_command = None
     config = {
-        "fill_value": 0.,
+        "fill_value": torch.nan,
         "granularity": 1,  # 0: flatten directly, 1: split by layer, 2: split by output
-        "pe_granularity": 1,  # 0: no embedding, 1: 1d embedding, 2: 2d embedding
+        "pe_granularity": 2,  # 0: no embedding, 1: 1d embedding, 2: 2d embedding
     }
 
     def __init__(self, checkpoint_path=None, dim_per_token=8192, **kwargs):
