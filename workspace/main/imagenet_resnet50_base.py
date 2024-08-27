@@ -58,7 +58,7 @@ config["model_config"] = {
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 1536,
+    "diffusion_batch": 1024,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 9,
