@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
-os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
+os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # other
