@@ -1,7 +1,7 @@
 import torch
 
-diction1 = torch.load("/home/wangkai/arpgen/AR-Param-Generation/dataset/imagenet_vittiny_6m/generated/generated_model.pth")
-diction2 = torch.load("/home/wangkai/arpgen/AR-Param-Generation/dataset/imagenet_vittiny_6m/checkpoint/0000_acc0.6822_seed20_vittiny.pth")
+diction1 = torch.load("/data/personal/nus-wk/arpgen/AR-Param-Generation/dataset/cifar10_vittiny/generated/generated_model.pth")
+diction2 = torch.load("/data/personal/nus-wk/arpgen/AR-Param-Generation/dataset/cifar10_vittiny/generated/generated_model.pth")
 
 def norm(x):
     if len(x.shape) == 0:
@@ -11,9 +11,9 @@ def norm(x):
 
 
 for (key1, value1), (key2, value2) in zip(diction1.items(), diction2.items()):
-    if key1 != "head.0.bias":
-        print(key1, norm(value1.flatten()[:5]), "\n",
-              key1, norm(value2.flatten()[:5]))
+    if "running_var" in key1:
+        print("ok")
+        print(key1)
 
 
 

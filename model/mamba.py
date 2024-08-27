@@ -32,13 +32,16 @@ class MambaModel(nn.Module):
                        d_state=self.config["d_state"],
                        d_conv=self.config["d_conv"],
                        expand=self.config["expand"])
+        project = nn.Sequential(nn.ELU(),
+                                nn.Linear(self.config["d_model_1"], self.config["d_model_2"]),
+                                nn.LayerNorm(self.config["d_model_2"]))
         mamba2 = Mamba(d_model=self.config["d_model_2"],
                        d_state=self.config["d_state"],
                        d_conv=self.config["d_conv"],
                        expand=self.config["expand"])
-        mamba2.in_proj = nn.Linear(mamba1.out_proj.out_features, mamba2.in_proj.out_features, bias=False)
-        mamba2.out_proj = nn.Linear(mamba2.out_proj.in_features, self.config["dim_per_token"], bias=True)
-        self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
+        to_output = nn.Sequential(nn.ELU(),
+                                  nn.Linear(self.config["d_model_2"], self.config["dim_per_token"]))
+        self.mamba_forward = nn.Sequential(*[mamba1, project, mamba2, to_output])
         self.to_condition = Condition(d_condition=self.config["d_condition"],
                                       d_model=self.config["d_model_1"],
                                       sequence_length=positional_embedding.shape[-2])
