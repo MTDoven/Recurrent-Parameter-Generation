@@ -5,6 +5,7 @@ from .lstm import LstmModel
 from .mamba import MambaModel
 from .transformer import TransformerModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
+from .condition import ClassToCondition
 
 
 
@@ -37,8 +38,6 @@ class ModelDiffusion(nn.Module, ABC):
 
 
 class MambaDiffusion(ModelDiffusion):
-    config = {}
-
     def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         MambaModel.config = self.config
@@ -46,8 +45,6 @@ class MambaDiffusion(ModelDiffusion):
 
 
 class TransformerDiffusion(ModelDiffusion):
-    config = {}
-
     def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         TransformerModel.config = self.config
@@ -55,9 +52,19 @@ class TransformerDiffusion(ModelDiffusion):
 
 
 class LstmDiffusion(ModelDiffusion):
-    config = {}
-
     def __init__(self, sequence_length, positional_embedding):
         super().__init__(sequence_length=sequence_length)
         LstmModel.config = self.config
         self.model = LstmModel(positional_embedding=positional_embedding)
+
+
+
+
+class ClassConditionMambaDiffusion(MambaDiffusion):
+    def __init__(self, sequence_length, positional_embedding, input_class=10):
+        super().__init__(sequence_length, positional_embedding)
+        self.get_condition = ClassToCondition(input_class, self.config["d_condition"])
+
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        condition = self.get_condition(condition)
+        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)

@@ -352,6 +352,31 @@ class ConditionalDataset(BaseDataset):
 
 
 
+class ClassInput_ViTTiny(ConditionalDataset):
+    def _extract_condition(self, index: int):
+        condition = super()._extract_condition(index)[2]
+        one_hot_string = bin(int(condition))[2:].zfill(10)
+        optimize_class = [index for index, i in enumerate(one_hot_string) if i == "1"]
+        indicator_tensor = torch.zeros(size=(10,))
+        for i in optimize_class:
+            indicator_tensor[i] = 1.0
+        return indicator_tensor
+
+class ClassInput_ViTTiny_Train(ClassInput_ViTTiny):
+    data_path = "./dataset/condition_classinput_vittiny/checkpoint_train"
+    generated_path = "./dataset/condition_classinput_vittiny/generated/generated_model_{}.pth"
+    test_command = "python ./dataset/condition_classinput_vittiny/test.py " + \
+                   "./dataset/condition_classinput_vittiny/generated/generated_model_{}.pth"
+
+class ClassInput_ViTTiny_Test(ClassInput_ViTTiny):
+    data_path = "./dataset/condition_classinput_vittiny/checkpoint_test"
+    generated_path = "./dataset/condition_classinput_vittiny/generated/generated_model_{}.pth"
+    test_command = "python ./dataset/condition_classinput_vittiny/test.py " + \
+                   "./dataset/condition_classinput_vittiny/generated/generated_model_{}.pth"
+
+
+
+
 if __name__ == "__main__":
     dataset = Cifar10_ResNet18(
         dim_per_token=8192,
