@@ -1,5 +1,7 @@
 /.idea
 /.vscode
 **/checkpoint/
+**/checkpoint_train/
+**/checkpoint_test/
 **/__pycache__/
 **/generated/

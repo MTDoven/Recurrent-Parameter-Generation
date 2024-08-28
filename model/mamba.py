@@ -14,7 +14,8 @@ class Condition(nn.Module):
 
     def forward(self, condition):
         assert len(condition.shape) == 2
-        assert condition.shape[-1] == self.d_condition
+        assert condition.shape[-1] == self.d_condition, \
+                f"condition.shape[-1]: {condition.shape[-1]}; self.d_condition: {self.d_condition}"
         c = self.linear(condition)[:, None, :] * torch.sigmoid(self.gate)
         return c
 
