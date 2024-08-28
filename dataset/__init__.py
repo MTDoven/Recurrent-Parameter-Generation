@@ -321,6 +321,18 @@ class ImageNet_ViTSmall(BaseDataset):
     test_command = "python ./dataset/imagenet_vitsmall/test.py " + \
                    "./dataset/imagenet_vitsmall/generated/generated_model.pth"
 
+class ImageNet_ConvNextPico(BaseDataset):
+    data_path = "./dataset/imagenet_convnextpico/checkpoint"
+    generated_path = "./dataset/imagenet_convnextpico/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_convnextpico/test.py " + \
+                   "./dataset/imagenet_convnextpico/generated/generated_model.pth"
+
+class ImageNet_ConvNextTiny(BaseDataset):
+    data_path = "./dataset/imagenet_convnexttiny/checkpoint"
+    generated_path = "./dataset/imagenet_convnexttiny/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_convnexttiny/test.py " + \
+                   "./dataset/imagenet_convnexttiny/generated/generated_model.pth"
+
 
 
 
