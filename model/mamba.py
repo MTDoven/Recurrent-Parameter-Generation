@@ -34,8 +34,7 @@ class MambaModel(nn.Module):
                        expand=self.config["expand"])
         project = nn.Sequential(nn.SiLU(),
                                 nn.Linear(self.config["d_model_1"], self.config["d_model_2"]),
-                                nn.LayerNorm(self.config["d_model_2"])) \
-                        if self.config["d_model_1"] != self.config["d_model_2"] else nn.Identity()
+                                nn.LayerNorm(self.config["d_model_2"]))
         mamba2 = Mamba(d_model=self.config["d_model_2"],
                        d_state=self.config["d_state"],
                        d_conv=self.config["d_conv"],
