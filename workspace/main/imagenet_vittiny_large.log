@@ -1,0 +1,89 @@
+(arpgen) wangkai@5a21df081e09:~/arpgen/AR-Param-Generation/workspace/evaluate$ CUDA_VISIBLE_DEVICES=6 python generate.py
+==> Preparing data..
+checkpoint number: 51
+input shape: torch.Size([808, 8192])
+useful ratio: tensor(0.8638)
+sequence length: 808
+==> Building model..
+==> Building optimizer..
+==> Defining training..
+==> Building model..
+==> Defining generate..
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_001.pth
+
+==> Generating..
+Generated_norm: 9.957511901855469
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:27<00:00,  8.94it/s]
+Loss: 0.9513 | Acc: 0.7509
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_002.pth
+
+==> Generating..
+Generated_norm: 9.95372200012207
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:28<00:00,  8.82it/s]
+Loss: 0.9488 | Acc: 0.7515
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_003.pth
+
+==> Generating..
+Generated_norm: 9.9573335647583
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:23<00:00, 10.58it/s]
+Loss: 0.9426 | Acc: 0.7522
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_004.pth
+
+==> Generating..
+Generated_norm: 9.959338188171387
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:22<00:00, 11.12it/s]
+Loss: 0.9469 | Acc: 0.7522
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_005.pth
+
+==> Generating..
+Generated_norm: 9.961249351501465
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:24<00:00, 10.10it/s]
+Loss: 0.9484 | Acc: 0.7528
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_006.pth
+
+==> Generating..
+Generated_norm: 9.961868286132812
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:22<00:00, 10.89it/s]
+Loss: 0.9422 | Acc: 0.7539
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_007.pth
+
+==> Generating..
+Generated_norm: 9.959348678588867
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:27<00:00,  9.16it/s]
+Loss: 0.9481 | Acc: 0.7516
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_008.pth
+
+==> Generating..
+Generated_norm: 9.958176612854004
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:28<00:00,  8.87it/s]
+Loss: 0.9474 | Acc: 0.7523
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_009.pth
+
+==> Generating..
+Generated_norm: 9.95876693725586
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:27<00:00,  9.21it/s]
+Loss: 0.9422 | Acc: 0.7523
+
+
+Save to ./dataset/imagenet_vittiny/generated/generated_imagenet_vittiny_large_010.pth
+
+==> Generating..
+Generated_norm: 9.951531410217285
+100%|_________________________________________________________________________________________________________________________________________________________________________| 250/250 [00:27<00:00,  9.19it/s]
+Loss: 0.9503 | Acc: 0.7518

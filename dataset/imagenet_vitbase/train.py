@@ -42,12 +42,12 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 500 if __name__ == "__main__" else 200,
+    "batch_size": 100 if __name__ == "__main__" else 200,
     "num_workers": 16,
-    "learning_rate": 1e-5,
+    "learning_rate": 3e-6,
     "weight_decay": 0.1,
     "epochs": 0,
-    "save_learning_rate": 1e-5,
+    "save_learning_rate": 3e-6,
     "total_save_number": 50,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
@@ -65,7 +65,7 @@ dataset = Dataset(
         transforms.RandomHorizontalFlip(),
         transforms.RandAugment(),
         transforms.ToTensor(),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
     ])
 )
 train_loader = DataLoader(
@@ -84,7 +84,7 @@ test_loader = DataLoader(
             transforms.Resize(224),
             transforms.CenterCrop(224),
             transforms.ToTensor(),
-            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
         ])),
     batch_size=config["batch_size"],
     num_workers=config["num_workers"],

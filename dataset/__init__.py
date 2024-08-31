@@ -277,30 +277,6 @@ class BaseDataset(Dataset, ABC):
 
 
 
-class Cifar10_ResNet18(BaseDataset):
-    data_path = "./dataset/cifar10_resnet18/checkpoint"
-    generated_path = "./dataset/cifar10_resnet18/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_resnet18/test.py " + \
-                   "./dataset/cifar10_resnet18/generated/generated_model.pth"
-
-class Cifar10_ResNet50(BaseDataset):
-    data_path = "./dataset/cifar10_resnet50/checkpoint"
-    generated_path = "./dataset/cifar10_resnet50/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_resnet50/test.py " + \
-                   "./dataset/cifar10_resnet50/generated/generated_model.pth"
-
-class Cifar10_ViTTiny(BaseDataset):
-    data_path = "./dataset/cifar10_vittiny/checkpoint"
-    generated_path = "./dataset/cifar10_vittiny/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_vittiny/test.py " + \
-                   "./dataset/cifar10_vittiny/generated/generated_model.pth"
-
-class Cifar10_ViTSmall(BaseDataset):
-    data_path = "./dataset/cifar10_vitsmall/checkpoint"
-    generated_path = "./dataset/cifar10_vitsmall/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar10_vitsmall/test.py " + \
-                   "./dataset/cifar10_vitsmall/generated/generated_model.pth"
-
 class ImageNet_ResNet18(BaseDataset):
     data_path = "./dataset/imagenet_resnet18/checkpoint"
     generated_path = "./dataset/imagenet_resnet18/generated/generated_model.pth"
@@ -324,6 +300,12 @@ class ImageNet_ViTSmall(BaseDataset):
     generated_path = "./dataset/imagenet_vitsmall/generated/generated_model.pth"
     test_command = "python ./dataset/imagenet_vitsmall/test.py " + \
                    "./dataset/imagenet_vitsmall/generated/generated_model.pth"
+
+class ImageNet_ViTBase(BaseDataset):
+    data_path = "./dataset/imagenet_vitbase/checkpoint"
+    generated_path = "./dataset/imagenet_vitbase/generated/generated_model.pth"
+    test_command = "python ./dataset/imagenet_vitbase/test.py " + \
+                   "./dataset/imagenet_vitbase/generated/generated_model.pth"
 
 class ImageNet_ConvNextPico(BaseDataset):
     data_path = "./dataset/imagenet_convnextpico/checkpoint"

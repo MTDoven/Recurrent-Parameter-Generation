@@ -28,7 +28,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTTiny as Dataset
+from dataset import ImageNet_ViTBase as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -36,16 +36,16 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 16384,
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
-    "batch_size": 4,
+    "batch_size": 1,
     "num_workers": 8,
-    "total_steps": 60000,
-    "learning_rate": 0.00003,
+    "total_steps": 80000,
+    "learning_rate": 0.00001,
     "weight_decay": 0.0,
-    "save_every": 60000//25,
+    "save_every": 80000//50,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -58,18 +58,18 @@ config["model_config"] = {
     # mamba config
     "num_permutation_state": config["num_permutation_state"],
     "d_condition": 1,
-    "d_model": 4096,
-    "d_model_1": 4096,
-    "d_model_2": 8192,
+    "d_model": 8192,
+    "d_model_1": 8192,
+    "d_model_2": 16384,
     "d_state": 128,
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 768,
+    "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
-    "sample_mode": DDPMSampler,
+    "sample_mode": DDIMSampler,
     "beta": (0.0001, 0.02),
     "T": 1000,
     "forward_once": True,
