@@ -23,7 +23,6 @@ class PermutationState(nn.Module):
         self.gate = nn.Parameter(torch.ones(1, sequence_length, 1))
 
     def forward(self, permutation_state):
-        print(permutation_state.shape)
         assert len(permutation_state.shape) == 1, f"{permutation_state.shape}"
         return self.embedding(permutation_state)[:, None, :] * torch.sigmoid(self.gate)
 
