@@ -1,3 +1,4 @@
+import random
 import torch
 from abc import ABC
 from torch import nn
@@ -20,17 +21,18 @@ class ModelDiffusion(nn.Module, ABC):
         self.sequence_length = sequence_length
         # to define model after this function
 
-    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+    def forward(self, output_shape=None, x_0=None, condition=None, permutation_state=None, **kwargs):
         if kwargs.get("sample"):
             return self.sample(x=None, condition=condition)
-        c = self.model(output_shape, condition)
+        c = self.model(output_shape, condition, permutation_state)
         # Given condition c and ground truth token x, compute loss
         loss = self.criteria(x=x_0, c=c, **kwargs)
         return loss
 
     @torch.no_grad()
     def sample(self, x=None, condition=None):
-        z = self.model([1, self.sequence_length, self.config["d_model"]], condition)
+        permutation_state = torch.tensor(random.randint(0, self.config["num_permutation_state"]-1)).view(1,)
+        z = self.model([1, self.sequence_length, self.config["d_model"]], condition, permutation_state)
         if x is None:
             x = torch.randn((1, self.sequence_length, self.config["dim_per_token"]), device=z.device)
         x = self.criteria.sample(x, z)

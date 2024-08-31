@@ -188,6 +188,10 @@ class BaseDataset(Dataset, ABC):
         self.length = max_num
         return self
 
+    @property
+    def max_permutation_state(self):
+        return self.real_length
+
     def get_position_embedding(self, positional_embedding_dim=None):
         if positional_embedding_dim is None:
             positional_embedding_dim = self.dim_per_token // 2
@@ -226,7 +230,7 @@ class BaseDataset(Dataset, ABC):
         index = index % self.real_length
         diction = torch.load(self.checkpoint_list[index], map_location="cpu")
         param = self.preprocess(diction)
-        return param
+        return param, index
 
     def save_params(self, params, save_path):
         diction = self.postprocess(params.cpu().to(torch.float32))
