@@ -42,14 +42,13 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 512 if __name__ == "__main__" else 50,
+    "batch_size": 500 if __name__ == "__main__" else 200,
     "num_workers": 16,
-    "learning_rate": 5e-5,
-    "weight_decay": 0.05,
-    "momentum": 0.3,
-    "epochs": 1,
-    "save_learning_rate": 5e-5,
-    "total_save_number": 100,
+    "learning_rate": 1e-5,
+    "weight_decay": 0.1,
+    "epochs": 0,
+    "save_learning_rate": 1e-5,
+    "total_save_number": 50,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
 config.update(additional_config)
@@ -99,11 +98,10 @@ test_loader = DataLoader(
 model, head = Model()
 model = model.to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(
+optimizer = optim.AdamW(
     model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
-    momentum=config["momentum"],
 )
 scheduler = lr_scheduler.CosineAnnealingLR(
     optimizer,
@@ -121,7 +119,7 @@ def train(model=model, optimizer=optimizer, scheduler=scheduler):
                                              total=len(dataset) // config["batch_size"]):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
-        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
         loss.backward()
@@ -141,7 +139,7 @@ def test(model=model):
     for batch_idx, (inputs, targets) in tqdm(enumerate(test_loader),
                                              total=len(test_loader.dataset) // config["batch_size"]):
         inputs, targets = inputs.to(device), targets.to(device)
-        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
         # to logging losses
@@ -163,7 +161,7 @@ def save_train(model=model, optimizer=optimizer):
     for batch_idx, (inputs, targets) in enumerate(train_loader):
         inputs, targets = inputs.to(device), targets.to(device)
         optimizer.zero_grad()
-        with torch.cuda.amp.autocast(enabled=False, dtype=torch.bfloat16):
+        with torch.cuda.amp.autocast(enabled=True, dtype=torch.bfloat16):
             outputs = model(inputs)
             loss = criterion(outputs, targets)
         loss.backward()

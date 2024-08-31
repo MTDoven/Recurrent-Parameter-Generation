@@ -3,7 +3,7 @@ import timm
 
 
 def Model():
-    model = timm.create_model("convnext_pico", pretrained=True)
+    model = timm.create_model("convnext_tiny", pretrained=True)
     return model, model.head.fc
 
 
