@@ -42,10 +42,10 @@ config = {
     # train setting
     "batch_size": 4,
     "num_workers": 8,
-    "total_steps": 50000,
-    "learning_rate": 0.00003,
+    "total_steps": 80000,
+    "learning_rate": 0.00002,
     "weight_decay": 0.0,
-    "save_every": 50000//25,
+    "save_every": 80000//50,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -123,7 +123,7 @@ optimizer = optim.AdamW8bit(
 scheduler = CosineAnnealingLR(
     optimizer=optimizer,
     T_max=config["total_steps"],
-    eta_min=config["learning_rate"]*0.001,
+    eta_min=config["learning_rate"]*0.0001,
 )  # scheduler
 
 # accelerator
