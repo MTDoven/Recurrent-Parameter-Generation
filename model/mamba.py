@@ -42,19 +42,14 @@ class MambaModel(nn.Module):
                             d_state=self.config["d_state"],
                             d_conv=self.config["d_conv"],
                             expand=self.config["expand"],)
-        self.project_middle = nn.Sequential(nn.LayerNorm(self.config["d_model_1"]),
-                                            nn.Linear(self.config["d_model_1"], self.config["d_model_2"]),
-                                            nn.SiLU(),
-                                            nn.Linear(self.config["d_model_2"], self.config["d_model_2"]),
-                                            nn.LayerNorm(self.config["d_model_2"]),)
         self.mamba2 = Mamba(d_model=self.config["d_model_2"],
                             d_state=self.config["d_state"],
                             d_conv=self.config["d_conv"],
                             expand=self.config["expand"],)
+        if self.config["d_model_1"] != self.config["d_model_2"]:
+            self.mamba2.in_proj = nn.Linear(self.mamba1.out_proj.out_features, self.mamba2.in_proj.out_features)
         self.project_out = nn.Sequential(nn.LayerNorm(self.config["d_model_2"]),
-                                         nn.Linear(self.config["d_model_2"], self.config["dim_per_token"]),
-                                         nn.SiLU(),
-                                         nn.Linear(self.config["dim_per_token"], self.config["dim_per_token"]),)
+                                         nn.Linear(self.config["d_model_2"], self.config["dim_per_token"]))
         self.to_condition = Condition(d_condition=self.config["d_condition"],
                                       d_model=self.config["d_model_1"],
                                       sequence_length=positional_embedding.shape[-2],)
@@ -68,9 +63,8 @@ class MambaModel(nn.Module):
             self.register_buffer("pe", pe)
 
     def mamba_forward(self, x):
-        x = self.mamba1(x) + x
-        x = self.project_middle(x)
-        x = self.mamba2(x) + x
+        x = self.mamba1(x)
+        x = self.mamba2(x)
         x = self.project_out(x)
         return x
 

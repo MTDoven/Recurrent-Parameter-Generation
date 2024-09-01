@@ -42,10 +42,10 @@ config = {
     # train setting
     "batch_size": 4,
     "num_workers": 8,
-    "total_steps": 60000,
+    "total_steps": 50000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 60000//25,
+    "save_every": 50000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -65,7 +65,7 @@ config["model_config"] = {
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 768,
+    "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,

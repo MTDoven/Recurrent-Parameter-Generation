@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 20040422
+seed = SEED = 20040614
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -43,7 +43,7 @@ config = {
     "batch_size": 1,
     "num_workers": 8,
     "total_steps": 80000,
-    "learning_rate": 0.00001,
+    "learning_rate": 0.000005,
     "weight_decay": 0.0,
     "save_every": 80000//50,
     "print_every": 50,
