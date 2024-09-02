@@ -3,7 +3,7 @@ import timm
 
 
 def Model():
-    model = timm.create_model("resnet50", pretrained=True)
+    model = timm.create_model("resnet50_gn", pretrained=True)
     return model, model.fc
 
 
