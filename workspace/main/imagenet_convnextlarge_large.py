@@ -1,13 +1,13 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 USE_WANDB = True
 
 # set global seed
 import random
 import numpy as np
 import torch
-seed = SEED = 20040422
+seed = SEED = 20040614
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -28,7 +28,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTTiny as Dataset
+from dataset import ImageNet_ConvNextLarge as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -36,7 +36,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 4096,
+    "dim_per_token": 8192,
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
@@ -58,14 +58,14 @@ config["model_config"] = {
     # mamba config
     "num_permutation_state": config["num_permutation_state"],
     "d_condition": 1,
-    "d_model": 4096,
-    "d_model_1": 4096,
-    "d_model_2": 4096,
+    "d_model": 8192,
+    "d_model_1": 8192,
+    "d_model_2": 8192,
     "d_state": 128,
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 1024,
+    "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
