@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 20040424
+seed = SEED = 20040422
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -36,7 +36,7 @@ from torch.utils.data import DataLoader
 config = {
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 4096,
+    "dim_per_token": 1024,
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
@@ -58,14 +58,14 @@ config["model_config"] = {
     # mamba config
     "num_permutation_state": config["num_permutation_state"],
     "d_condition": 1,
-    "d_model": 4096,
-    "d_model_1": 4096,
-    "d_model_2": 4096,
+    "d_model": 1024,
+    "d_model_1": 1024,
+    "d_model_2": 1024,
     "d_state": 128,
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 1024,
+    "diffusion_batch": 4096,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
