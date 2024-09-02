@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 20040422
+seed = SEED = 20040614
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -65,7 +65,7 @@ config["model_config"] = {
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 512,
+    "diffusion_batch": 1024,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
