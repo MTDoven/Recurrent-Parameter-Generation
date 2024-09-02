@@ -43,7 +43,7 @@ config = {
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 80000,
-    "learning_rate": 0.00003,
+    "learning_rate": 0.00005,
     "weight_decay": 0.0,
     "save_every": 80000//50,
     "print_every": 50,
@@ -65,7 +65,7 @@ config["model_config"] = {
     "d_conv": 4,
     "expand": 2,
     # diffusion config
-    "diffusion_batch": 256,
+    "diffusion_batch": 512,
     "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
