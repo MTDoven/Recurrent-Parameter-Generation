@@ -5,7 +5,7 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 # torch
 import torch
 # father
-from workspace.main import imagenet_vittiny_base as item
+from workspace.ablation.learnable_pe import ablation_learnable_pe as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config

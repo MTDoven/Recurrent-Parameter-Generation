@@ -42,12 +42,12 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 500 if __name__ == "__main__" else 200,
+    "batch_size": 256 if __name__ == "__main__" else 200,
     "num_workers": 16,
-    "learning_rate": 1e-5,
+    "learning_rate": 1e-6,
     "weight_decay": 0.1,
     "epochs": 0,
-    "save_learning_rate": 1e-5,
+    "save_learning_rate": 1e-6,
     "total_save_number": 50,
     "tag": os.path.basename(os.path.dirname(__file__)),
 }
