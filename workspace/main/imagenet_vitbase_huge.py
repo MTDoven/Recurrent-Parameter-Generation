@@ -40,7 +40,7 @@ config = {
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
-    "batch_size": 2,
+    "batch_size": 4,
     "num_workers": 8,
     "total_steps": 80000,
     "learning_rate": 0.00002,
@@ -66,10 +66,10 @@ config["model_config"] = {
     "expand": 2,
     # diffusion config
     "diffusion_batch": 512,
-    "layer_channels": [1, 64, 128, 64, 1],
+    "layer_channels": [1, 32, 64, 128, 64, 32, 1],
     "dim_per_token": config["dim_per_token"],
     "kernel_size": 7,
-    "sample_mode": DDPMSampler,
+    "sample_mode": DDIMSampler,
     "beta": (0.0001, 0.02),
     "T": 1000,
     "forward_once": True,
