@@ -40,10 +40,10 @@ config = {
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
-    "batch_size": 2,
+    "batch_size": 4,
     "num_workers": 8,
     "total_steps": 80000,
-    "learning_rate": 0.00005,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
     "save_every": 80000//50,
     "print_every": 50,
