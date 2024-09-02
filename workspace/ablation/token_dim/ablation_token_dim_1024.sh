@@ -5,4 +5,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  ablation_token_dim_2048.py \
+  ablation_token_dim_1024.py \
