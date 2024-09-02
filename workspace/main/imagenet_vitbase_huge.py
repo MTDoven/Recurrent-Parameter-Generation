@@ -40,7 +40,7 @@ config = {
     "sequence_length": 'auto',
     "num_permutation_state": 'auto',
     # train setting
-    "batch_size": 4,
+    "batch_size": 2,
     "num_workers": 8,
     "total_steps": 80000,
     "learning_rate": 0.00005,
