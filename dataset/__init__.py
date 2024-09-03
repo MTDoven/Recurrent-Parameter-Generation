@@ -253,7 +253,7 @@ class BaseDataset(Dataset, ABC):
         if self.config["granularity"] == 0:  # padding directly process tail
             param = pad_to_length(param, self.dim_per_token, **self.config).view(-1, self.dim_per_token)
         # print("Sequence length:", param.size(0))
-        return param
+        return param.to(torch.float32)
 
     def postprocess(self, params: torch.Tensor, **kwargs) -> dict:
         diction = {}
