@@ -5,7 +5,7 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 # torch
 import torch
 # father
-from workspace.ablation.token_dim import ablation_token_dim_4096 as item
+from workspace.ablation.token_dim import ablation_token_dim_1024 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
