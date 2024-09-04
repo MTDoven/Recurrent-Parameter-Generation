@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from torch import Tensor
 from torch.nn import functional as F
 import math
 
@@ -27,15 +26,16 @@ class TimestepEmbedder(nn.Module):
 
 
 class ConditionalUNet(nn.Module):
-    def __init__(self, layer_channels, model_dim, kernel_size):
+    def __init__(self, layer_channels: list, model_dim: int, condition_dim: int, kernel_size: int):
         super().__init__()
         self.time_embedder = TimestepEmbedder(hidden_dim=model_dim)
-        self.condi_embedder = nn.Identity()  # nn.Linear(condition_dim, model_dim)
+        self.condi_embedder = nn.Linear(condition_dim, model_dim)
+        # FIXME: condi_embedder is calculated for 1000 times as same, but it does not work in recurrent module, why?
         self.encoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1):
             self.encoder_list.append(nn.ModuleList([
                 nn.Conv1d(layer_channels[i], layer_channels[i+1], kernel_size, 1, kernel_size // 2),
-                nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU()),
+                nn.Sequential(nn.BatchNorm1d(layer_channels[i+1]), nn.ELU())
             ]))
         self.decoder_list = nn.ModuleList([])
         for i in range(len(layer_channels) // 2 + 1, len(layer_channels) - 1):
@@ -60,23 +60,3 @@ class ConditionalUNet(nn.Module):
             x = module((x + c) * t)
             x = activation(x)
         return x[:, 0, :]
-
-
-
-
-if __name__ == "__main__":
-    model = ConditionalUNet(
-        layer_channels=(1, 32, 64, 128, 64, 32, 1),
-        model_dim=8192,
-        kernel_size=65,
-    )  # define model
-    x = torch.ones((4, 8192))
-    t = torch.tensor([1, 2, 3, 4])
-    c = torch.ones((4, 8192))
-    y = model(x, t, c)
-    print(y.shape)
-    # param count
-    num_param = 0
-    for v in model.parameters():
-        num_param += v.numel()
-    print("num_param:", num_param)

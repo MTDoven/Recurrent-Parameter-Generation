@@ -153,7 +153,8 @@ class DiffusionLoss(nn.Module):
         super().__init__()
         self.net = ConditionalUNet(
             layer_channels=self.config["layer_channels"],
-            model_dim=self.config["dim_per_token"],
+            model_dim=self.config["model_dim"],
+            condition_dim=self.config["condition_dim"],
             kernel_size=self.config["kernel_size"],
         )
         self.diffusion_trainer = GaussianDiffusionTrainer(

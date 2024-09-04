@@ -6,6 +6,13 @@ import numpy as np
 import math
 
 
+def get_sinusoid(max_len, d_model):
+    pe = torch.zeros(max_len, d_model)
+    position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+    div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+    pe[:, 0::2] = torch.sin(position * div_term)
+    pe[:, 1::2] = torch.cos(position * div_term)
+    return pe
 
 
 class FeedForward(nn.Module):
@@ -65,7 +72,7 @@ class Transformer(nn.Module):
 class TransformerModel(nn.Module):
     config = {}
 
-    def __init__(self, positional_embedding):
+    def __init__(self, sequence_length):
         super().__init__()
         self.transformer_forward = Transformer(
             d_model=self.config["d_model"],
@@ -74,11 +81,8 @@ class TransformerModel(nn.Module):
             dim_head=self.config["dim_head"],
             num_layers=self.config["num_layers"],
         )
-        self.to_condition = nn.Sequential(
-            nn.LeakyReLU(),
-            nn.Linear(self.config["d_condition"], self.config["d_model"]),
-        )
-        pe = positional_embedding[None]
+        self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
+        pe = get_sinusoid(sequence_length, self.config["d_model"])[None, :, :]
         if self.config.get("trainable_pe"):
             self.pe = nn.Parameter(pe)
         else:  # fixed positional embedding
