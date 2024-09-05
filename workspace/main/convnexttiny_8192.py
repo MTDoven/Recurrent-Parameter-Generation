@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 20040422
+seed = SEED = 999
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -25,10 +25,10 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from bitsandbytes import optim
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -42,6 +42,7 @@ from torch.utils.data import DataLoader
 
 
 config = {
+    "seed": SEED,
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 8192,
@@ -50,9 +51,9 @@ config = {
     "batch_size": 4,
     "num_workers": 8,
     "total_steps": 50000,
-    "learning_rate": 0.00005,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 50000//20,
+    "save_every": 50000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -71,7 +72,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
+        "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -81,7 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_convnextiny_8192",
+    "tag": "main_convnexttiny_8192",
 }
 
 
@@ -101,7 +102,7 @@ if config["model_config"]["model_dim"] == "auto":
 if config["sequence_length"] == "auto":
     config["sequence_length"] = train_set.sequence_length
     print(f"sequence length: {config['sequence_length']}")
-else:  # set fix sequence_length
+else:  # set fixed sequence_length
     assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(
     dataset=train_set,
@@ -119,12 +120,12 @@ model = Model(
     sequence_length=config["sequence_length"],
     positional_embedding=train_set.get_position_embedding(
         positional_embedding_dim=config["model_config"]["d_model"]
-    )
+    )  # positional_embedding
 )  # model setting is in model
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW8bit(
+optimizer = optim.AdamW(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -136,7 +137,9 @@ scheduler = CosineAnnealingLR(
 
 # accelerator
 if __name__ == "__main__":
-    accelerator = Accelerator()
+    kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
+    accelerator = Accelerator(kwargs_handlers=[kwargs,])
+    # FIXME: the program rely on this bug; find_unused_parameters=True is necessary! why?
     model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
 
 
@@ -194,10 +197,9 @@ def generate(save_path=config["generated_path"], need_test=True):
         prediction = model(sample=True)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
-    if USE_WANDB and accelerator.is_main_process:
+    if USE_WANDB:
         wandb.log({"generated_norm": generated_norm.item()})
-    if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path)
+    train_set.save_params(prediction, save_path=save_path)
     if need_test:
         os.system(config["test_command"])
         print("\n")

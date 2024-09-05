@@ -1,11 +1,11 @@
-import random
 import torch
 from abc import ABC
 from torch import nn
-from .mamba import MambaModel
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
 # from .transformer import TransformerModel
+from .mamba import MambaModel
 # from .lstm import LstmModel
+
 
 
 
@@ -19,6 +19,7 @@ class ModelDiffusion(nn.Module, ABC):
         assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
         # to define model after this function
+        self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
         self.to_permutation_state = nn.Embedding(self.config["num_permutation"], self.config["d_model"])
         self.to_permutation_state.weight = \
                 nn.Parameter(torch.ones_like(self.to_permutation_state.weight) / self.config["d_model"])
@@ -28,20 +29,22 @@ class ModelDiffusion(nn.Module, ABC):
         if condition is not None:
             assert len(condition.shape) == 2
             assert condition.shape[-1] == self.config["d_model"]
-            condition = condition[:, None, :].to(self.device)
+            condition = self.to_condition(condition.to(self.device))
         else:  # not use condition
-            condition = torch.zeros(size=(1, 1, self.config["d_model"]), device=self.device)
+            condition = self.to_condition(torch.zeros(size=(1, 1), device=self.device))
         # process
         if kwargs.get("sample"):
-            permutation_state = torch.randint(0, self.to_permutation_state.num_embeddings, (1,), device=self.device)
-            permutation_state = self.to_permutation_state(permutation_state)
+            if permutation_state is not False:
+                permutation_state = torch.randint(0, self.to_permutation_state.num_embeddings, (1,), device=self.device)
+                permutation_state = self.to_permutation_state(permutation_state)
+            else:  # permutation state == False
+                permutation_state = 0.
             return self.sample(x=None, condition=condition+permutation_state)
         else:  # train
             if permutation_state is not None:
-                permutation_state = self.to_permutation_state(permutation_state)[:, None, :]
+                permutation_state = self.to_permutation_state(permutation_state)
             else:  # not use permutation state
-                permutation_state = 0.*self.to_permutation_state(
-                        torch.zeros(size=(output_shape[0],), device=self.device, dtype=torch.long))[:, None, :]
+                permutation_state = 0.
             # Given condition c and ground truth token x, compute loss
             c = self.model(output_shape, condition+permutation_state)
             loss = self.criteria(x=x_0, c=c, **kwargs)
@@ -57,7 +60,9 @@ class ModelDiffusion(nn.Module, ABC):
 
     @property
     def device(self):
-        return self.to_permutation_state.weight.device
+        return next(self.parameters()).device
+
+
 
 
 class MambaDiffusion(ModelDiffusion):

@@ -4,7 +4,6 @@ from mamba_ssm import Mamba2 as Mamba
 import math
 
 
-
 class MambaModel(nn.Module):
     config = {}
 
@@ -17,13 +16,13 @@ class MambaModel(nn.Module):
             "expand": self.config["expand"],
         }
         self.mamba_forward = nn.Sequential(*[Mamba(**mamba_config) for _ in range(self.config["num_layers"])])
+        pe = positional_embedding[None, :, :]
         if self.config.get("trainable_pe"):
-            self.pe = nn.Parameter(positional_embedding)
+            self.pe = nn.Parameter(pe)
         else:  # fixed positional embedding
-            self.register_buffer("pe", positional_embedding)
+            self.register_buffer("pe", pe)
 
-    def forward(self, output_shape, condition):
-        assert len(condition.shape) == 3
-        assert condition.shape[-1] == self.config["d_model"]
+    def forward(self, output_shape, condition=None):
+        condition = condition[:, None, :]
         x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x

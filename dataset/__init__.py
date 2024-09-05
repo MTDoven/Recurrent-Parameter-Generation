@@ -105,12 +105,11 @@ def positional_embedding_2d(dim1, dim2, d_model):
 
 
 def positional_embedding_1d(dim1, d_model):
-    assert d_model % 2 == 0, f"Cannot use sin/cos positional encoding with odd dimension {d_model}"
     pe = torch.zeros(dim1, d_model)
-    position = torch.arange(0, dim1).unsqueeze(1)
-    div_term = torch.exp((torch.arange(0, d_model, 2, dtype=torch.float32) * -(math.log(10000.0) / d_model)))
-    pe[:, 0::2] = torch.sin(position.float() * div_term)
-    pe[:, 1::2] = torch.cos(position.float() * div_term)
+    position = torch.arange(0, dim1, dtype=torch.float).unsqueeze(1)
+    div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+    pe[:, 0::2] = torch.sin(position * div_term)
+    pe[:, 1::2] = torch.cos(position * div_term)
     return pe
 
 
@@ -197,6 +196,7 @@ class BaseDataset(Dataset, ABC):
             positional_embedding_dim = self.dim_per_token // 2
         assert self.structure is not None, "run get_structure before get_position_embedding"
         if self.config["pe_granularity"] == 2:
+            print("Use 2d positional embedding")
             positional_embedding_index = []
             for key, item in self.structure.items():
                 if ("num_batches_tracked" in key) or (item[-1] is None):
@@ -217,8 +217,10 @@ class BaseDataset(Dataset, ABC):
             positional_embedding = torch.stack(positional_embedding)
             return positional_embedding
         elif self.config["pe_granularity"] == 1:
+            print("Use 1d positional embedding")
             return positional_embedding_1d(self.sequence_length, positional_embedding_dim)
         elif self.config["pe_granularity"] == 0:
+            print("Not use positional embedding")
             return torch.zeros_like(self.__getitem__(0))
         else:  # NotImplementedError
             raise NotImplementedError("pe_granularity: 0: no embedding, 1: 1d embedding, 2: 2d embedding")
