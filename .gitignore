@@ -5,3 +5,4 @@
 **/checkpoint_test/
 **/__pycache__/
 **/generated/
+**/wandb/

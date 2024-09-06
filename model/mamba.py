@@ -23,6 +23,6 @@ class MambaModel(nn.Module):
             self.register_buffer("pe", pe)
 
     def forward(self, output_shape, condition=None):
-        condition = condition[:, None, :]
+        assert len(condition.shape) == 3
         x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x

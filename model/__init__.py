@@ -28,21 +28,21 @@ class ModelDiffusion(nn.Module, ABC):
         # condition
         if condition is not None:
             assert len(condition.shape) == 2
-            assert condition.shape[-1] == self.config["d_model"]
-            condition = self.to_condition(condition.to(self.device))
+            assert condition.shape[-1] == self.config["d_condition"]
+            condition = self.to_condition(condition.to(self.device)[:, None, :])
         else:  # not use condition
-            condition = self.to_condition(torch.zeros(size=(1, 1), device=self.device))
+            condition = self.to_condition(torch.zeros(size=(1, 1, 1), device=self.device))
         # process
         if kwargs.get("sample"):
             if permutation_state is not False:
                 permutation_state = torch.randint(0, self.to_permutation_state.num_embeddings, (1,), device=self.device)
-                permutation_state = self.to_permutation_state(permutation_state)
+                permutation_state = self.to_permutation_state(permutation_state)[:, None, :]
             else:  # permutation state == False
                 permutation_state = 0.
             return self.sample(x=None, condition=condition+permutation_state)
         else:  # train
             if permutation_state is not None:
-                permutation_state = self.to_permutation_state(permutation_state)
+                permutation_state = self.to_permutation_state(permutation_state)[:, None, :]
             else:  # not use permutation state
                 permutation_state = 0.
             # Given condition c and ground truth token x, compute loss
@@ -84,3 +84,33 @@ class MambaDiffusion(ModelDiffusion):
 #         super().__init__(sequence_length=sequence_length)
 #         LstmModel.config = self.config
 #         self.model = LstmModel(sequence_length=sequence_length)
+
+
+
+
+class ClassConditionMambaDiffusion(MambaDiffusion):
+    def __init__(self, sequence_length, positional_embedding, input_class=10):
+        super().__init__(sequence_length, positional_embedding)
+        self.get_condition = nn.Sequential(
+            nn.Linear(input_class, self.config["d_condition"]),
+            nn.SiLU(),
+        )  # to condition
+        self.to_permutation_state = nn.Embedding(self.config["num_permutation"], self.config["d_model"])
+        # condition module
+        self.to_condition_linear = nn.Linear(self.config["d_condition"], self.config["d_model"])
+        to_condition_gate = torch.zeros(size=(1, sequence_length, 1))
+        to_condition_gate[:, -8:, :] = 1.
+        self.register_buffer("to_condition_gate", to_condition_gate)
+        # reset to_condition
+        del self.to_condition
+        self.to_condition = self._to_condition
+
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        condition = self.get_condition(condition.to(self.device))
+        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
+
+    def _to_condition(self, x):
+        assert len(x.shape) == 3
+        x = self.to_condition_linear(x)
+        x = x * self.to_condition_gate
+        return x
