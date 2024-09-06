@@ -16,7 +16,8 @@ class ModelDiffusion(nn.Module, ABC):
         super().__init__()
         DiffusionLoss.config = self.config
         self.criteria = DiffusionLoss()
-        assert self.config["d_model"] == self.config["condition_dim"]
+        if self.config.get("post_d_model") is None:
+            assert self.config["d_model"] == self.config["condition_dim"]
         self.sequence_length = sequence_length
         # to define model after this function
         self.to_condition = nn.Linear(self.config["d_condition"], self.config["d_model"])
