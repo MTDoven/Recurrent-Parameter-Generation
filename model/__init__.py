@@ -2,9 +2,9 @@ import torch
 from abc import ABC
 from torch import nn
 from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
-# from .transformer import TransformerModel
+from .transformer import TransformerModel
 from .mamba import MambaModel
-# from .lstm import LstmModel
+from .lstm import LstmModel
 
 
 
@@ -72,18 +72,18 @@ class MambaDiffusion(ModelDiffusion):
         self.model = MambaModel(positional_embedding=positional_embedding)
 
 
-# class TransformerDiffusion(ModelDiffusion):
-#     def __init__(self, sequence_length):
-#         super().__init__(sequence_length=sequence_length)
-#         TransformerModel.config = self.config
-#         self.model = TransformerModel(sequence_length=sequence_length)
-#
-#
-# class LstmDiffusion(ModelDiffusion):
-#     def __init__(self, sequence_length):
-#         super().__init__(sequence_length=sequence_length)
-#         LstmModel.config = self.config
-#         self.model = LstmModel(sequence_length=sequence_length)
+class TransformerDiffusion(ModelDiffusion):
+    def __init__(self, sequence_length, positional_embedding):
+        super().__init__(sequence_length=sequence_length)
+        TransformerModel.config = self.config
+        self.model = TransformerModel(positional_embedding=positional_embedding)
+
+
+class LstmDiffusion(ModelDiffusion):
+    def __init__(self, sequence_length, positional_embedding):
+        super().__init__(sequence_length=sequence_length)
+        LstmModel.config = self.config
+        self.model = LstmModel(positional_embedding=positional_embedding)
 
 
 
