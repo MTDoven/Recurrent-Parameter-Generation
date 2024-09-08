@@ -364,6 +364,19 @@ class ClassInput_ViTTiny_Test(ClassInput_ViTTiny):
 
 
 
+class Permutation_ViTTiny(ConditionalDataset):
+    data_path = "./dataset/condition_permutation_vittiny/checkpoint"
+    generated_path = "./dataset/condition_permutation_vittiny/generated/generated_model.pth"
+    test_command = "python ./dataset/condition_permutation_vittiny/test.py " + \
+                   "./dataset/condition_permutation_vittiny/generated/generated_model.pth"
+
+    def _extract_condition(self, index: int):
+        condition = super()._extract_condition(index)[2][5:]
+        return int(condition)
+
+
+
+
 if __name__ == "__main__":
     dataset = Cifar10_ResNet18(
         dim_per_token=8192,
