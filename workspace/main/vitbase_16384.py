@@ -1,10 +1,22 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 USE_WANDB = True
 
+# set global seed
+import random
+import numpy as np
+import torch
+seed = SEED = 1000
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = True
+np.random.seed(seed)
+random.seed(seed)
+
 # other
-import dill
 import math
 import random
 import warnings
@@ -13,13 +25,11 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
-import torch.optim as optim
+import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
-import bitsandbytes as bnb
 # model
 from mamba_ssm import Mamba2 as Mamba
-from model.mamba import MambaModel
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -33,23 +43,23 @@ from torch.utils.data import DataLoader
 
 
 config = {
+    "resume": False,
+    "seed": SEED,
     # dataset setting
     "dataset": Dataset,
     "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "resume": False,
-    "batch_size": 4,
-    "num_workers": 8,
-    "total_steps": 100000,
+    "batch_size": 1,
+    "num_workers": 2,
+    "total_steps": 120000,
     "learning_rate": 0.00001,
-    "weight_decay": 1e-5,
-    "save_every": 100000//25,
+    "weight_decay": 0.0,
+    "save_every": 120000//30,
     "print_every": 50,
-    "autocast": lambda i: 10000 < i < 90000,
+    "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
-    "test_device": 0,
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
     "test_command": Dataset.test_command,
@@ -58,15 +68,15 @@ config = {
         "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 12288,
         "post_d_model": 16384,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
-        "num_layers": 2,  # useless
+        "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 768,
-        "layer_channels": [1, 32, 64, 96, 64, 32, 1],
+        "diffusion_batch": 512,
+        "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
         "kernel_size": 7,
@@ -75,7 +85,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": 'superlarge_vitbase_16384',
+    "tag": "main_vitbase_16384",
 }
 
 
@@ -88,10 +98,14 @@ print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 if config["model_config"]["num_permutation"] == "auto":
     config["model_config"]["num_permutation"] = train_set.max_permutation_state
+if config["model_config"]["condition_dim"] == "auto":
+    config["model_config"]["condition_dim"] = config["model_config"]["d_model"]
+if config["model_config"]["model_dim"] == "auto":
+    config["model_config"]["model_dim"] = config["dim_per_token"]
 if config["sequence_length"] == "auto":
     config["sequence_length"] = train_set.sequence_length
     print(f"sequence length: {config['sequence_length']}")
-else:  # set fix sequence_length
+else:  # set fixed sequence_length
     assert train_set.sequence_length == config["sequence_length"], f"sequence_length={train_set.sequence_length}"
 train_loader = DataLoader(
     dataset=train_set,
@@ -131,7 +145,6 @@ class VaryMambaModel(nn.Module):
         else:  # fixed positional embedding
             self.register_buffer("pe", pe)
     def forward(self, output_shape, condition=None):
-        condition = condition[:, None, :]
         x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
         return x
 VaryMambaModel.config = config["model_config"]
@@ -144,7 +157,7 @@ torch.cuda.empty_cache()
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = bnb.optim.AdamW8bit(
+optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -168,17 +181,14 @@ else:  # not resume
 if __name__ == "__main__":
     kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
     accelerator = Accelerator(kwargs_handlers=[kwargs,])
+    # FIXME: the program rely on this bug; find_unused_parameters=True is necessary! why?
     model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
+
 
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(
-        project="AR-Param-Generation",
-        name=config["tag"],
-        config=config,
-        resume=config["resume"],
-    )
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
 
 
 
@@ -217,8 +227,7 @@ def train():
         if batch_idx % config["save_every"] == 0 and accelerator.is_main_process:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = accelerator.unwrap_model(model).state_dict()
-            torch.save(state, os.path.join(config["checkpoint_save_path"],
-                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"], config["tag"]+".pth"))
             torch.save({
                 "model": accelerator.unwrap_model(model).state_dict(),
                 "optimizer": accelerator.unwrap_model(optimizer).state_dict(),
@@ -233,17 +242,15 @@ def train():
 def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
-    # _, condition = train_set[0]
     with torch.no_grad():
         prediction = model(sample=True)
         generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
-    if USE_WANDB and accelerator.is_main_process:
+    if USE_WANDB:
         wandb.log({"generated_norm": generated_norm.item()})
-    if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path)
+    train_set.save_params(prediction, save_path=save_path)
     if need_test:
-        os.system(f"CUDA_VISIBLE_DEVICES={config['test_device']} " + config["test_command"])
+        os.system(config["test_command"])
         print("\n")
     model.train()
     return prediction
