@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 999
+seed = SEED = 1000
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -25,10 +25,11 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
-import torch.optim as optim
+import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
+from mamba_ssm import Mamba2 as Mamba
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -42,18 +43,19 @@ from torch.utils.data import DataLoader
 
 
 config = {
+    "resume": False,
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
     "num_workers": 8,
-    "total_steps": 50000,
-    "learning_rate": 0.00003,
+    "total_steps": 120000,
+    "learning_rate": 0.00001,
     "weight_decay": 0.0,
-    "save_every": 50000//25,
+    "save_every": 120000//30,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -66,23 +68,24 @@ config = {
         "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 12288,
+        "post_d_model": 16384,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
-        "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": "auto",
-        "condition_dim": "auto",
+        "diffusion_batch": 512,
+        "layer_channels": [1, 64, 96, 64, 1],
+        "model_dim": 16384,
+        "condition_dim": 16384,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_resnet50_8192",
+    "tag": "main_resnet50_16384",
 }
 
 
@@ -122,10 +125,39 @@ model = Model(
         positional_embedding_dim=config["model_config"]["d_model"]
     )  # positional_embedding
 )  # model setting is in model
+class VaryMambaModel(nn.Module):
+    config = {}
+    def __init__(self, positional_embedding):
+        super().__init__()
+        mamba1 = Mamba(d_model=config["model_config"]["d_model"],
+                       d_state=config["model_config"]["d_state"],
+                       d_conv=config["model_config"]["d_conv"],
+                       expand=config["model_config"]["expand"])
+        mamba2 = Mamba(d_model=config["model_config"]["post_d_model"],
+                       d_state=config["model_config"]["d_state"],
+                       d_conv=config["model_config"]["d_conv"],
+                       expand=config["model_config"]["expand"])
+        mamba2.in_proj = nn.Linear(mamba1.out_proj.out_features, mamba2.in_proj.out_features, bias=False)
+        self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
+        pe = positional_embedding[None, :, :]
+        if self.config.get("trainable_pe"):
+            self.pe = nn.Parameter(pe)
+        else:  # fixed positional embedding
+            self.register_buffer("pe", pe)
+    def forward(self, output_shape, condition=None):
+        x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
+        return x
+VaryMambaModel.config = config["model_config"]
+model.model = VaryMambaModel(
+    positional_embedding=train_set.get_position_embedding(
+        positional_embedding_dim=config["model_config"]["d_model"]
+    )  # positional_embedding
+)  # update mamba model
+torch.cuda.empty_cache()
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(
+optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -134,6 +166,16 @@ scheduler = CosineAnnealingLR(
     optimizer=optimizer,
     T_max=config["total_steps"],
 )
+
+# load checkpoint
+if config["resume"] and os.path.exists("./vitbase_state.pt"):
+    diction = torch.load("./vitbase_state.pt", map_location="cpu")
+    model.load_state_dict(diction["model"])
+    optimizer.load_state_dict(diction["optimizer"])
+    scheduler.load_state_dict(diction["scheduler"])
+    start_batch_idx = diction["step"] + 1
+else:  # not resume
+    start_batch_idx = 0
 
 # accelerator
 if __name__ == "__main__":
@@ -160,6 +202,7 @@ def train():
     print("==> start training..")
     model.train()
     for batch_idx, (param, permutation_state) in enumerate(train_loader):
+        batch_idx += start_batch_idx
         optimizer.zero_grad()
         # train
         # noinspection PyArgumentList
@@ -185,6 +228,12 @@ def train():
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"], config["tag"]+".pth"))
+            torch.save({
+                "model": accelerator.unwrap_model(model).state_dict(),
+                "optimizer": accelerator.unwrap_model(optimizer).state_dict(),
+                "scheduler": scheduler.state_dict(),
+                "step": batch_idx
+            }, "./vitbase_state.pt")
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break

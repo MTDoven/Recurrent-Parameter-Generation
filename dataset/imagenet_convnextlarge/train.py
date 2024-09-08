@@ -149,6 +149,8 @@ def test(model=model):
         all_predicts.extend(predicts.flatten().tolist())
         total += targets.size(0)
         correct += predicts.eq(targets).sum().item()
+        if batch_idx >= 50:
+            break
     loss = test_loss / (batch_idx + 1)
     acc = correct / total
     print(f"Loss: {loss:.4f} | Acc: {acc:.4f}")
