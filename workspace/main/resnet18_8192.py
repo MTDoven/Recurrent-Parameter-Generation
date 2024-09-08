@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 9999
+seed = SEED = 999
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -48,12 +48,12 @@ config = {
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 4,
-    "num_workers": 8,
-    "total_steps": 50000,
-    "learning_rate": 0.00003,
+    "batch_size": 8,
+    "num_workers": 16,
+    "total_steps": 80000,
+    "learning_rate": 0.00004,
     "weight_decay": 0.0,
-    "save_every": 50000//25,
+    "save_every": 80000//30,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",

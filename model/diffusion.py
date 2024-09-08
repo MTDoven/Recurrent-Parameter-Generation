@@ -122,7 +122,7 @@ class DDIMSampler(nn.Module):
         return x_t_minus_one
 
     @torch.no_grad()
-    def forward(self, x_t, c, steps=100, method="linear", eta=0.05, only_return_x_0=True, interval=1):
+    def forward(self, x_t, c, steps=60, method="linear", eta=0.05, only_return_x_0=True, interval=1):
         if method == "linear":
             a = self.T // steps
             time_steps = np.asarray(list(range(0, self.T, a)))
