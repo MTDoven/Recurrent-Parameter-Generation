@@ -1,11 +1,11 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
 
 # torch
 import torch
 # father
-from workspace.ablation.no_relation import no_relation as item
+from workspace.main import convnextlarge_16384 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -36,9 +36,10 @@ print('==> Defining generate..')
 def generate(save_path=config["generated_path"], test_command=config["test_command"], need_test=True):
     print("\n==> Generating..")
     model.eval()
-    with torch.no_grad():
-        prediction = model(sample=True)
-        generated_norm = torch.nanmean(prediction.abs())
+    with torch.cuda.amp.autocast(True, torch.bfloat16):
+        with torch.no_grad():
+            prediction = model(sample=True)
+            generated_norm = torch.nanmean(prediction.abs())
     print("Generated_norm:", generated_norm.item())
     train_set.save_params(prediction, save_path=save_path)
     if need_test:
