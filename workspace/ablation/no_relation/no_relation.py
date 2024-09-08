@@ -29,7 +29,7 @@ import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from model import TransformerDiffusion as Model
+from model import GMLPDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -67,11 +67,8 @@ config = {
         # transformer config
         "d_condition": 1,
         "d_model": 8192,
-        "nhead": 8,
-        "dim_feedforward": 16384,
-        "dim_head": 1024,
+        "expand": 2,
         "num_layers": 2,
-        "mask": "set in future",
         # diffusion config
         "diffusion_batch": 512,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
@@ -83,7 +80,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_no_relation_eye",
+    "tag": "ablation_no_relation",
 }
 
 

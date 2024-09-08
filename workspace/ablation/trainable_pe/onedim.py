@@ -45,7 +45,7 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 768,
+    "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
@@ -72,7 +72,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1536,
+        "diffusion_batch": 512,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -82,7 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_slice_channel",
+    "tag": "ablation_onedim_pe",
 }
 
 
@@ -91,10 +91,9 @@ config = {
 # Data
 print('==> Preparing data..')
 train_set = config["dataset"](dim_per_token=config["dim_per_token"],
-                              granularity=2)  # 2: split by output
+                              pe_granularity=1)  # 1: 1d embedding
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
-nan_mask = torch.logical_not(torch.isnan(train_set[0][0])).float()
 if config["model_config"]["num_permutation"] == "auto":
     config["model_config"]["num_permutation"] = train_set.max_permutation_state
 if config["model_config"]["condition_dim"] == "auto":
@@ -198,7 +197,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     model.eval()
     with torch.no_grad():
         prediction = model(sample=True)
-        generated_norm = torch.nanmean(prediction.abs().cpu() * nan_mask)
+        generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB:
         wandb.log({"generated_norm": generated_norm.item()})

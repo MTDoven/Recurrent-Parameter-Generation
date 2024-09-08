@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 999
+seed = SEED = 20040422
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -45,7 +45,7 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 768,
+    "dim_per_token": 4096,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
@@ -66,13 +66,13 @@ config = {
         "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 4096,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1536,
+        "diffusion_batch": 512,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -82,7 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_slice_channel",
+    "tag": "ablation_slice_index",
 }
 
 
@@ -90,8 +90,11 @@ config = {
 
 # Data
 print('==> Preparing data..')
-train_set = config["dataset"](dim_per_token=config["dim_per_token"],
-                              granularity=2)  # 2: split by output
+train_set = config["dataset"](
+    dim_per_token=config["dim_per_token"],
+    granularity=0,  # 0: flatten directly
+    pe_granularity=1,  # 1: 1d embedding
+)  # old method
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
 nan_mask = torch.logical_not(torch.isnan(train_set[0][0])).float()

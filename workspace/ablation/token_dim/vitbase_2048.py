@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 999
+seed = SEED = 997
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -36,7 +36,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTTiny as Dataset
+from dataset import ImageNet_ViTBase as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -45,15 +45,15 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 768,
+    "dim_per_token": 2048,
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
-    "num_workers": 8,
-    "total_steps": 50000,
+    "num_workers": 4,
+    "total_steps": 80000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 50000//25,
+    "save_every": 80000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -66,13 +66,13 @@ config = {
         "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 2048,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1536,
+        "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -82,7 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "ablation_slice_channel",
+    "tag": "ablation_vitbase_dim_2048",
 }
 
 
@@ -90,11 +90,9 @@ config = {
 
 # Data
 print('==> Preparing data..')
-train_set = config["dataset"](dim_per_token=config["dim_per_token"],
-                              granularity=2)  # 2: split by output
+train_set = config["dataset"](dim_per_token=config["dim_per_token"])
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].shape)
-nan_mask = torch.logical_not(torch.isnan(train_set[0][0])).float()
 if config["model_config"]["num_permutation"] == "auto":
     config["model_config"]["num_permutation"] = train_set.max_permutation_state
 if config["model_config"]["condition_dim"] == "auto":
@@ -198,7 +196,7 @@ def generate(save_path=config["generated_path"], need_test=True):
     model.eval()
     with torch.no_grad():
         prediction = model(sample=True)
-        generated_norm = torch.nanmean(prediction.abs().cpu() * nan_mask)
+        generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
     if USE_WANDB:
         wandb.log({"generated_norm": generated_norm.item()})

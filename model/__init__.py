@@ -5,6 +5,7 @@ from .diffusion import DiffusionLoss, DDIMSampler, DDPMSampler
 from .transformer import TransformerModel
 from .mamba import MambaModel
 from .lstm import LstmModel
+from .gatemlp import GMLPModel
 
 
 
@@ -85,6 +86,13 @@ class LstmDiffusion(ModelDiffusion):
         super().__init__(sequence_length=sequence_length)
         LstmModel.config = self.config
         self.model = LstmModel(positional_embedding=positional_embedding)
+
+
+class GMLPDiffusion(ModelDiffusion):
+    def __init__(self, sequence_length, positional_embedding):
+        super().__init__(sequence_length=sequence_length)
+        GMLPModel.config = self.config
+        self.model = GMLPModel(positional_embedding=positional_embedding)
 
 
 
