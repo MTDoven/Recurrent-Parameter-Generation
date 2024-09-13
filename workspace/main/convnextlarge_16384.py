@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 1001
+seed = SEED = 1003
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -50,7 +50,7 @@ config = {
     "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 1,
+    "batch_size": 2,
     "num_workers": 4,
     "total_steps": 120000,
     "learning_rate": 0.00001,
@@ -75,7 +75,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
+        "diffusion_batch": 256,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
@@ -155,7 +155,6 @@ model.model = VaryMambaModel(
 )  # update mamba model
 torch.cuda.empty_cache()
 
-#model.load_state_dict(torch.load("/home/wangkai/arpgen/AR-Param-Generation/convnextlarge_16384_85.pt", map_location="cpu"))
 
 # Optimizer
 print('==> Building optimizer..')
@@ -170,8 +169,8 @@ scheduler = CosineAnnealingLR(
 )
 
 # load checkpoint
-if config["resume"] and os.path.exists("./vitbase_state.pt"):
-    diction = torch.load("./vitbase_state.pt", map_location="cpu")
+if config["resume"] and os.path.exists("./convnextlarge_state.pt"):
+    diction = torch.load("./convnextlarge_state.pt", map_location="cpu")
     model.load_state_dict(diction["model"])
     optimizer.load_state_dict(diction["optimizer"])
     scheduler.load_state_dict(diction["scheduler"])
@@ -190,7 +189,7 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config, resume=config["resume"])
 
 
 
@@ -235,7 +234,7 @@ def train():
                 "optimizer": accelerator.unwrap_model(optimizer).state_dict(),
                 "scheduler": scheduler.state_dict(),
                 "step": batch_idx
-            }, "./vitbase_state.pt")
+            }, "./convnextlarge_state.pt")
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break

@@ -1,13 +1,13 @@
 import sys, os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 USE_WANDB = True
 
 # set global seed
 import random
 import numpy as np
 import torch
-seed = SEED = 999
+seed = SEED = 1003
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -25,10 +25,11 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
-import torch.optim as optim
+import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
+from mamba_ssm import Mamba2 as Mamba
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
@@ -36,7 +37,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ConvNextTiny as Dataset
+from dataset import ImageNet_ViTSmall as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -45,15 +46,15 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 4,
+    "batch_size": 2,
     "num_workers": 8,
     "total_steps": 80000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 80000//30,
+    "save_every": 80000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -63,26 +64,27 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        "num_permutation": "auto",
+        "num_permutation": 'auto',
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 12288,
+        "post_d_model": 16384,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
-        "layer_channels": [1, 32, 64, 128, 64, 32, 1],
-        "model_dim": "auto",
-        "condition_dim": "auto",
+        "diffusion_batch": 384,
+        "layer_channels": [1, 64, 96, 64, 1],
+        "model_dim": 16384,
+        "condition_dim": 16384,
         "kernel_size": 7,
-        "sample_mode": DDPMSampler,
+        "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_convnexttiny_8192",
+    "tag": "ablation_vitsmall_dim_16384",
 }
 
 
@@ -122,10 +124,40 @@ model = Model(
         positional_embedding_dim=config["model_config"]["d_model"]
     )  # positional_embedding
 )  # model setting is in model
+class VaryMambaModel(nn.Module):
+    config = {}
+    def __init__(self, positional_embedding):
+        super().__init__()
+        mamba1 = Mamba(d_model=config["model_config"]["d_model"],
+                       d_state=config["model_config"]["d_state"],
+                       d_conv=config["model_config"]["d_conv"],
+                       expand=config["model_config"]["expand"])
+        mamba2 = Mamba(d_model=config["model_config"]["post_d_model"],
+                       d_state=config["model_config"]["d_state"],
+                       d_conv=config["model_config"]["d_conv"],
+                       expand=config["model_config"]["expand"])
+        mamba2.in_proj = nn.Linear(mamba1.out_proj.out_features, mamba2.in_proj.out_features, bias=False)
+        self.mamba_forward = nn.Sequential(*[mamba1, mamba2])
+        pe = positional_embedding[None, :, :]
+        if self.config.get("trainable_pe"):
+            self.pe = nn.Parameter(pe)
+        else:  # fixed positional embedding
+            self.register_buffer("pe", pe)
+    def forward(self, output_shape, condition=None):
+        x = self.mamba_forward(self.pe.repeat(output_shape[0], 1, 1) + condition)
+        return x
+VaryMambaModel.config = config["model_config"]
+model.model = VaryMambaModel(
+    positional_embedding=train_set.get_position_embedding(
+        positional_embedding_dim=config["model_config"]["d_model"]
+    )  # positional_embedding
+)  # update mamba model
+torch.cuda.empty_cache()
+
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(
+optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -134,6 +166,7 @@ scheduler = CosineAnnealingLR(
     optimizer=optimizer,
     T_max=config["total_steps"],
 )
+
 
 # accelerator
 if __name__ == "__main__":

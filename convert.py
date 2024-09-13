@@ -1,6 +1,6 @@
 import torch
 
-model = torch.load("convnextlarge_state.pt", map_location="cpu")["model"]
+model = torch.load("convnextlarge_old.pt", map_location="cpu")["model"]
 
 new_diction = {}
 for k, v in model.items():
@@ -18,4 +18,4 @@ for k, v in model.items():
     new_diction[k] = v
 new_diction["to_permutation_state.weight"] = torch.zeros(size=[1, 8192])
 
-torch.save(new_diction, "convnextlarge_16384_new.pt")
+torch.save(new_diction, "main_convnextlarge_16384.pt")

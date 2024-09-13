@@ -27,15 +27,15 @@ import sys
 import os
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
-config_root = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ImageNet1k")
+config_root = os.path.dirname(os.path.dirname(__file__))
 with open(os.path.join(config_root, "config.json"), "r") as f:
     additional_config = json.load(f)
 
 
 config = {
     # dataset setting
-    "train_image_root": "from_additional_config",
-    "test_image_root": "from_additional_config",
+    "train_image_root": additional_config["imagenet_root"]["train"],
+    "test_image_root": additional_config["imagenet_root"]["test"],
     # train setting
     "device": torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     "batch_size": 64,

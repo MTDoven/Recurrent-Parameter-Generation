@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 USE_WANDB = True
 
 # set global seed
@@ -25,7 +25,7 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
-import torch.optim as optim
+import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
@@ -36,7 +36,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ResNet18 as Dataset
+from dataset import ImageNet_ViTTiny as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -45,15 +45,15 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 1024,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 8,
-    "num_workers": 16,
-    "total_steps": 80000,
-    "learning_rate": 0.00004,
+    "batch_size": 4,
+    "num_workers": 8,
+    "total_steps": 30000,
+    "learning_rate": 0.0001,
     "weight_decay": 0.0,
-    "save_every": 80000//30,
+    "save_every": 30000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -63,16 +63,16 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        "num_permutation": 'auto',
+        "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 1024,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1024,
+        "diffusion_batch": 4096,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -82,7 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_resnet18_8192",
+    "tag": "ablation_token_dim_1024",
 }
 
 
@@ -125,7 +125,7 @@ model = Model(
 
 # Optimizer
 print('==> Building optimizer..')
-optimizer = optim.AdamW(
+optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
@@ -140,6 +140,7 @@ if __name__ == "__main__":
     kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
     accelerator = Accelerator(kwargs_handlers=[kwargs,])
     # FIXME: the program rely on this bug; find_unused_parameters=True is necessary! why?
+    # FIXME: we use a dynamic policy in diffusion training, this may be the reason...
     model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
 
 

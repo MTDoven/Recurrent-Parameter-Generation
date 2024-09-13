@@ -1,13 +1,13 @@
 import sys, os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 USE_WANDB = True
 
 # set global seed
 import random
 import numpy as np
 import torch
-seed = SEED = 1000
+seed = SEED = 999
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -37,13 +37,12 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ResNet50 as Dataset
+from dataset import ImageNet_ViTTiny as Dataset
 from torch.utils.data import DataLoader
 
 
 
 config = {
-    "resume": False,
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
@@ -51,11 +50,11 @@ config = {
     "sequence_length": 'auto',
     # train setting
     "batch_size": 4,
-    "num_workers": 8,
-    "total_steps": 120000,
+    "num_workers": 4,
+    "total_steps": 80000,
     "learning_rate": 0.00001,
     "weight_decay": 0.0,
-    "save_every": 120000//30,
+    "save_every": 80000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -65,7 +64,7 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        "num_permutation": "auto",
+        "num_permutation": 'auto',
         # mamba config
         "d_condition": 1,
         "d_model": 12288,
@@ -75,17 +74,17 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 512,
+        "diffusion_batch": 384,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
         "kernel_size": 7,
-        "sample_mode": DDPMSampler,
+        "sample_mode": DDIMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_resnet50_16384",
+    "tag": "ablation_token_dim_16384",
 }
 
 
@@ -155,6 +154,7 @@ model.model = VaryMambaModel(
 )  # update mamba model
 torch.cuda.empty_cache()
 
+
 # Optimizer
 print('==> Building optimizer..')
 optimizer = optim.AdamW8bit(
@@ -167,15 +167,6 @@ scheduler = CosineAnnealingLR(
     T_max=config["total_steps"],
 )
 
-# load checkpoint
-if config["resume"] and os.path.exists("./vitbase_state.pt"):
-    diction = torch.load("./vitbase_state.pt", map_location="cpu")
-    model.load_state_dict(diction["model"])
-    optimizer.load_state_dict(diction["optimizer"])
-    scheduler.load_state_dict(diction["scheduler"])
-    start_batch_idx = diction["step"] + 1
-else:  # not resume
-    start_batch_idx = 0
 
 # accelerator
 if __name__ == "__main__":
@@ -202,7 +193,6 @@ def train():
     print("==> start training..")
     model.train()
     for batch_idx, (param, permutation_state) in enumerate(train_loader):
-        batch_idx += start_batch_idx
         optimizer.zero_grad()
         # train
         # noinspection PyArgumentList
@@ -228,12 +218,6 @@ def train():
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = accelerator.unwrap_model(model).state_dict()
             torch.save(state, os.path.join(config["checkpoint_save_path"], config["tag"]+".pth"))
-            torch.save({
-                "model": accelerator.unwrap_model(model).state_dict(),
-                "optimizer": accelerator.unwrap_model(optimizer).state_dict(),
-                "scheduler": scheduler.state_dict(),
-                "step": batch_idx
-            }, "./vitbase_state.pt")
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break

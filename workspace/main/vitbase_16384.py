@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 1000
+seed = SEED = 995
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -50,19 +50,19 @@ config = {
     "dim_per_token": 16384,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 1,
-    "num_workers": 2,
+    "batch_size": 2,
+    "num_workers": 6,
     "total_steps": 120000,
     "learning_rate": 0.00001,
     "weight_decay": 0.0,
     "save_every": 120000//30,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 45000,
+    "autocast": lambda i: 5000 < i < 100000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
     "generated_path": Dataset.generated_path,
-    "test_command": Dataset.test_command,
+    "test_command": "CUDA_VISIBLE_DEVICES=5 "+Dataset.test_command,
     # to log
     "model_config": {
         "num_permutation": "auto",
@@ -188,7 +188,7 @@ if __name__ == "__main__":
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config, resume=config["resume"])
 
 
 
