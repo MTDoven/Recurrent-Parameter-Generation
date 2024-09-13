@@ -193,7 +193,7 @@ class DiffusionLoss(nn.Module):
         return loss
 
     @torch.no_grad()
-    def sample(self, x, c):
+    def sample(self, x, c, **kwargs):
         # Given condition and noise, sample x using reverse diffusion process
         # Given condition z and ground truth token x, compute loss
         batch = max(self.config["diffusion_batch"], 256)
@@ -204,9 +204,9 @@ class DiffusionLoss(nn.Module):
             result = []
             num_loops = x.size(0) // batch if x.size(0) % batch != 0 else x.size(0) // batch - 1
             for _ in range(num_loops):
-                result.append(self.diffusion_sampler(x[:batch], c[:batch]))
+                result.append(self.diffusion_sampler(x[:batch], c[:batch], **kwargs))
                 x, c = x[batch:], c[batch:]
-            result.append(self.diffusion_sampler(x, c))
+            result.append(self.diffusion_sampler(x, c, **kwargs))
             return torch.cat(result, dim=0).view(x_shape)
         else:  # all as a batch
-            return self.diffusion_sampler(x, c).view(x_shape)
+            return self.diffusion_sampler(x, c, **kwargs).view(x_shape)
