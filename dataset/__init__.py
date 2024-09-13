@@ -147,7 +147,7 @@ class BaseDataset(Dataset, ABC):
         for i, checkpoint in enumerate(checkpoint_list):
             diction = torch.load(checkpoint, map_location="cpu")
             for key, value in diction.items():
-                if ("num_batches_tracked" in key) or (value.numel() == 1):
+                if ("num_batches_tracked" in key) or (value.numel() == 1) or not torch.is_floating_point(value):
                     structures[i][key] = (value.shape, value, None)
                 elif "running_var" in key:
                     pre_mean = value.mean() * 0.95
@@ -158,7 +158,7 @@ class BaseDataset(Dataset, ABC):
         final_structure = {}
         structure_diction = torch.load(checkpoint_list[0], map_location="cpu")
         for key, param in structure_diction.items():
-            if ("num_batches_tracked" in key) or (param.numel() == 1):
+            if ("num_batches_tracked" in key) or (param.numel() == 1) or not torch.is_floating_point(param):
                 final_structure[key] = (param.shape, param, None)
             elif "running_var" in key:
                 value = [param.shape, 0., 0., 0.]
@@ -241,7 +241,7 @@ class BaseDataset(Dataset, ABC):
     def preprocess(self, diction: dict, **kwargs) -> torch.Tensor:
         param_list = []
         for key, value in diction.items():
-            if ("num_batches_tracked" in key) or (value.numel() == 1):
+            if ("num_batches_tracked" in key) or (value.numel() == 1) or not torch.is_floating_point(value):
                 continue
             elif "running_var" in key:
                 shape, pre_mean, mean, std = self.structure[key]
@@ -326,6 +326,18 @@ class ImageNet_ConvNextLarge(BaseDataset):
     generated_path = "./dataset/imagenet_convnextlarge/generated/generated_model.pth"
     test_command = "python ./dataset/imagenet_convnextlarge/test.py " + \
                    "./dataset/imagenet_convnextlarge/generated/generated_model.pth"
+
+class KDE20KDetection(BaseDataset):
+    data_path = "/home/nus-zwb/dongwen/Detection/checkpoint"
+    generated_path = "./dataset/ade20k_detection/generated/generated_model.pth"
+    test_command = "CUDA_VISIBLE_DEVICES=0 bash /home/nus-zwb/dongwen/test_detection.sh " + \
+                   "./dataset/ade20k_detection/generated/generated_model.pth"
+
+class CocoSegmentation(BaseDataset):
+    data_path = "/home/nus-zwb/dongwen/Segmentation/checkpoint"
+    generated_path = "./dataset/coco_segmentation/generated/generated_model.pth"
+    test_command = "CUDA_VISIBLE_DEVICES=0 bash /home/nus-zwb/dongwen/test_segmentation.sh " + \
+                   "./dataset/coco_segmentation/generated/generated_model.pth"
 
 
 
