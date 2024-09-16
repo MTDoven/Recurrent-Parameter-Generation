@@ -315,12 +315,6 @@ class ImageNet_ConvNextAtto(BaseDataset):
     test_command = "python ./dataset/imagenet_convnextatto/test.py " + \
                    "./dataset/imagenet_convnextatto/generated/generated_model.pth"
 
-class ImageNet_ConvNextTiny(BaseDataset):
-    data_path = "./dataset/imagenet_convnexttiny/checkpoint"
-    generated_path = "./dataset/imagenet_convnexttiny/generated/generated_model.pth"
-    test_command = "python ./dataset/imagenet_convnexttiny/test.py " + \
-                   "./dataset/imagenet_convnexttiny/generated/generated_model.pth"
-
 class ImageNet_ConvNextLarge(BaseDataset):
     data_path = "./dataset/imagenet_convnextlarge/checkpoint"
     generated_path = "./dataset/imagenet_convnextlarge/generated/generated_model.pth"
@@ -330,14 +324,44 @@ class ImageNet_ConvNextLarge(BaseDataset):
 class KDE20KDetection(BaseDataset):
     data_path = "/home/nus-zwb/dongwen/Detection/checkpoint"
     generated_path = "./dataset/ade20k_detection/generated/generated_model.pth"
-    test_command = "CUDA_VISIBLE_DEVICES=0 bash /home/nus-zwb/dongwen/test_detection.sh " + \
+    test_command = "bash /home/nus-zwb/dongwen/test_detection.sh " + \
                    "./dataset/ade20k_detection/generated/generated_model.pth"
 
 class CocoSegmentation(BaseDataset):
     data_path = "/home/nus-zwb/dongwen/Segmentation/checkpoint"
     generated_path = "./dataset/coco_segmentation/generated/generated_model.pth"
-    test_command = "CUDA_VISIBLE_DEVICES=0 bash /home/nus-zwb/dongwen/test_segmentation.sh " + \
+    test_command = "bash /home/nus-zwb/dongwen/test_segmentation.sh " + \
                    "./dataset/coco_segmentation/generated/generated_model.pth"
+
+class Cifar10_ResNet18(BaseDataset):
+    data_path = "./dataset/cifar10_resnet18/checkpoint"
+    generated_path = "./dataset/cifar10_resnet18/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_resnet18/test.py " + \
+                   "./dataset/cifar10_resnet18/generated/generated_model.pth"
+
+class Cifar10_MobileNetv3(BaseDataset):
+    data_path = "./dataset/cifar10_mobilenetv3/checkpoint"
+    generated_path = "./dataset/cifar10_mobilenetv3/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_mobilenetv3/test.py " + \
+                   "./dataset/cifar10_mobilenetv3/generated/generated_model.pth"
+
+class Cifar10_ViTBase(BaseDataset):
+    data_path = "./dataset/cifar10_vitbase/checkpoint"
+    generated_path = "./dataset/cifar10_vitbase/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_vitbase/test.py " + \
+                   "./dataset/cifar10_vitbase/generated/generated_model.pth"
+
+class Cifar10_CNNSmall(BaseDataset):
+    data_path = "./dataset/cifar10_cnnsmall/checkpoint"
+    generated_path = "./dataset/cifar10_cnnsmall/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_cnnsmall/test.py " + \
+                   "./dataset/cifar10_cnnsmall/generated/generated_model.pth"
+
+class Cifar10_CNNMedium(BaseDataset):
+    data_path = "./dataset/cifar10_cnnmedium/checkpoint"
+    generated_path = "./dataset/cifar10_cnnmedium/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar10_cnnmedium/test.py " + \
+                   "./dataset/cifar10_cnnmedium/generated/generated_model.pth"
 
 
 

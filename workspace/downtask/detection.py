@@ -45,7 +45,7 @@ from torch.utils.data import DataLoader
 
 
 config = {
-    "resume": False,
+    "resume": True,
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
@@ -77,7 +77,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 384,
+        "diffusion_batch": 512,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,

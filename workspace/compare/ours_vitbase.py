@@ -37,7 +37,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ImageNet_ViTBase as Dataset
+from dataset import Cifar10_ViTBase as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -51,11 +51,11 @@ config = {
     "sequence_length": 'auto',
     # train setting
     "batch_size": 2,
-    "num_workers": 6,
-    "total_steps": 120000,
-    "learning_rate": 0.00001,
+    "num_workers": 3,
+    "total_steps": 100000,
+    "learning_rate": 0.00002,
     "weight_decay": 0.0,
-    "save_every": 120000//30,
+    "save_every": 100000//30,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 100000,
     "checkpoint_save_path": "./checkpoint",
@@ -85,7 +85,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "main_vitbase_16384",
+    "tag": "compare_ours_vitbase",
 }
 
 
