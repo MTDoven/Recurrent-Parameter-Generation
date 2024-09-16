@@ -38,7 +38,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import KDE20KDetection as Dataset
+from dataset import CocoDetection as Dataset
 from torch.utils.data import DataLoader
 
 

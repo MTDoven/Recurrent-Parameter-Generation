@@ -321,17 +321,17 @@ class ImageNet_ConvNextLarge(BaseDataset):
     test_command = "python ./dataset/imagenet_convnextlarge/test.py " + \
                    "./dataset/imagenet_convnextlarge/generated/generated_model.pth"
 
-class KDE20KDetection(BaseDataset):
+class CocoDetection(BaseDataset):
     data_path = "/home/nus-zwb/dongwen/Detection/checkpoint"
-    generated_path = "./dataset/ade20k_detection/generated/generated_model.pth"
+    generated_path = "./dataset/downtask_detection/generated/generated_model.pth"
     test_command = "bash /home/nus-zwb/dongwen/test_detection.sh " + \
-                   "./dataset/ade20k_detection/generated/generated_model.pth"
+                   "./dataset/downtask_detection/generated/generated_model.pth"
 
-class CocoSegmentation(BaseDataset):
+class ADE20KSegmentation(BaseDataset):
     data_path = "/home/nus-zwb/dongwen/Segmentation/checkpoint"
-    generated_path = "./dataset/coco_segmentation/generated/generated_model.pth"
+    generated_path = "./dataset/downtask_segmentation/generated/generated_model.pth"
     test_command = "bash /home/nus-zwb/dongwen/test_segmentation.sh " + \
-                   "./dataset/coco_segmentation/generated/generated_model.pth"
+                   "./dataset/downtask_segmentation/generated/generated_model.pth"
 
 class Cifar10_ResNet18(BaseDataset):
     data_path = "./dataset/cifar10_resnet18/checkpoint"
