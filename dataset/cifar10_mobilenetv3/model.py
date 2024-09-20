@@ -5,6 +5,10 @@ import timm
 def Model():
     model = timm.create_model("mobilenetv3_large_100", pretrained=True)
     model.classifier = nn.Linear(1280, 10)
+    for name, param in model.named_parameters():
+        if "bn" in name:
+            # print(f"freeze {name}")
+            param.requires_grad = False
     return model, model.classifier
 
 

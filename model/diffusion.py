@@ -197,8 +197,8 @@ class DiffusionLoss(nn.Module):
         # Given condition and noise, sample x using reverse diffusion process
         # Given condition z and ground truth token x, compute loss
         batch = self.config.get("diffusion_batch")
-        if batch is not None:
-            batch = max(batch, 256)
+        # if batch is not None:
+        #     batch = max(batch, 256)
         x_shape = x.shape
         x = x.view(-1, x.size(-1))
         c = c.view(-1, c.size(-1))

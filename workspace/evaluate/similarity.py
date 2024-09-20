@@ -5,13 +5,13 @@ os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
 import pandas as pd
 import numpy as np
 import torch
-import dataset.imagenet_vittiny.train as item
+import dataset.cifar10_cnnmedium.train as item
 loader = item.test_loader
 model = item.model
 test = item.test
 
-checkpoint_path = "./dataset/imagenet_vittiny/checkpoint"
-generated_path = "./dataset/imagenet_vittiny/generated"
+checkpoint_path = "./dataset/cifar10_cnnmedium/checkpoint"
+generated_path = "./dataset/cifar10_cnnmedium/generated"
 
 
 
@@ -19,6 +19,7 @@ generated_path = "./dataset/imagenet_vittiny/generated"
 # load paths
 checkpoint_items = [os.path.join(checkpoint_path, i) for i in os.listdir(checkpoint_path)]
 generated_items = [os.path.join(generated_path, i) for i in os.listdir(generated_path)]
+generated_items.sort()
 total_items = list(checkpoint_items) + list(generated_items)
 
 
@@ -48,6 +49,7 @@ for i, item in enumerate(total_items):
     total_result_list.append(result)
 
 # compute iou_metrix
+print("Start Computing IoU...")
 iou_matrix = np.zeros(shape=[len(total_result_list), len(total_result_list)])
 for i in range(len(total_result_list)):
     for j in range(len(total_result_list)):
@@ -58,3 +60,25 @@ for i in range(len(total_result_list)):
 # save result
 df = pd.DataFrame(iou_matrix)
 df.to_excel("./similarity.xlsx", index=False)
+print("Finished!!!")
+
+
+
+
+# print ori_ori
+print("num_checkpoint:", len(checkpoint_items))
+print("num_generated:", len(generated_items))
+ori_num = len(checkpoint_items)
+ori_ori = iou_matrix[:ori_num, :ori_num]
+ori_ori = (np.sum(ori_ori) - ori_num) / (ori_num * (ori_num-1))
+print("ori-ori:", ori_ori)
+gen_num = len(generated_items)
+gen_gen = iou_matrix[-gen_num:, -gen_num:]
+gen_gen = (np.sum(gen_gen) - gen_num) / (gen_num * (gen_num-1))
+print("gen-gen:", gen_gen)
+ori_gen = iou_matrix[-gen_num:, :ori_num]
+ori_gen = np.mean(ori_gen)
+print("ori-gen:", ori_gen)
+nearest = iou_matrix[-gen_num:, :ori_num]
+nearest = np.amax(nearest, axis=-1).mean()
+print("nearest:", nearest)

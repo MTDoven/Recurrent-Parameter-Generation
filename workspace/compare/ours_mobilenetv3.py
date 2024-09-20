@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 999
+seed = SEED = 995
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -45,15 +45,15 @@ config = {
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
-    "dim_per_token": 8192,
+    "dim_per_token": 4096,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 64,
-    "num_workers": 16,
-    "total_steps": 80000,
-    "learning_rate": 0.00005,
+    "batch_size": 2,
+    "num_workers": 4,
+    "total_steps": 100000,
+    "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 80000//30,
+    "save_every": 100000//25,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -66,13 +66,13 @@ config = {
         "num_permutation": 'auto',
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 4096,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 1536,
+        "diffusion_batch": 1024,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",

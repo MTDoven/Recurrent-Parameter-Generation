@@ -42,8 +42,8 @@ with open(config_file, "r") as f:
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {
     "dataset_root": "from_additional_config",
-    "batch_size": 300 if __name__ == "__main__" else 200,
-    "num_workers": 32,
+    "batch_size": 500 if __name__ == "__main__" else 200,
+    "num_workers": 4,
     "learning_rate": 3e-3,
     "weight_decay": 0.1,
     "epochs": 5,
@@ -176,12 +176,13 @@ def save_train(model=model, optimizer=optimizer):
         loss.backward()
         optimizer.step()
         # Save checkpoint
-    _, acc, _, _ = test(model=model)
-    if not os.path.isdir('checkpoint'):
-        os.mkdir('checkpoint')
-    save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
-    torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
-    print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+        if batch_idx % (len(dataset) // train_loader.batch_size // config["total_save_number"]) == 0:
+            _, acc, _, _ = test(model=model)
+            if not os.path.isdir('checkpoint'):
+                os.mkdir('checkpoint')
+            save_state = {key: value.cpu().to(torch.float32) for key, value in model.state_dict().items()}
+            torch.save(save_state, f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
+            print("save:", f"checkpoint/{str(batch_idx).zfill(4)}_acc{acc:.4f}_seed{seed:04d}_{config['tag']}.pth")
 
 
 
@@ -195,5 +196,4 @@ if __name__ == '__main__':
     for epoch in range(config["epochs"]):
         train(model=model, optimizer=optimizer, scheduler=scheduler)
         test(model=model)
-    for _ in range(30):
-        save_train(model=model, optimizer=optimizer)
+    save_train(model=model, optimizer=optimizer)
