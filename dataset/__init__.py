@@ -364,10 +364,10 @@ class Cifar10_CNNMedium(BaseDataset):
                    "./dataset/cifar10_cnnmedium/generated/generated_model.pth"
 
 class Cifar100_ResNet18BN(BaseDataset):
-    data_path = "./dataset/cifar100_resnet18/checkpoint"
-    generated_path = "./dataset/cifar100_resnet18/generated/generated_model.pth"
-    test_command = "python ./dataset/cifar100_resnet18/test.py " + \
-                   "./dataset/cifar100_resnet18/generated/generated_model.pth"
+    data_path = "./dataset/cifar100_resnet18bn/checkpoint"
+    generated_path = "./dataset/cifar100_resnet18bn/generated/generated_model.pth"
+    test_command = "python ./dataset/cifar100_resnet18bn/test.py " + \
+                   "./dataset/cifar100_resnet18bn/generated/generated_model.pth"
 
 
 

@@ -37,7 +37,7 @@ from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import Cifar10_CNNMedium as Dataset
+from dataset import Cifar100_ResNet18BN as Dataset
 from torch.utils.data import DataLoader
 
 
@@ -48,16 +48,16 @@ config = {
     "dataset": Dataset,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 16,
-    "num_workers": 16,
-    "total_steps": 40000,
-    "vae_steps": 10000,
+    "batch_size": 50,
+    "num_workers": 25,
+    "total_steps": 5000,
+    "vae_steps": 1000,
     "learning_rate": 0.0001,
-    "vae_learning_rate": 0.00001,
-    "weight_decay": 0.0,
-    "save_every": 40000//2,
+    "vae_learning_rate": 0.00002,
+    "weight_decay": 0.01,
+    "save_every": 5000//2,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 45000,
+    "autocast": lambda i: True,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -67,28 +67,30 @@ config = {
     "model_config": {
         # diffusion config
         "layer_channels": [1, 64, 128, 256, 512, 256, 128, 64, 1],
-        "model_dim": 1024,
+        "model_dim": 128,
         "kernel_size": 7,
         "sample_mode": DDPMSampler,
         "beta": (0.0001, 0.02),
         "T": 1000,
         # vae config
         "channels": [64, 256, 384, 512, 64],
-        "last_length": 340,
+        "divide_slice_length": 32,
     },
-    "tag": "compare_pdiff_cnnsmedium_repeat",
+    "tag": "pdiff_resnet18bn_vae",
 }
 
 
 
 
 # Data
-divide_slice_length = 64
+divide_slice_length = config["model_config"]["divide_slice_length"]
 print('==> Preparing data..')
-train_set = config["dataset"](dim_per_token=divide_slice_length,
-                              granularity=0,
-                              pe_granularity=0,
-                              fill_value=0.)
+train_set = config["dataset"](
+    dim_per_token=divide_slice_length,
+    granularity=0,
+    pe_granularity=0,
+    fill_value=0.
+)
 print("Dataset length:", train_set.real_length)
 print("input shape:", train_set[0][0].flatten().shape)
 if config["sequence_length"] == "auto":
@@ -109,7 +111,7 @@ Model.config = config["model_config"]
 model = Model(sequence_length=config["sequence_length"])  # model setting is in model
 vae = VAE(d_model=config["model_config"]["channels"],
           d_latent=config["model_config"]["model_dim"],
-          last_length=config["model_config"]["last_length"],
+          sequence_length=config["sequence_length"],
           kernel_size=config["model_config"]["kernel_size"])
 
 # Optimizer
@@ -165,7 +167,7 @@ def train_vae():
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
             param = param.flatten(start_dim=1)
-            loss = vae(x=param, manual_std=0.01)
+            loss = vae(x=param, use_var=False, manual_std=0.01, kld_weight=0.01)
         accelerator.backward(loss)
         vae_optimizer.step()
         if accelerator.is_main_process:

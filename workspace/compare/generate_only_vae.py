@@ -1,11 +1,11 @@
 import sys, os
-sys.path.append("/home/wangkai/arpgen/AR-Param-Generation")
-os.chdir("/home/wangkai/arpgen/AR-Param-Generation")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 # torch
 import torch
 # father
-from workspace.compare import pdiff_cnnmedium_repeat as item
+from workspace.compare import pdiff_resnet18bn_vae as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -16,7 +16,7 @@ config["tag"] = config.get("tag") if config.get("tag") is not None else os.path.
 
 generate_config = {
     "device": "cuda",
-    "num_generated": 15,
+    "num_generated": 200,
     "checkpoint": f"./checkpoint/{config['tag']}.pth",
     "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
@@ -40,9 +40,10 @@ print('==> Defining generate..')
 def generate(save_path=config["generated_path"], test_command=config["test_command"], need_test=True):
     print("\n==> Generating..")
     model.eval()
-    with torch.cuda.amp.autocast(True, torch.bfloat16):
+    with torch.cuda.amp.autocast(False, torch.bfloat16):
         with torch.no_grad():
             mu = model(sample=True)
+            mu = torch.randn_like(mu)
             prediction = vae.decode(mu)
             generated_norm = torch.nanmean(prediction.abs())
     print("Generated_norm:", generated_norm.item())
