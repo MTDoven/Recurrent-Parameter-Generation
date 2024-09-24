@@ -4,14 +4,17 @@ import numpy as np
 import torch
 import re
 import sys
-def get_permutation_state():
-    try:  # get string
-        string = sys.argv[1]
-    except IndexError:
-        RuntimeError("sys.argv[1] not found")
-    class_int_string = str(re.search(r'class(\d+)', string).group(1)).zfill(4)
-    return int(class_int_string)
-seed = SEED = get_permutation_state()
+if __name__ == "__main__":
+    def get_permutation_state():
+        try:  # get string
+            string = sys.argv[1]
+        except IndexError:
+            RuntimeError("sys.argv[1] not found")
+        class_int_string = str(re.search(r'class(\d+)', string).group(1)).zfill(4)
+        return int(class_int_string)
+    seed = SEED = get_permutation_state()
+else:  # when testing
+    seed = SEED = 0
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)

@@ -23,6 +23,7 @@ elif os.path.isfile(test_item):
 
 
 for item in test_items:
+    print(f"testing: {item}")
     state = torch.load(item, map_location="cpu")
     model.load_state_dict({key: value.to(torch.float32).to(device) for key, value in state.items()})
     loss, acc, all_targets, all_predicts = test(model=model)

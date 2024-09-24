@@ -12,7 +12,7 @@ try:
     test_item = sys.argv[1]
 except IndexError:
     assert __name__ == "__main__"
-    test_item = "./checkpoint"
+    test_item = "./checkpoint_test"
 test_items = []
 if os.path.isdir(test_item):
     for item in os.listdir(test_item):

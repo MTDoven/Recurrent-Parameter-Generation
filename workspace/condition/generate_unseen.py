@@ -17,7 +17,7 @@ config["tag"] = config.get("tag") if config.get("tag") is not None else os.path.
 
 generate_config = {
     "device": "cuda",
-    "checkpoint": "/mnt/petrelfs/zhaowangbo.p/arpgen/AR-Param-Generation/checkpoint/generalization-old.pth",  # f"./checkpoint/{config['tag']}.pth",
+    "checkpoint": "/mnt/petrelfs/zhaowangbo.p/arpgen/AR-Param-Generation/checkpoint/generalization.pth",  # f"./checkpoint/{config['tag']}.pth",
     "generated_path": os.path.join(test_set.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "test_command": os.path.join(test_set.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "need_test": True,
@@ -53,6 +53,7 @@ def generate(save_path=config["generated_path"], test_command=config["test_comma
 
 if __name__ == "__main__":
     for i in range(len(test_set)):
+        i = 9
         print("Save to", config["generated_path"].format(config["tag"], "classXXX"))
         generate(
             save_path=config["generated_path"],
