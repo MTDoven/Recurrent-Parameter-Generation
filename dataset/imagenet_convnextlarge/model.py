@@ -1,7 +1,16 @@
+import torch.nn as nn
 import timm
-import torch
-from torch import nn
 
-def imagenet_classify():
-    model = timm.create_model('convnext_large', pretrained=True)
-    return model
+
+def Model():
+    model = timm.create_model("convnext_large", pretrained=True)
+    return model, model.head
+
+
+if __name__ == "__main__":
+    model, _ = Model()
+    print(model)
+    num_param = 0
+    for v in model.parameters():
+        num_param += v.numel()
+    print("num_param:", num_param)

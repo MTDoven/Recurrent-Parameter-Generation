@@ -76,7 +76,7 @@ config = {
         "channels": [64, 256, 384, 512, 64],
         "divide_slice_length": 32,
     },
-    "tag": "pdiff_resnet18bn_vae",
+    "tag": "compare_pdiff_resnet18bn_vae",
 }
 
 

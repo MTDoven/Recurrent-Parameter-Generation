@@ -76,7 +76,7 @@ config = {
         "channels": [64, 256, 384, 512, 64],
         "last_length": 340,
     },
-    "tag": "compare_pdiff_cnnsmedium",
+    "tag": "compare_pdiff_cnnsmedium_vae",
 }
 
 

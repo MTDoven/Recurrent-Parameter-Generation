@@ -5,4 +5,4 @@ accelerate launch \
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  pdiff_cnnmedium.py \
+  pdiff_cnnmedium_vae.py \

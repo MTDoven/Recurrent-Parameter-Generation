@@ -6,22 +6,25 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 import pandas as pd
 import numpy as np
 import torch
-import dataset.cifar100_resnet18bn.train as item
+import pickle
+import dataset.imagenet_vitbase.train as item
 loader = item.test_loader
 model = item.model
 test = item.test
 
 
 
-
-checkpoint_path = "./dataset/cifar100_resnet18bn/checkpoint"
-generated_path = "./dataset/cifar100_resnet18bn/generated"
-tag = "cifar100_resnet18bn"
+tag = os.path.basename(os.path.dirname(item.__file__))
+checkpoint_path = f"./dataset/{tag}/checkpoint"
+generated_path = f"./dataset/{tag}/generated"
+cache_file = None
+resume = True
 try:
     exec(sys.argv[1])
 except:
-    print("Please set noise_intensity=[xx.x, xx.x, xx.x]")
-    noise_intensity = [0.01, 0.03, 0.10]
+    print("Please set noise_intensity=[xx.x,xx.x,xx.x]")
+    noise_intensity = [0.1, 0.01, 0.001]
+    total_noised_number = None
 
 
 
@@ -33,6 +36,7 @@ generated_items.sort()
 total_items = list(checkpoint_items) + list(generated_items)
 num_checkpoint = len(checkpoint_items)
 num_generated = len(generated_items)
+total_noised_number = len(checkpoint_items) if total_noised_number is None else total_noised_number
 
 
 
@@ -56,34 +60,53 @@ print("\n==> start evaluating..")
 total_result_list = []
 total_acc_list = []
 
-
-
-
-# compute checkpoint and generated
-for i, item in enumerate(total_items):
-    print(f"start: {i+1}/{len(total_items)}")
-    item = torch.load(item, map_location='cpu')
-    result, acc = compute_wrong_indices(item)
-    result = result.numpy()
-    total_result_list.append(result)
-    total_acc_list.append(acc)
+cache_file = os.path.join(os.path.dirname(checkpoint_path), "cache.pt") if cache_file is None else cache_file
+if resume is True and os.path.exists(cache_file):
+    print(f"load cache from {cache_file}")
+    with open(cache_file, "rb") as f:
+        total_result_list, total_acc_list = pickle.load(f)
+else:  # compute checkpoint and generated
+    print(f"start inferencing on {tag}")
+    for i, item in enumerate(total_items):
+        print(f"start: {i+1}/{len(total_items)}")
+        item = torch.load(item, map_location='cpu')
+        result, acc = compute_wrong_indices(item)
+        result = result.numpy()
+        total_result_list.append(result)
+        total_acc_list.append(acc)
+    with open(cache_file, "wb") as f:
+        pickle.dump([total_result_list, total_acc_list], f)
 
 # compute noised
 checkpoint_items_for_noise = checkpoint_items.copy()
 random.shuffle(checkpoint_items_for_noise)
-num_each_noised = len(checkpoint_items_for_noise) // len(noise_intensity)
+num_each_noised = total_noised_number // len(noise_intensity)
 num_noise_class = len(noise_intensity)
 bias = 0
 for this_noise_intensity in noise_intensity:
     for i in range(num_each_noised):
         i = i + bias
         print(f"testing noised: {i+1}/{num_each_noised * num_noise_class}")
-        item = checkpoint_items_for_noise[i]
+        item = checkpoint_items_for_noise[i % num_checkpoint]
         item = torch.load(item, map_location="cpu")
         new_diction = {}
-        for k, v in item.items():
-            v += torch.randn_like(v) * this_noise_intensity
-            new_diction[k] = v
+        for key, value in item.items():
+            if ("num_batches_tracked" in key) or (value.numel() == 1) or not torch.is_floating_point(value):
+                pass  # not add noise to these
+            elif "running_var" in key:
+                pre_mean = value.mean() * 0.95
+                value = torch.log(value / pre_mean + 0.05)
+                mean, std = value.mean(), value.std()
+                value = (value - mean) / std
+                value += torch.randn_like(value) * this_noise_intensity
+                value = value * std + mean
+                value = torch.clip(torch.exp(value) - 0.05, min=0.001) * pre_mean
+            else:  # conv & linear
+                mean, std = value.mean(), value.std()
+                value = (value - mean) / std
+                value += torch.randn_like(value) * this_noise_intensity
+                value = value * std + mean
+            new_diction[key] = value
         result, acc = compute_wrong_indices(new_diction)
         result = result.numpy()
         total_result_list.append(result)
@@ -113,12 +136,23 @@ print(f"finished Saving ./similarity_{tag}.xlsx!")
 
 
 # print summary
-print("\n\n===============================================\nSummary:")
+print("\n\n===============================================")
+print(f"Summary: {tag}")
 print()
 print("num_checkpoint:", num_checkpoint)
 print("num_generated:", num_generated)
 print(f"num_noised: {num_each_noised}x{num_noise_class}")
-print()
+print(f"original_acc_mean:", np.array(total_acc_list[:num_checkpoint]).mean())
+print(f"original_acc_max:", np.array(total_acc_list[:num_checkpoint]).max())
+print(f"generated_acc_mean:", np.array(total_acc_list[num_checkpoint:num_checkpoint+num_generated]).mean())
+print(f"generated_acc_max:", np.array(total_acc_list[num_checkpoint:num_checkpoint+num_generated]).max())
+
+this_start = num_checkpoint + num_generated
+for this_noise_intensity in noise_intensity:
+    print(f"noise={this_noise_intensity:.4f}_acc_mean:",
+          np.array(total_acc_list[this_start:this_start+num_each_noised]).mean())
+    this_start += num_each_noised
+print()  # empty line
 origin_origin = iou_matrix[:num_checkpoint, :num_checkpoint]
 origin_origin = (np.sum(origin_origin) - num_checkpoint) / (num_checkpoint * (num_checkpoint - 1))
 print("origin-origin:", origin_origin)
@@ -152,6 +186,18 @@ for this_noise_intensity in noise_intensity:
 
 
 
+
+summary = {
+    "summary": tag,
+    "num_checkpoint": num_checkpoint,
+    "num_generated": num_generated,
+    "num_each_noised": num_each_noised,
+    "num_noise_class": num_noise_class,
+    "noise_intensity": noise_intensity,
+    "total_acc_list": total_acc_list,
+    "iou_matrix": iou_matrix,
+}
+draw_cache = [summary,]
 # final draw
 print("\n==> start drawing..")
 import seaborn as sns
@@ -160,16 +206,24 @@ import matplotlib.pyplot as plt
 draw_origin_origin_max = np.amax(iou_matrix[:num_checkpoint, :num_checkpoint] - np.eye(num_checkpoint), axis=-1)
 draw_origin_origin_acc = np.array(total_acc_list[:num_checkpoint])
 sns.scatterplot(x=draw_origin_origin_max, y=draw_origin_origin_acc, label="origin")
+draw_cache.append(dict(x=draw_origin_origin_max, y=draw_origin_origin_acc, label="origin"))
 # generated
 draw_origin_generated_max = origin_generated_max
 draw_origin_generated_acc = np.array(total_acc_list[num_checkpoint:num_checkpoint + num_generated])
 sns.scatterplot(x=draw_origin_generated_max, y=draw_origin_generated_acc, label="generated")
+draw_cache.append(dict(x=draw_origin_generated_max, y=draw_origin_generated_acc, label="generated"))
 # noised
 this_start = num_checkpoint + num_generated
 for i, this_noise_intensity in enumerate(noise_intensity):
     draw_origin_noised_max = noised_max_list[i]
     draw_origin_noised_acc = total_acc_list[this_start: this_start+num_each_noised]
     sns.scatterplot(x=draw_origin_noised_max, y=draw_origin_noised_acc, label=f"noise={this_noise_intensity:.4f}")
+    draw_cache.append(dict(x=draw_origin_noised_max, y=draw_origin_noised_acc, label=f"noise={this_noise_intensity:.4f}"))
+    this_start += num_each_noised
 # draw
 plt.savefig(f'plot_{tag}.png')
 print(f"plot saved to plot_{tag}.png")
+with open(f'plot_{tag}.cache', "wb") as f:
+    pickle.dump(draw_cache, f)
+
+

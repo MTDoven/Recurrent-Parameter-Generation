@@ -7,7 +7,7 @@ USE_WANDB = True
 import random
 import numpy as np
 import torch
-seed = SEED = 1003
+seed = SEED = 995
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
 torch.cuda.manual_seed_all(seed)
@@ -19,6 +19,7 @@ random.seed(seed)
 # other
 import math
 import random
+import _thread
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 if USE_WANDB: import wandb
@@ -32,7 +33,6 @@ from torch.cuda.amp import autocast
 from mamba_ssm import Mamba2 as Mamba
 from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
-from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
@@ -43,7 +43,7 @@ from torch.utils.data import DataLoader
 
 
 config = {
-    "resume": False,
+    "resume": True,
     "seed": SEED,
     # dataset setting
     "dataset": Dataset,
@@ -54,8 +54,10 @@ config = {
     "num_workers": 4,
     "total_steps": 120000,
     "learning_rate": 0.00001,
+    "warm_up_steps": 1,
+    "warmup_factor": 1.0,
     "weight_decay": 0.0,
-    "save_every": 120000//8,
+    "save_every": 120000//50,
     "print_every": 50,
     "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
@@ -65,17 +67,17 @@ config = {
     "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        "num_permutation": 1,
+        "num_permutation": "auto",
         # mamba config
         "d_condition": 1,
-        "d_model": 8192,
+        "d_model": 12288,
         "post_d_model": 16384,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 256,
+        "diffusion_batch": 448,
         "layer_channels": [1, 64, 96, 64, 1],
         "model_dim": 16384,
         "condition_dim": 16384,
@@ -163,9 +165,27 @@ optimizer = optim.AdamW8bit(
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
 )
-scheduler = CosineAnnealingLR(
+class WarmupCosineAnnealingLR(torch.optim.lr_scheduler._LRScheduler):
+    def __init__(self, optimizer, T_max, eta_min=0, last_epoch=-1, warmup_epochs=5, warmup_factor=0.1):
+        self.T_max = T_max
+        self.eta_min = eta_min
+        self.warmup_epochs = warmup_epochs
+        self.warmup_factor = warmup_factor
+        super().__init__(optimizer, last_epoch)
+    def get_lr(self):
+        if self.last_epoch < self.warmup_epochs:
+            alpha = float(self.last_epoch) / self.warmup_epochs
+            factor = self.warmup_factor * (1.0 - alpha) + alpha
+        else:  # end warm up
+            progress = (self.last_epoch - self.warmup_epochs) / (self.T_max - self.warmup_epochs)
+            factor = (1 + math.cos(math.pi * progress)) / 2
+            factor = (1 - self.eta_min) * factor + self.eta_min
+        return [base_lr * factor for base_lr in self.base_lrs]
+scheduler = WarmupCosineAnnealingLR(
     optimizer=optimizer,
     T_max=config["total_steps"],
+    warmup_epochs=config["warm_up_steps"],
+    warmup_factor=config["warmup_factor"],
 )
 
 # load checkpoint
@@ -208,8 +228,10 @@ def train():
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(output_shape=param.shape, x_0=param, permutation_state=None)
+            loss = model(output_shape=param.shape, x_0=param, permutation_state=permutation_state)
         accelerator.backward(loss)
+        # if accelerator.sync_gradients:
+        #     accelerator.clip_grad_norm_(model.parameters(), 1.)
         optimizer.step()
         if accelerator.is_main_process:
             scheduler.step()
@@ -251,7 +273,7 @@ def generate(save_path=config["generated_path"], need_test=True):
         wandb.log({"generated_norm": generated_norm.item()})
     train_set.save_params(prediction, save_path=save_path)
     if need_test:
-        os.system(config["test_command"])
+        _thread.start_new_thread(os.system, (config["test_command"],))
         print("\n")
     model.train()
     return prediction
