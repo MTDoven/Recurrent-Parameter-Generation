@@ -16,7 +16,7 @@ from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
 from bitsandbytes import optim
-from model import ClassConditionMambaDiffusion as Model
+from model import ClassConditionMambaDiffusionFull as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
@@ -37,12 +37,13 @@ config = {
     # train setting
     "batch_size": 16,
     "num_workers": 16,
-    "total_steps": 100000,
-    "learning_rate": 0.00003,
-    "weight_decay": 0.0,
-    "save_every": 100000//50,
+    "pre_steps": 0,
+    "total_steps": 150000,
+    "learning_rate": 0.00005,
+    "weight_decay": 5e-6,
+    "save_every": 150000//50,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 90000,
+    "autocast": lambda i: 5000 < i < 190000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
@@ -59,7 +60,7 @@ config = {
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 256,
+        "diffusion_batch": 512,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -158,6 +159,7 @@ def train():
                 x_0=param, 
                 condition=condition, 
                 permutation_state=None,
+                pre_training=batch_idx < config["pre_steps"]
             )
         accelerator.backward(loss)
         optimizer.step()

@@ -1,10 +1,8 @@
 /.idea
 /.vscode
-**/checkpoint/
-**/checkpoint_train/
-**/checkpoint_test/
+**/checkpoint*/
 **/__pycache__/
-**/generated/
+**/generated*/
 **/wandb/
 **/full_model.pth
 /rubbish

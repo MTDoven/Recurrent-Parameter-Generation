@@ -1,7 +1,20 @@
 import sys, os
-sys.path.append("/mnt/petrelfs/zhaowangbo.p/arpgen/AR-Param-Generation")
-os.chdir("/mnt/petrelfs/zhaowangbo.p/arpgen/AR-Param-Generation")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 USE_WANDB = True
+
+# set global seed
+import random
+import numpy as np
+import torch
+seed = SEED = 995
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.cuda.manual_seed_all(seed)
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = True
+np.random.seed(seed)
+random.seed(seed)
 
 # other
 import math
@@ -12,54 +25,54 @@ if USE_WANDB: import wandb
 # torch
 import torch
 import torch.nn as nn
+import bitsandbytes.optim as optim
 from torch.nn import functional as F
 from torch.cuda.amp import autocast
 # model
-from bitsandbytes import optim
-from model import ClassConditionMambaDiffusion as Model
+from model import MambaDiffusion as Model
 from model.diffusion import DDPMSampler, DDIMSampler
 from torch.optim.lr_scheduler import CosineAnnealingLR, LinearLR, SequentialLR
 from accelerate.utils import DistributedDataParallelKwargs
 from accelerate.utils import AutocastKwargs
 from accelerate import Accelerator
 # dataset
-from dataset import ClassInput_ViTTiny_Train
-from dataset import ClassInput_ViTTiny_Test
+from dataset import Permutation_ViTTiny as Dataset
 from torch.utils.data import DataLoader
 
 
 
 config = {
+    "seed": SEED,
     # dataset setting
-    "dataset": None,
+    "dataset": Dataset,
     "dim_per_token": 8192,
     "sequence_length": 'auto',
     # train setting
-    "batch_size": 16,
-    "num_workers": 16,
-    "total_steps": 100000,
+    "batch_size": 8,
+    "num_workers": 8,
+    "total_steps": 120000,
     "learning_rate": 0.00003,
     "weight_decay": 0.0,
-    "save_every": 100000//50,
+    "save_every": 120000//30,
     "print_every": 50,
-    "autocast": lambda i: 5000 < i < 90000,
+    "autocast": lambda i: 5000 < i < 45000,
     "checkpoint_save_path": "./checkpoint",
     # test setting
     "test_batch_size": 1,  # fixed, don't change this
-    "generated_path": ClassInput_ViTTiny_Test.generated_path,
-    "test_command": ClassInput_ViTTiny_Test.test_command,
+    "generated_path": Dataset.generated_path,
+    "test_command": Dataset.test_command,
     # to log
     "model_config": {
-        "num_permutation": "auto",
+        "num_permutation": 1,
         # mamba config
-        "d_condition": 1024,
+        "d_condition": 1,
         "d_model": 8192,
         "d_state": 128,
         "d_conv": 4,
         "expand": 2,
         "num_layers": 2,
         # diffusion config
-        "diffusion_batch": 256,
+        "diffusion_batch": 384,
         "layer_channels": [1, 32, 64, 128, 64, 32, 1],
         "model_dim": "auto",
         "condition_dim": "auto",
@@ -69,6 +82,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
+    "tag": "permutation_1",
 }
 
 
@@ -76,13 +90,9 @@ config = {
 
 # Data
 print('==> Preparing data..')
-train_set = ClassInput_ViTTiny_Train(dim_per_token=config["dim_per_token"])
-test_set = ClassInput_ViTTiny_Test(dim_per_token=config["dim_per_token"])
-sample = train_set[0][0]
-print("checkpoint number:", train_set.real_length)
-print("input shape:", sample.shape)
-print("useful ratio:", torch.where(torch.isnan(sample), 0., 1.).mean())
-mask = torch.where(torch.isnan(sample), torch.nan, 1.)
+train_set = config["dataset"](dim_per_token=config["dim_per_token"])
+print("Dataset length:", train_set.real_length)
+print("input shape:", train_set[0][0].shape)
 if config["model_config"]["num_permutation"] == "auto":
     config["model_config"]["num_permutation"] = train_set.max_permutation_state
 if config["model_config"]["condition_dim"] == "auto":
@@ -109,8 +119,8 @@ Model.config = config["model_config"]
 model = Model(
     sequence_length=config["sequence_length"],
     positional_embedding=train_set.get_position_embedding(
-        positional_embedding_dim=config["model_config"]["d_model"],
-    ),  # positional_embedding
+        positional_embedding_dim=config["model_config"]["d_model"]
+    )  # positional_embedding
 )  # model setting is in model
 
 # Optimizer
@@ -119,23 +129,25 @@ optimizer = optim.AdamW8bit(
     params=model.parameters(),
     lr=config["learning_rate"],
     weight_decay=config["weight_decay"],
-)  # optimizer
+)
 scheduler = CosineAnnealingLR(
     optimizer=optimizer,
     T_max=config["total_steps"],
-)  # scheduler
+)
 
 # accelerator
 if __name__ == "__main__":
     kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
     accelerator = Accelerator(kwargs_handlers=[kwargs,])
+    # FIXME: the program rely on this bug; find_unused_parameters=True is necessary! why?
+    # FIXME: we use a dynamic policy in diffusion training, this may be the reason...
     model, optimizer, train_loader = accelerator.prepare(model, optimizer, train_loader)
 
 
 # wandb
 if __name__ == "__main__" and USE_WANDB and accelerator.is_main_process:
     wandb.login(key="b8a4b0c7373c8bba8f3d13a2298cd95bf3165260")
-    wandb.init(project="AR-Param-Generation", name=__file__.split("/")[-1][:-3], config=config)
+    wandb.init(project="AR-Param-Generation", name=config['tag'], config=config,)
 
 
 
@@ -148,17 +160,12 @@ def train():
         this_steps = 0
     print("==> start training..")
     model.train()
-    for batch_idx, (param, condition) in enumerate(train_loader):
+    for batch_idx, (param, permutation_state) in enumerate(train_loader):
         optimizer.zero_grad()
         # train
         # noinspection PyArgumentList
         with accelerator.autocast(autocast_handler=AutocastKwargs(enabled=config["autocast"](batch_idx))):
-            loss = model(
-                output_shape=param.shape, 
-                x_0=param, 
-                condition=condition, 
-                permutation_state=None,
-            )
+            loss = model(output_shape=param.shape, x_0=param, permutation_state=permutation_state)
         accelerator.backward(loss)
         optimizer.step()
         if accelerator.is_main_process:
@@ -178,8 +185,7 @@ def train():
         if batch_idx % config["save_every"] == 0 and accelerator.is_main_process:
             os.makedirs(config["checkpoint_save_path"], exist_ok=True)
             state = accelerator.unwrap_model(model).state_dict()
-            torch.save(state, os.path.join(config["checkpoint_save_path"],
-                                           f"{__file__.split('/')[-1].split('.')[0]}.pth"))
+            torch.save(state, os.path.join(config["checkpoint_save_path"], config["tag"]+".pth"))
             generate(save_path=config["generated_path"], need_test=True)
         if batch_idx >= config["total_steps"]:
             break
@@ -188,18 +194,15 @@ def train():
 def generate(save_path=config["generated_path"], need_test=True):
     print("\n==> Generating..")
     model.eval()
-    _, condition = test_set[random.randint(0, len(test_set)-1)]
-    class_index = str(int("".join([str(int(i)) for i in condition]), 2)).zfill(4)
     with torch.no_grad():
-        prediction = model(sample=True, condition=condition[None], permutation_state=False)
-        generated_norm = torch.nanmean((prediction.cpu() * mask).abs())
+        prediction = model(sample=True)
+        generated_norm = prediction.abs().mean()
     print("Generated_norm:", generated_norm.item())
-    if USE_WANDB and accelerator.is_main_process:
+    if USE_WANDB:
         wandb.log({"generated_norm": generated_norm.item()})
-    if accelerator.is_main_process:
-        train_set.save_params(prediction, save_path=save_path.format(class_index))
+    train_set.save_params(prediction, save_path=save_path)
     if need_test:
-        os.system(config["test_command"].format(class_index))
+        os.system(config["test_command"])
         print("\n")
     model.train()
     return prediction

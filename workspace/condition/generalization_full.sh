@@ -6,4 +6,4 @@ srun -p Gveval-S1 --job-name=train --gres=gpu:3 --ntasks-per-node=1 accelerate l
   --num_machines=1 \
   --mixed_precision=bf16 \
   --dynamo_backend=no \
-  generalization.py \
+  generalization_full.py \

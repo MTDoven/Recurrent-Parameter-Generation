@@ -123,3 +123,40 @@ class ClassConditionMambaDiffusion(MambaDiffusion):
         x = self.to_condition_linear(x)
         x = x * self.to_condition_gate
         return x
+
+
+class ClassConditionMambaDiffusionFull(MambaDiffusion):
+    def __init__(self, sequence_length, positional_embedding, input_class=10, init_noise_intensity=1e-4):
+        super().__init__(sequence_length, positional_embedding)
+        self.get_condition = nn.Sequential(
+            nn.Linear(input_class, self.config["d_condition"]),
+            nn.LayerNorm(self.config["d_condition"]),
+        )  # to condition
+        self.to_permutation_state = nn.Embedding(self.config["num_permutation"], self.config["d_model"])
+        # condition module
+        self.to_condition_linear = nn.Linear(self.config["d_condition"], self.config["d_model"])
+        self.to_condition_conv = nn.Sequential(
+            nn.Conv1d(1, sequence_length, 9, 1, 4),
+            nn.GroupNorm(num_groups=1, num_channels=sequence_length),
+            nn.Conv1d(sequence_length, sequence_length, 9, 1, 4),
+        )  # [batch_size, sequence_length, d_model]
+        # reset to_condition
+        del self.to_condition
+
+    def forward(self, output_shape=None, x_0=None, condition=None, **kwargs):
+        if kwargs.get("pre_training"):
+            self.to_condition = self._zero_condition
+            condition = None
+        else:  # train with condition
+            self.to_condition = self._to_condition
+            condition = self.get_condition(condition.to(self.device))
+        return super().forward(output_shape=output_shape, x_0=x_0, condition=condition, **kwargs)
+
+    def _to_condition(self, x):
+        assert len(x.shape) == 3
+        x = self.to_condition_linear(x)  # [batch_size, 1, d_model]
+        x = self.to_condition_conv(x)  # [batch_size, sequence_length, d_model]
+        return x
+
+    def _zero_condition(self, x):
+        return torch.zeros(size=(x.shape[0], self.sequence_length, self.config["d_model"]), device=x.device)

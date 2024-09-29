@@ -22,6 +22,7 @@ generate_config = {
     "generated_path": os.path.join(test_set.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "test_command": os.path.join(test_set.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "need_test": True,
+    "specific_item": 37, 
 }
 config.update(generate_config)
 
@@ -53,7 +54,10 @@ def generate(save_path=config["generated_path"], test_command=config["test_comma
 
 
 if __name__ == "__main__":
-    for i in range(60):
+    for i in range(20):
+        if specific_item is not None:
+            assert isinstance(specific_item, int)
+            i = specific_item
         print("Save to", config["generated_path"].format(config["tag"], "classXXX"))
         generate(
             save_path=config["generated_path"],
