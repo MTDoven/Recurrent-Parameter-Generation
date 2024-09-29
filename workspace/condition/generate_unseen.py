@@ -54,9 +54,9 @@ def generate(save_path=config["generated_path"], test_command=config["test_comma
 
 if __name__ == "__main__":
     for i in range(len(test_set)):
-        if specific_item is not None:
-            assert isinstance(specific_item, int)
-            i = specific_item
+        if config["specific_item"] is not None:
+            assert isinstance(config["specific_item"], int)
+            i = config["specific_item"]
         print("Save to", config["generated_path"].format(config["tag"], "classXXX"))
         generate(
             save_path=config["generated_path"],
