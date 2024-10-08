@@ -5,7 +5,7 @@ os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 # torch
 import torch
 # father
-from workspace.main import convnextlarge_16384 as item
+from workspace.downtask import segmentation as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -15,11 +15,11 @@ config["tag"] = config.get("tag") if config.get("tag") is not None else os.path.
 
 generate_config = {
     "device": "cuda",
-    "num_generated": 10,
+    "num_generated": 8,
     "checkpoint": f"./checkpoint/{config['tag']}.pth",
     "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
-    "need_test": True,
+    "need_test": False,
 }
 config.update(generate_config)
 

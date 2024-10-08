@@ -322,16 +322,30 @@ class ImageNet_ConvNextLarge(BaseDataset):
                    "./dataset/imagenet_convnextlarge/generated/generated_model.pth"
 
 class CocoDetection(BaseDataset):
-    data_path = "/home/nus-zwb/dongwen/Detection/checkpoint"
+    data_path = "./dataset/downtask_detection/checkpoint"
     generated_path = "./dataset/downtask_detection/generated/generated_model.pth"
-    test_command = "bash /home/nus-zwb/dongwen/test_detection.sh " + \
+    test_command = "bash ./dataset/downtask_detection/test.sh " + \
                    "./dataset/downtask_detection/generated/generated_model.pth"
 
 class ADE20KSegmentation(BaseDataset):
-    data_path = "/home/nus-zwb/dongwen/Segmentation/checkpoint"
+    data_path = "./dataset/downtask_segmentation/checkpoint"
     generated_path = "./dataset/downtask_segmentation/generated/generated_model.pth"
-    test_command = "bash /home/nus-zwb/dongwen/test_segmentation.sh " + \
+    test_command = "bash ./dataset/downtask_segmentation/test.sh " + \
                    "./dataset/downtask_segmentation/generated/generated_model.pth"
+
+class DoRACommonSenseReasoningR4(BaseDataset):
+    data_path = "./dataset/downtask_dora_r4/checkpoint"
+    generated_path = "./dataset/downtask_dora_r4/generated/generated_model.pth"
+    test_command = "echo coming_soon"
+    # test_command = "bash ./dataset/downtask_dora_r4/test.sh " + \
+    #                "./dataset/downtask_dora_r4/generated/generated_model.pth"
+
+class DoRACommonSenseReasoningR16(BaseDataset):
+    data_path = "./dataset/downtask_dora_r16/checkpoint"
+    generated_path = "./dataset/downtask_dora_r16/generated/generated_model.pth"
+    test_command = "echo coming_soon"
+    # test_command = "bash ./dataset/downtask_dora_r16/test.sh " + \
+    #                "./dataset/downtask_dora_r16/generated/generated_model.pth"
 
 class Cifar10_ResNet18(BaseDataset):
     data_path = "./dataset/cifar10_resnet18/checkpoint"
