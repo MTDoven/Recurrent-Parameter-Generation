@@ -7,10 +7,13 @@ import pandas as pd
 import numpy as np
 import torch
 import pickle
-import dataset.imagenet_vitbase.train as item
+# import dataset.imagenet_vitbase.train as item
+import importlib
+item = importlib.import_module(f"dataset.{sys.argv[1]}.train")
 loader = item.test_loader
 model = item.model
 test = item.test
+
 
 
 
@@ -20,11 +23,9 @@ generated_path = f"./dataset/{tag}/generated"
 cache_file = None
 resume = True
 try:
-    exec(sys.argv[1])
-except:
-    print("Please set noise_intensity=[xx.x,xx.x,xx.x]")
-    noise_intensity = [0.1, 0.01, 0.001]
-    total_noised_number = None
+    exec(sys.argv[2])
+except IndexError:
+    pass
 
 
 
@@ -36,7 +37,16 @@ generated_items.sort()
 total_items = list(checkpoint_items) + list(generated_items)
 num_checkpoint = len(checkpoint_items)
 num_generated = len(generated_items)
-total_noised_number = len(checkpoint_items) if total_noised_number is None else total_noised_number
+
+
+
+
+if "noise_intensity" not in globals():
+    noise_intensity = [0.1, 0.01, 0.001]
+    print(f"set noise_intensity to {noise_intensity}")
+if "total_noised_number" not in globals():
+    total_noised_number = len(checkpoint_items)
+    print(f"set total_noised_number to {total_noised_number}")
 
 
 

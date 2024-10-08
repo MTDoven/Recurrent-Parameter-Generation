@@ -123,6 +123,8 @@ class DDIMSampler(nn.Module):
 
     @torch.no_grad()
     def forward(self, x_t, c, steps=60, method="linear", eta=0.05, only_return_x_0=True, interval=1):
+        if steps == 0:
+            return c
         if method == "linear":
             a = self.T // steps
             time_steps = np.asarray(list(range(0, self.T, a)))
@@ -140,8 +142,8 @@ class DDIMSampler(nn.Module):
             if not only_return_x_0 and ((steps - i) % interval == 0 or i == 0):
                 x.append(x_t)
         if only_return_x_0:
-            return x_t  # [batch_size, channels, height, width]
-        return torch.stack(x, dim=1)  # [batch_size, sample, channels, height, width]
+            return x_t  # [batch_size x channels, dim]
+        return torch.stack(x, dim=1)  # [batch_size x channels, sample, dim]
 
 
 
@@ -202,6 +204,9 @@ class DiffusionLoss(nn.Module):
         x_shape = x.shape
         x = x.view(-1, x.size(-1))
         c = c.view(-1, c.size(-1))
+        if kwargs.get("only_return_x_0") is False:
+            diffusion_steps = self.diffusion_sampler(x, c, **kwargs)
+            return torch.permute(diffusion_steps, (1, 0, 2))  # [sample, 1 x channels, dim]
         if batch is not None and x.size(0) > batch:
             result = []
             num_loops = x.size(0) // batch if x.size(0) % batch != 0 else x.size(0) // batch - 1

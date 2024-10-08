@@ -10,7 +10,7 @@ import copy
 from torch import nn
 from model.diffusion import DDIMSampler, DDPMSampler
 # father
-from workspace.main import convnextatto_8192 as item
+from workspace.main import convnextlarge_16384 as item
 Dataset = item.Dataset
 train_set = item.train_set
 config = item.config
@@ -20,7 +20,7 @@ config["tag"] = config.get("tag") if config.get("tag") is not None else os.path.
 
 generate_config = {
     "device": "cuda",
-    "num_generated": 1,
+    "num_generated": 10,
     "checkpoint": f"./checkpoint/{config['tag']}.pth",
     "generated_path": os.path.join(Dataset.generated_path.rsplit("/", 1)[0], "generated_{}_{}.pth"),
     "test_command": os.path.join(Dataset.test_command.rsplit("/", 1)[0], "generated_{}_{}.pth"),
@@ -46,7 +46,7 @@ def new_sample(self, x=None, condition=None):
     z = self.condi_embedder(z)
     if x is None:
         x = torch.randn((1, self.sequence_length, self.config["model_dim"]), device=z.device)
-    x = self.criteria.sample(x, z)  # steps=200, eta=0.1)
+    x = self.criteria.sample(x, z, steps=60, eta=0.05)
     return x
 model.sample = types.MethodType(new_sample, model)
 model.criteria.diffusion_sampler.model.condi_embedder = nn.Identity()

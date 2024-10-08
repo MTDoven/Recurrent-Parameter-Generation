@@ -1,6 +1,6 @@
 import sys, os
-sys.path.append("/data/personal/nus-wk/arpgen/AR-Param-Generation")
-os.chdir("/data/personal/nus-wk/arpgen/AR-Param-Generation")
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+os.chdir(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 # torch
 import torch
