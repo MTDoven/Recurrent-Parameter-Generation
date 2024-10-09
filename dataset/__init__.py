@@ -336,16 +336,14 @@ class ADE20KSegmentation(BaseDataset):
 class DoRACommonSenseReasoningR4(BaseDataset):
     data_path = "./dataset/downtask_dora_r4/checkpoint"
     generated_path = "./dataset/downtask_dora_r4/generated/generated_model.pth"
-    test_command = "echo coming_soon"
-    # test_command = "bash ./dataset/downtask_dora_r4/test.sh " + \
-    #                "./dataset/downtask_dora_r4/generated/generated_model.pth"
+    test_command = "bash ./dataset/downtask_dora_r4/test.sh " + \
+                   "./dataset/downtask_dora_r4/generated/generated_model.pth"
 
 class DoRACommonSenseReasoningR16(BaseDataset):
     data_path = "./dataset/downtask_dora_r16/checkpoint"
     generated_path = "./dataset/downtask_dora_r16/generated/generated_model.pth"
-    test_command = "echo coming_soon"
-    # test_command = "bash ./dataset/downtask_dora_r16/test.sh " + \
-    #                "./dataset/downtask_dora_r16/generated/generated_model.pth"
+    test_command = "bash ./dataset/downtask_dora_r16/test.sh " + \
+                   "./dataset/downtask_dora_r16/generated/generated_model.pth"
 
 class Cifar10_ResNet18(BaseDataset):
     data_path = "./dataset/cifar10_resnet18/checkpoint"

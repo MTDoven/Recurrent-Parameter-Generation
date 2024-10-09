@@ -87,7 +87,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "segmentation",
+    "tag": "downtask_segmentation",
 }
 
 

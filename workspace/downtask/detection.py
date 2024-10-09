@@ -87,7 +87,7 @@ config = {
         "T": 1000,
         "forward_once": True,
     },
-    "tag": "detection",
+    "tag": "downtask_detection",
 }
 
 
